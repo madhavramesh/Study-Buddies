@@ -9,10 +9,10 @@ Madhav Ramesh, Richard Tang, Jack Cheng, Akash Singirikonda
 **Strengths**  
 * Madhav Ramesh
   - Sleep schedule aligns with others
-  - 
+  - Strong in extensibility and generics
 * Richard Tang
   - Sleep schedule aligns with others
-  - 
+  - Good at planning, scheduling, and coding fast
 * Jack Cheng
   * Sleep schedule aligns with others
   * Crushing hidden bugs
@@ -20,15 +20,19 @@ Madhav Ramesh, Richard Tang, Jack Cheng, Akash Singirikonda
   * Likes algorithms
 * Akash Singirikonda
   - Sleep schedule aligns with others
+  - Good at writing test cases and project design
 
 **Weaknesses**
 * Madhav Ramesh
   - From cs19 (like the other group members - lack of diversity) 
+  - 
 * Richard Tang
   - Also from cs19
+  - 
 * Jack Cheng
   * Also from cs19
   * Limited experience in Java
+  * Hates thinking about generics
 * Akash Singirikonda
   * Also from cs19
 
