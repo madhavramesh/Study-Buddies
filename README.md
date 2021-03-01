@@ -10,11 +10,16 @@ Madhav Ramesh, Richard Tang, Jack Cheng, Akash Singirikonda
 * Madhav Ramesh
 * Richard Tang
 * Jack Cheng
+  * Sleep schedule aligns with others
+  * Crushing hidden bugs
+  * 
 * Akash Singirikonda
 
 **Weaknesses**
-- We all came from cs19 so our Java experience is limited
-
+* Madhav Ramesh
+* Richard Tang
+* Jack Cheng
+* Akash Singirikonda
 **Project Idea(s):** _Fill this in with three unique ideas! (Due by March 1)_
 ### Idea 1
 
