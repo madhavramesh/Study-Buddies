@@ -19,10 +19,11 @@ Madhav Ramesh, Richard Tang, Jack Cheng, Akash Singirikonda
   * Semi-stable supply of caffeine
   * Likes algorithms
 * Akash Singirikonda
+  - Sleep schedule aligns with others
 
 **Weaknesses**
 * Madhav Ramesh
-  - Also from cs19
+  - From cs19 (like the other group members - lack of diversity) 
 * Richard Tang
   - Also from cs19
 * Jack Cheng
