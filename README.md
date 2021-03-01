@@ -43,7 +43,7 @@ Madhav Ramesh, Richard Tang, Jack Cheng, Akash Singirikonda
 
 **Project Idea(s):** 
 
-### Idea 1 - Shiritori (Word Game) 
+### Idea 1 - Shiritori (Word Game) Based on piazza @943_f88
 Requirements:
 - It is attempting to solve the lack of a more complex shiritori game online
 - A nice to have would be a Shiritori style word game that uses the meanings of the words.
