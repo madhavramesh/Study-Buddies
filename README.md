@@ -1,8 +1,10 @@
 # cs0320 Term Project 2021
 
-**Team Members:** _Fill this in!_
+**Team Members:** Madhav Ramesh, Richard Tang, Jack Cheng, Akash Singirikonda
 
-**Team Strengths and Weaknesses:** _Fill this in!_
+**Team Strengths and Weaknesses:** 
+**Strengths**
+**Weaknesses**
 
 **Project Idea(s):** _Fill this in with three unique ideas! (Due by March 1)_
 ### Idea 1
