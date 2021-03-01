@@ -8,13 +8,7 @@ Madhav Ramesh, Richard Tang, Jack Cheng, Akash Singirikonda
 
 **Strengths**  
 * Madhav Ramesh
-- 
-- Sleep schedule alignment
-- Same dorm
-- We vibe together
-- We like helping each other 
 * Richard Tang
-*   - asdf
 * Jack Cheng
 * Akash Singirikonda
 
