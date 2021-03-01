@@ -25,9 +25,26 @@ Madhav Ramesh, Richard Tang, Jack Cheng, Akash Singirikonda
 * Akash Singirikonda
 
 **Project Idea(s):** _Fill this in with three unique ideas! (Due by March 1)_
-### Idea 1
+### Idea 1 - Shiritori (Word Game) 
+Requirements:
+- It is attempting to solve the lack of a more complex shiritori game online
 
-### Idea 2
+Features:
+- Choose which place to “end” with (ie the first letter, second letter, etc.) so it’s not always the end
+- Choose local, online, or computer opponent modes
+- Option to choose to end with either letter, syllable, group of letters, or phonetic sound
+
+### Idea 2 - Automated buying and reselling of sneakers 
+
+Requirements:
+- It is attempting to solve the lack of money by US college students
+- To increase the liquidity and efficiency of the sneaker market 
+
+Features:
+- Allows users to choose a maximum buy-in price
+- Allows users to choose a time period limit of reselling
+- Allows users to adjust risk and volatility levels
+
 
 ### Idea 3
 
