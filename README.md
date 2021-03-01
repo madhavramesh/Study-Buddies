@@ -3,7 +3,9 @@
 **Team Members:** Madhav Ramesh, Richard Tang, Jack Cheng, Akash Singirikonda
 
 **Team Strengths and Weaknesses:** 
-**Strengths**
+
+**Strengths**  
+
 **Weaknesses**
 
 **Project Idea(s):** _Fill this in with three unique ideas! (Due by March 1)_
