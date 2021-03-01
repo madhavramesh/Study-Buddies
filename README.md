@@ -12,7 +12,7 @@ Madhav Ramesh, Richard Tang, Jack Cheng, Akash Singirikonda
   - Strong in extensibility and generics
 * Richard Tang
   - Sleep schedule aligns with others
-  - Good at planning, scheduling, and coding fast
+  - Strong in planning, scheduling, and coding fast
 * Jack Cheng
   * Sleep schedule aligns with others
   * Crushing hidden bugs
@@ -20,7 +20,7 @@ Madhav Ramesh, Richard Tang, Jack Cheng, Akash Singirikonda
   * Likes algorithms
 * Akash Singirikonda
   - Sleep schedule aligns with others
-  - Good at writing test cases and project design
+  - Strong in writing test cases, model based testing, and strategic project design
 
 **Weaknesses**
 * Madhav Ramesh
