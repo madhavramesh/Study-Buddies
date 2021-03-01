@@ -21,6 +21,7 @@ Madhav Ramesh, Richard Tang, Jack Cheng, Akash Singirikonda
 * Akash Singirikonda
   - Sleep schedule aligns with others
   - Strong in writing test cases, model based testing, and strategic project design
+  - Previous experience using Word2Vec in Python
 
 **Weaknesses**
 * Madhav Ramesh
@@ -34,13 +35,18 @@ Madhav Ramesh, Richard Tang, Jack Cheng, Akash Singirikonda
   * Limited experience in Java
   * Hates thinking about generics
 * Akash Singirikonda
-  * Also from cs19
+  * Also from cs19.
+  * Limited Experience with backend development.
+  * Sometimes* compromises on sleep.
+  * Taking a heavy courseload, exams may overlap with project.
+  * Easily goes off on tangents.
 
 **Project Idea(s):** 
 
 ### Idea 1 - Shiritori (Word Game) 
 Requirements:
 - It is attempting to solve the lack of a more complex shiritori game online
+- A nice to have would be a Shiritori style word game that uses the meanings of the words.
 
 Features:
 - Choose which place to “end” with (ie the first letter, second letter, etc.) so it’s not always the end
