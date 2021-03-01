@@ -10,7 +10,7 @@ Madhav Ramesh, Richard Tang, Jack Cheng, Akash Singirikonda
 * Madhav Ramesh
 * Richard Tang
 * Jack Cheng
- * Sleep schedule aligns with others
+  * Sleep schedule aligns with others
   * Crushing hidden bugs
   * 
 * Akash Singirikonda
