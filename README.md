@@ -25,7 +25,7 @@ Madhav Ramesh, Richard Tang, Jack Cheng, Akash Singirikonda
 **Weaknesses**
 * Madhav Ramesh
   - From cs19 (like the other group members - lack of diversity) 
-  - 
+  -
 * Richard Tang
   - Also from cs19
   - 
@@ -36,7 +36,8 @@ Madhav Ramesh, Richard Tang, Jack Cheng, Akash Singirikonda
 * Akash Singirikonda
   * Also from cs19
 
-**Project Idea(s):** _Fill this in with three unique ideas! (Due by March 1)_
+**Project Idea(s):** 
+
 ### Idea 1 - Shiritori (Word Game) 
 Requirements:
 - It is attempting to solve the lack of a more complex shiritori game online
