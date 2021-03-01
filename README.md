@@ -21,8 +21,9 @@ Madhav Ramesh, Richard Tang, Jack Cheng, Akash Singirikonda
 * Richard Tang
 * Jack Cheng
   * Limited experience in Java
-  * 
+  * From cs19 (like the others)
 * Akash Singirikonda
+
 **Project Idea(s):** _Fill this in with three unique ideas! (Due by March 1)_
 ### Idea 1
 
