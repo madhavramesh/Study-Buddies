@@ -1,13 +1,25 @@
 # cs0320 Term Project 2021
 
 **Team Members:** 
+
 Madhav Ramesh, Richard Tang, Jack Cheng, Akash Singirikonda
 
 **Team Strengths and Weaknesses:** 
 
 **Strengths**  
+* Madhav Ramesh
+- 
+- Sleep schedule alignment
+- Same dorm
+- We vibe together
+- We like helping each other 
+* Richard Tang
+*   - asdf
+* Jack Cheng
+* Akash Singirikonda
 
 **Weaknesses**
+- We all came from cs19 so our Java experience is limited
 
 **Project Idea(s):** _Fill this in with three unique ideas! (Due by March 1)_
 ### Idea 1
