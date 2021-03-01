@@ -13,6 +13,7 @@ Madhav Ramesh, Richard Tang, Jack Cheng, Akash Singirikonda
 * Richard Tang
   - Sleep schedule aligns with others
   - Strong in planning, scheduling, and coding fast
+  - Decent with databases, project design, and setting up project functionality
 * Jack Cheng
   * Sleep schedule aligns with others
   * Crushing hidden bugs
@@ -29,7 +30,9 @@ Madhav Ramesh, Richard Tang, Jack Cheng, Akash Singirikonda
   -
 * Richard Tang
   - Also from cs19
-  - 
+  - Limited experience in Java and generics, and web development
+  - Heavy courseload, other coursework may overlap with project
+  - Chronically sleep deprived
 * Jack Cheng
   * Also from cs19
   * Limited experience in Java
