@@ -10,6 +10,8 @@ Madhav Ramesh, Richard Tang, Jack Cheng, Akash Singirikonda
 * Madhav Ramesh
   - Sleep schedule aligns with others
   - Strong in extensibility and generics
+  - Decent at using Javascript modules like node.js, puppeteer, axios
+  - Decent at using interfaces for project design
 * Richard Tang
   - Sleep schedule aligns with others
   - Strong in planning, scheduling, and coding fast
@@ -27,7 +29,9 @@ Madhav Ramesh, Richard Tang, Jack Cheng, Akash Singirikonda
 **Weaknesses**
 * Madhav Ramesh
   - From cs19 (like the other group members - lack of diversity) 
-  -
+  - Limited experience in Java and frontend development
+  - Indecisive in choosing a specific project design
+  - Hates writing tests
 * Richard Tang
   - Also from cs19
   - Limited experience in Java and generics, and web development
