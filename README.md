@@ -63,6 +63,8 @@ Features:
 - Option to choose to end with either letter, syllable, group of letters, or phonetic sound
   - This is where the main algorithmic complexity will probably come in. Most shiritori games are based on letters. However, in reality letters do not all have the same sound. We would like to implement an algorithm that can also check if a group of letters likely has the same phonetic sound. This way, the game resembles the real-life version more. This will probably be the most challenging part of the project.
 
+**HTA Approval (crusch):** Approved, contingent on having a complex algorithm — I'm not too familiar with Shiritori, but an algorithm that can "check if a group of letters likely has the same phonetic sound" isn't really enough.
+
 ### Idea 2 - Automated buying and reselling of sneakers 
 Requirements:
 - It is attempting to solve the lack of money by college students
@@ -75,6 +77,8 @@ Features:
   - Some people may need to make cash faster than others, albeit maybe at a lower profit level. This feature will allow users to choose a time period that they wish to resell within and the algorithm will make judgements on if a better price to resell will probably appear within the deadline. 
 - Allows users to adjust risk and volatility levels
   - Allows the user to adjust the riskiness of the algorithm in the sense that the riskier it is, the more likely the algorithm is going to "hold" for a better resell value or buy more volatile shoes. This will probably be where the main algorithmic complexity lies and the most challenging part for the future.
+
+**HTA Approval (crusch):** Rejected — this isn't feasible for a 32 project.
 
 ### Idea 3 - Budget and find food on a trip
 
@@ -90,6 +94,8 @@ Features:
   - Some people may be more willing to go off their trip path to find food than others; this option will allow users to manage that option.
 - Choose restaurants based off their instagram 
   - An algorithm that looks at the instagram profile of each picture and judges their posts by the vibrancy, amount of user comments and likes, follower count, and/or other metrics to determine how worthy a restaurant is of patronage. 
+
+**HTA Approval (crusch):** Accepted — just make sure that your algorithm is sufficiently complex and not just pushing around data.
 
 **Mentor TA:** _Put your mentor TA's name and email here once you're assigned one!_
 
