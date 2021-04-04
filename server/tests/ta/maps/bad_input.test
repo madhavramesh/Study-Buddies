@@ -1,7 +1,0 @@
-INPUT
-map data/maps/smallMaps.sqlite3
-rout "Sootball Ln" "Chihiro Ave" "Sootball Ln" "Yubaba St"
-OUTPUT
-map set to data/maps/smallMaps.sqlite3
-ERROR:
-END

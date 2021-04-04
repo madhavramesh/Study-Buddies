@@ -1,7 +1,0 @@
-INPUT
-map data/maps/smallMaps.sqlite3
-nearest 0 0
-OUTPUT
-map set to data/maps/smallMaps.sqlite3
-/n/0
-END

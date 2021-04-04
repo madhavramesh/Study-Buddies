@@ -1,7 +1,0 @@
-INPUT
-map data/maps/smallMaps.sqlite3
-route "Sootball Ln" "Chihiro Ave" "Sootball Ln" "Yubaba St"
-OUTPUT
-map set to data/maps/smallMaps.sqlite3
-/n/1 -> /n/4 : /w/3
-END
