@@ -1,0 +1,8 @@
+input[type="number"] {
+  width: 3em;
+}
+
+body {
+  background-color: aquamarine;
+  margin-left: 100px;
+}

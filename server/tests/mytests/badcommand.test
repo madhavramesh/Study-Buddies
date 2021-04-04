@@ -1,0 +1,5 @@
+INPUT
+badcommand hehe 
+OUTPUT
+ERROR: Invalid command
+END

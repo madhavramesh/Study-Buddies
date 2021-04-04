@@ -1,0 +1,9 @@
+INPUT
+route 0 0 0 0
+nearest 0 0
+ways 0 0 100 100
+OUTPUT
+ERROR:
+ERROR:
+ERROR:
+END
