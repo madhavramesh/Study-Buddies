@@ -3,8 +3,17 @@ import './LoginStyle.css';
 import React from "react";
 
 function Register() {
+    const
+
+    const registerPerson = () => {
+        const postParameters = {
+
+        }
+    }
+
     return (
         <div className='base-container'>
+            <img src="https://seeklogo.com/images/S/snorlax-logo-4B47B6B547-seeklogo.com.png"></img>
             <div className='header'>Chunky Study Buddies</div>
             <div className='title'>Welcome to Chunky Study Buddies</div>
             <div className='content'>
