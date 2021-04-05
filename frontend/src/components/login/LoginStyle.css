@@ -1,16 +1,15 @@
 .base-container {
-    width: 100%;
+    height: 100vh;
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     color: grey;
 }
 
 .header {
     font-size: 24px;
     font-family: cursive;
-    margin-top: 80px;
     margin-bottom: 80px;
 }
 
@@ -68,6 +67,35 @@ input:focus {
     margin-bottom: 2em;
 }
 
+.hr-label::before {
+    right: 0.5em;
+    margin-left: -50%;
+}
+
+.hr-label::before, .hr-label::after {
+    content: '';
+    position: relative;
+    width: 50%;
+    background-color: grey;
+    display: inline-block;
+    height: 1px;
+    vertical-align: middle;
+}
+
+.hr-label::after {
+    left: 0.5em;
+    margin-right: -50%;
+}
+
 .footer {
+    margin-top: 0.5em;
+}
+
+.caption {
+    font-size: 12px;
     margin-top: 1em;
+}
+
+a:link, a:visited {
+    color: #2386c8;
 }

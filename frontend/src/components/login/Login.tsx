@@ -1,18 +1,8 @@
 import React from 'react';
 import './LoginStyle.css';
-import { GoogleLogin } from 'react-google-login';
-
-const clientID = '553204310857-hcd2155qs2hh1sg8tiafd96b1r8ndjbd.apps.googleusercontent.com'
+import { Link } from 'react-router-dom';
 
 function Login() {
-    // const onSuccess = (res) => {
-    //     console.log(`[Login Success] Current User: ${res.profileObj}`);
-    // }
-
-    // const onFailure = (res) => {
-    //     console.log(`[Login Failed] Res: ${res}`)
-    // }
-
     return (
         <div className='base-container'>
             <div className='header'>Chunky Study Buddies</div>
@@ -33,15 +23,9 @@ function Login() {
                         Sign in
                     </button>
                 </div>
-                <div className="hr-label">
-                    <span className='hr-label-text'>or</span>
-                </div>
-                <div className="google-login">
-                    <GoogleLogin
-                        clientId={clientID}
-                        buttonText="Sign in with Google"
-                        isSignedIn={true}
-                    />
+                <div className='caption'>
+                    New to Chunky Study Buddies?&nbsp;
+                    <Link to="/register">Create Account</Link>
                 </div>
             </div>
         </div>
