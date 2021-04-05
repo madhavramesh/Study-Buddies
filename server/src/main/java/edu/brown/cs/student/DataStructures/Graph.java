@@ -18,11 +18,11 @@ public class Graph<N extends Node, E extends Edge> {
    * Constructor for the graph class, initializes the nodes and edges ArrayLists.
    */
   public Graph() {
-    nodes = new ArrayList();
-    edges = new ArrayList();
+    nodes = new ArrayList<>();
+    edges = new ArrayList<>();
   }
 
-  public Graph(Graph otherGraph) {
+  public Graph(Graph<N, E> otherGraph) {
     this.nodes = otherGraph.getNodes();
     this.edges = otherGraph.getEdges();
   }

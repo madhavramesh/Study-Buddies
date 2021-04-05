@@ -14,7 +14,7 @@ public interface Node<N extends Node<N, E>, E extends Edge<N, E>> {
    * Returns all the outgoing edges.
    * @return a collection of all the outgoing edges.
    */
-  Collection<E> getOutEdges();
+  Collection<E> getEdges();
 
   void addEdge(E edge);
 
