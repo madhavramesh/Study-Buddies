@@ -22,6 +22,12 @@ public class Graph<N extends Node, E extends Edge> {
     edges = new ArrayList();
   }
 
+  public Graph(Graph otherGraph) {
+    this.nodes = otherGraph.getNodes();
+    this.edges = otherGraph.getEdges();
+  }
+
+
   /**
    * adds a node.
    * @param n node to be added

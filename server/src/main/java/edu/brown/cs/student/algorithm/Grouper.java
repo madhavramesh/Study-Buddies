@@ -1,12 +1,9 @@
 package edu.brown.cs.student.algorithm;
 
-import edu.brown.cs.student.DataStructures.Edge;
-import edu.brown.cs.student.DataStructures.Graph;
-import edu.brown.cs.student.DataStructures.IGEdge;
-import edu.brown.cs.student.DataStructures.Node;
+import com.google.common.collect.Lists;
+import edu.brown.cs.student.DataStructures.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * This is the class that executes the algorithm to form groups of size n.
@@ -17,6 +14,7 @@ import java.util.List;
  */
 public class Grouper {
   private final Graph<Node, IGEdge> graph;
+  private static Random r = new Random();
 
   /**
    * Constructor for the Grouper class
@@ -56,12 +54,12 @@ public class Grouper {
 
       // 5)
       // Randomly drop n variables from the candidate solution
-      Graph<Node, IGEdge> incompleteSolution = randomDrop(candidateSolution, randomDropNum);
+      Graph incompleteSolution = randomDrop(candidateSolution, randomDropNum);
 
 
       // 6)
       // Greedily add n variables to the candidate solution
-      Graph<Node, IGEdge> completeSolution = greedyAdd(incompleteSolution, randomDropNum, 0);
+      Graph completeSolution = greedyAdd(incompleteSolution, randomDropNum, 0);
 
 
       // 7)
@@ -102,6 +100,36 @@ public class Grouper {
    */
   private Graph<Node, IGEdge> construct(Graph g) {
 
+    // For each node not in the graph, calculate its contribution to the given subgraph g
+    // and store the result in a map from the node to the contribution.
+    List<IGNode> nodesNotInG = nodesNotInGraph(g);
+    Map<Node, Double> nodeContributionMap = new HashMap<>();
+    for (IGNode n: nodesNotInG) {
+      double contribution = contribution(g, n);
+      nodeContributionMap.put(n, contribution);
+    }
+
+    // Find the node with the maximum contribution
+    Map.Entry<Node, Double> maxNode = null;
+    for (Map.Entry<Node, Double> entry: nodeContributionMap.entrySet()) {
+      if (maxNode == null) {
+        // if there hasn't been a maxNode found yet, assign the entry to it
+        maxNode = entry;
+      } else if (maxNode.getValue() == entry.getValue()) {
+        // if there is a tie, randomly choose one
+        List<Map.Entry<Node, Double>> potentialMaxes = Lists.newArrayList(maxNode, entry);
+        maxNode = potentialMaxes.get(r.nextInt(2));
+      } else if (maxNode.getValue() < entry.getValue()) {
+        // if the entry has a greater contribution key, replace the current maxNode with it
+        maxNode = entry;
+      }
+    }
+
+    // Add that node to the graph and return it
+    if (!(maxNode == null)) {
+      Graph newGraph = new Graph(g);
+      newGraph.ad
+    }
   }
 
   /**
@@ -118,16 +146,20 @@ public class Grouper {
    * The contribution of a node is the sum of the edge weights that contain that node in the graph.
    * @return the contribution
    */
-  private double contribution(Graph g, Node<Integer, Double> n) {
-    Node nodeValue = n.getValue();
+  private double contribution(Graph g, IGNode n) {
+    int nodeValue = n.getValue();
     double totalContribution = 0;
     List<IGEdge> edges = g.getEdges();
     
     for (IGEdge edge: edges) {
-      Integer startValue = edge.getStart().getValue();
-      Integer endValue   = edge.getEnd().getValue();
-      if ()
+      int startValue = edge.getStart().getValue();
+      int endValue   = edge.getEnd().getValue();
+      if (startValue == nodeValue || endValue == nodeValue) {
+        totalContribution += edge.weight();
+      }
     }
+
+    return totalContribution;
   }
 
   /**

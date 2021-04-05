@@ -1,4 +1,4 @@
-package edu.brown.cs.student.graph;
+package edu.brown.cs.student.random;
 
 import java.util.Collection;
 

@@ -2,22 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6f35fa56-7f5b-42f9-814a-3dc404b8ebaf" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/DataStructures/Edge.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/DataStructures/Graph.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/DataStructures/Node.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/algorithm/MaxClique.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/checkstyle-idea.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/term-project-asingir1-jcheng46-mramesh5-rtang26.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/data/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/data/stars/MOCK_DATA.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/data/stars/one-star.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/data/stars/stardata.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/data/stars/ten-star.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/data/stars/three-star.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/data/stars/tie-star.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/DataStructures/Edge.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/DataStructures/Edge.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/DataStructures/Node.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/DataStructures/Node.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/random/GraphEdge.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/random/GraphEdge.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/random/GraphNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/random/GraphNode.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,7 +26,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/server/pom.xml" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -62,6 +51,8 @@
       <updated>1617519533484</updated>
       <workItem from="1617519536157" duration="3707000" />
       <workItem from="1617526651438" duration="498000" />
+      <workItem from="1617603992161" duration="20000" />
+      <workItem from="1617604217886" duration="9000" />
     </task>
     <servers />
   </component>

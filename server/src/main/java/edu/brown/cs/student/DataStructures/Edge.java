@@ -1,36 +1,28 @@
 package edu.brown.cs.student.DataStructures;
 
-/**
- * Class for generic edge types for a directed graph.
- * @param <N> an extension/type of node used for the edge.
+/** Edge in a Graph.
+ *
+ * @param <N> Type of Node in Graph
+ * @param <E> Type of Edge in Graph
  */
-public class Edge<N extends Node<N, E>, E extends Edge<N, E>> {
-
-  private final N startNode;
-  private final N endNode;
+public interface Edge<N extends Node<N, E>, E extends Edge<N, E>>
+        extends Comparable<E> {
 
   /**
-   * Constructor for the edge.
-   * @param s the starting node
-   * @param e the ending node
+   * Returns the node the edge comes from.
+   * @return the node the edge comes from.
    */
-  public Edge(N s, N e) {
-    startNode = s;
-    endNode = e;
-  }
+  N getStart();
 
   /**
-   * @return the starting node
+   * Returns the node the edge goes to.
+   * @return the node the edge goes to.
    */
-  public N getStart() {
-    return startNode;
-  }
+  N getEnd();
 
   /**
-   * @return the ending node
+   * Returns the weight of the edge.
+   * @return the weight of the edge.
    */
-  public N getEnd() {
-    return endNode;
-  }
-
+  double weight();
 }

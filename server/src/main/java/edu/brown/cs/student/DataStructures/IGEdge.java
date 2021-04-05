@@ -1,6 +1,9 @@
 package edu.brown.cs.student.DataStructures;
 
-public class IGEdge extends Edge{
+public class IGEdge implements Edge<IGNode, IGEdge> {
+  private final IGNode startNode;
+  private final IGNode endNode;
+
   private final double weight;
   private double contribution;
 
@@ -10,30 +13,35 @@ public class IGEdge extends Edge{
    * @param e the ending node
    * @param weight
    */
-  public IGEdge(Node s, Node e, double weight) {
-    super(s, e);
+  public IGEdge(IGNode s, IGNode e, double weight) {
+    this.startNode = s;
+    this.endNode = e;
     this.weight = weight;
   }
 
-  /**
-   * Sets the contribution
-   * @param contribution new contribution to be set
-   */
-  public void setContribution(double contribution) {
-    this.contribution = contribution;
+  @Override
+  public IGNode getStart() {
+    return this.startNode;
   }
 
-  /**
-   * @return Returns the contribution
-   */
-  public double getContribution() {
-    return contribution;
+  @Override
+  public IGNode getEnd() {
+    return this.endNode;
   }
 
-  /**
-   * @return Returns the edge weight
-   */
-  public double getWeight() {
-    return weight;
+  @Override
+  public double weight() {
+    return this.weight;
+  }
+
+  @Override
+  public int compareTo(IGEdge otherIGEdge) {
+    if (this.weight < otherIGEdge.weight()) {
+      return -1;
+    } else if (this.weight == otherIGEdge.weight()) {
+      return 0;
+    } else {
+      return 1;
+    }
   }
 }
