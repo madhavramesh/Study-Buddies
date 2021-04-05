@@ -25,6 +25,11 @@ function Register() {
             }
         }
 
+        console.log("First Name: " + firstName);
+        console.log("Last Name: " + lastName);
+        console.log("Email: " + email);
+        console.log("Password: " + password);
+
         axios.post(
             "http://localhost:4567/new-account",
             postParameters,
@@ -61,12 +66,12 @@ function Register() {
                     </div>
                     <div className="form-group">
                         <label htmlFor='password'>Password</label>
-                        <input type="text" name='password' id='password' placeholder='Password'
+                        <input type="password" name='password' id='password' placeholder='Password'
                                onChange={(e) => setPassword(e.target.value)}/>
                     </div>
                 </div>
                 <div className="footer">
-                    <button type='button' className="sign-in" onCl>
+                    <button type='button' className="sign-in" onClick={registerPerson}>
                         Create an account
                     </button>
                 </div>

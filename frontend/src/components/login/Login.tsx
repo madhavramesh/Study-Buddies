@@ -3,6 +3,8 @@ import './LoginStyle.css';
 import { Link } from 'react-router-dom';
 
 function Login() {
+
+
     return (
         <div className='base-container'>
             <img src="https://seeklogo.com/images/S/snorlax-logo-4B47B6B547-seeklogo.com.png"></img>
@@ -16,7 +18,7 @@ function Login() {
                     </div>
                     <div className="form-group">
                         <label htmlFor='password'>Password</label>
-                        <input type="text" name='password' id='password' placeholder='Password'/>
+                        <input type="password" name='password' id='password' placeholder='Password'/>
                     </div>
                 </div>
                 <div className="footer">
