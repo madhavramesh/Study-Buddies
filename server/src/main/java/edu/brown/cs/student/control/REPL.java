@@ -3,6 +3,7 @@ package edu.brown.cs.student.control;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -56,7 +57,7 @@ public class REPL {
   /**
    * runs the REPL.
    */
-  public void run() {
+  public void run() throws SQLException {
     try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
       String s;
       while ((s = br.readLine()) != null) {

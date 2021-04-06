@@ -6,8 +6,8 @@ import java.util.*;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
-import edu.brown.cs.student.groups.GroupsDatabase;
-import edu.brown.cs.student.groups.Person;
+import edu.brown.cs.student.groups.RegisterUser;
+import edu.brown.cs.student.groups.NewGroupsDatabase;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import org.json.JSONObject;
@@ -21,12 +21,16 @@ public final class Main {
 
   private static final int DEFAULT_PORT = 4567;
   // list of trigger actions
-  private final List<TriggerAction> actionList = new ArrayList<>();
+  private final List<TriggerAction> actionList = List.of(new RegisterUser());
   // GSON instance for handling JSON requests
   private static final Gson GSON = new Gson();
 
   private static final String PATH_TO_DB = "data/groups_db.sqlite";
-  private static GroupsDatabase GROUPS_DATABASE;
+  private static NewGroupsDatabase GROUPS_DATABASE;
+
+  public static NewGroupsDatabase getGroupsDatabase() {
+    return GROUPS_DATABASE;
+  }
 
   /**
    * The initial method called when execution begins.
@@ -55,7 +59,7 @@ public final class Main {
       runSparkServer((int) options.valueOf("port"));
     }
 
-    GROUPS_DATABASE = new GroupsDatabase(PATH_TO_DB);
+    GROUPS_DATABASE = new NewGroupsDatabase(PATH_TO_DB);
     REPL repl = new REPL();
 
     // register trigger actions to repl
@@ -91,7 +95,7 @@ public final class Main {
 
     // Setup Spark Routes
     Spark.post("/new-account", new RegisterUserHandler());
-    Spark.post("/validate-account", new LoginUserHandler());
+//    Spark.post("/validate-account", new LoginUserHandler());
 
   }
 
@@ -120,36 +124,36 @@ public final class Main {
     }
   }
 
-  /**
-   * Process user login requests. JSON objects must be in the form:
-   * {
-   *   email: ...,
-   *   password: ...,
-   * }
-   */
-  private static class LoginUserHandler implements Route {
-    @Override
-    public Object handle(Request request, Response response) throws Exception {
-      JSONObject data = new JSONObject(request.body());
-      String email = data.getString("email");
-      String rawPassword = data.getString("password");
-      String passToken = rawPassword; // TODO: implement hashing & salting
-      int[] results = GROUPS_DATABASE.validateUser(email, passToken);
-      boolean status = results[0] == 1;
-      Person person = null;
-      if (status) {
-        person = GROUPS_DATABASE.getPerson(results[1]);
-      }
-      Map<String, Object> variables = ImmutableMap.of(
-          "status", status,
-          "message", status ? "User successfully logged in!" : "Incorrect credentials!",
-          "firstname", status ? person.getFirstName() : "",
-          "lastname", status ? person.getLastName() : ""
-          // classes
-      );
-      return GSON.toJson(variables);
-    }
-  }
+//  /**
+//   * Process user login requests. JSON objects must be in the form:
+//   * {
+//   *   email: ...,
+//   *   password: ...,
+//   * }
+//   */
+//  private static class LoginUserHandler implements Route {
+//    @Override
+//    public Object handle(Request request, Response response) throws Exception {
+//      JSONObject data = new JSONObject(request.body());
+//      String email = data.getString("email");
+//      String rawPassword = data.getString("password");
+//      String passToken = rawPassword; // TODO: implement hashing & salting
+//      int[] results = GROUPS_DATABASE.validateUser(email, passToken);
+//      boolean status = results[0] == 1;
+//      Person person = null;
+//      if (status) {
+//        person = GROUPS_DATABASE.getPerson(results[1]);
+//      }
+//      Map<String, Object> variables = ImmutableMap.of(
+//          "status", status,
+//          "message", status ? "User successfully logged in!" : "Incorrect credentials!",
+//          "firstname", status ? person.getFirstName() : "",
+//          "lastname", status ? person.getLastName() : ""
+//          // classes
+//      );
+//      return GSON.toJson(variables);
+//    }
+//  }
   /**
    * Display an error page when an exception occurs in the server.
    */
