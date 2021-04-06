@@ -2,15 +2,6 @@
     display: flex;
 }
 
-.left-side {
-    background-color: #48d1cc;
-    flex: 1;
-}
-
-.right-side {
-    flex: 1;
-}
-
 button {
     font-size: 15px;
     padding: 10px 70px;

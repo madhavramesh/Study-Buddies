@@ -1,10 +1,23 @@
 .base-container {
     height: 100vh;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     color: grey;
+}
+
+.left-side {
+    height: 100vh;
+    background-color: #48d1cc;
+    flex: 1;
+}
+
+.right-side {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .header {
@@ -45,6 +58,12 @@ img {
     width: fit-content;
 }
 
+.error {
+    font-size: 12px;
+    color: #e82110;
+    margin-top: 10px;
+}
+
 label {
     font-size: 12px;
 }
@@ -59,7 +78,7 @@ input {
     background-color: #f3f3f3;
     border: 0;
     border-radius: 4px;
-    margin-bottom: 25px;
+    margin-bottom: 15px;
     transition: all 250ms ease-in-out;
 }
 
