@@ -5,8 +5,7 @@ package edu.brown.cs.student.DataStructures;
  * @param <N> Type of Node in Graph
  * @param <E> Type of Edge in Graph
  */
-public interface Edge<N extends Node<N, E>, E extends Edge<N, E>>
-        extends Comparable<E> {
+public interface Edge<N extends Node<N, E>, E extends Edge<N, E>> {
 
   /**
    * Returns the node the edge comes from.
@@ -24,5 +23,5 @@ public interface Edge<N extends Node<N, E>, E extends Edge<N, E>>
    * Returns the weight of the edge.
    * @return the weight of the edge.
    */
-  double weight();
+  double getWeight();
 }

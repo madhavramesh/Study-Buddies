@@ -5,7 +5,6 @@ public class IGEdge implements Edge<IGNode, IGEdge> {
   private final IGNode endNode;
 
   private final double weight;
-  private double contribution;
 
   /**
    * Constructor for IGEdge.
@@ -30,18 +29,7 @@ public class IGEdge implements Edge<IGNode, IGEdge> {
   }
 
   @Override
-  public double weight() {
+  public double getWeight() {
     return this.weight;
-  }
-
-  @Override
-  public int compareTo(IGEdge otherIGEdge) {
-    if (this.weight < otherIGEdge.weight()) {
-      return -1;
-    } else if (this.weight == otherIGEdge.weight()) {
-      return 0;
-    } else {
-      return 1;
-    }
   }
 }

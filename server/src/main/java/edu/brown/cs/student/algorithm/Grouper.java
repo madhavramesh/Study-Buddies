@@ -29,7 +29,7 @@ public class Grouper {
    * @param g Graph to be referenced
    * @param groupSize Group size to find
    */
-  public Graph<Node, IGEdge> findGroup(Graph<IGNode, IGEdge> g, int groupSize) throws Exception {
+  public Graph<IGNode, IGEdge> findGroup(Graph<IGNode, IGEdge> g, int groupSize) throws Exception {
     // 0)
     // Change the value of contributions of each node from "null" to an actual value.
     Graph initializedGraph = setContributions(g);
@@ -73,7 +73,7 @@ public class Grouper {
     // Then, it reconstructs the solution through a greedy solution.
     // It then checks if the greedy solution is better than the previous solution
     // and always stores the best-so-far solution.
-    while (!(runCount >= maxRuns)) {
+    while (runCount <= maxRuns) {
       runCount += 1;
 
       // 5)
@@ -249,7 +249,7 @@ public class Grouper {
       int startValue = edge.getStart().getValue();
       int endValue   = edge.getEnd().getValue();
       if (startValue == nodeValue || endValue == nodeValue) {
-        totalContribution += edge.weight();
+        totalContribution += edge.getWeight();
       }
     }
 

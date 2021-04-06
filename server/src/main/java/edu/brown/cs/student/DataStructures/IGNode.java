@@ -13,7 +13,7 @@ public class IGNode implements Node<IGNode, IGEdge> {
    * @param id The value of the node that corresponds to each person's unique ID.
    * @param connectedEdges The edges that are connected to this node.
    */
-  IGNode(int id, List<IGEdge> connectedEdges) {
+  public IGNode(int id, List<IGEdge> connectedEdges) {
     this.value = id;
     this.connectedEdges = connectedEdges;
   }
@@ -66,6 +66,7 @@ public class IGNode implements Node<IGNode, IGEdge> {
    * @return
    */
   public double getContribution() {
+    System.out.println("hello");
     return contribution;
   }
 }
