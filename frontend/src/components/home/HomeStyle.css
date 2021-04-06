@@ -1,46 +1,46 @@
 .search-container {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .title {
-    font-size: 20px;
+  font-size: 20px;
 }
 
 #search {
-    box-shadow: none;
-    border-radius: 100px;
-    padding-left: 32px;
-    padding-right: 32px;
-    /*
+  box-shadow: none;
+  border-radius: 100px;
+  padding-left: 32px;
+  padding-right: 32px;
+  /*
     margin-top: 0px;
     margin-bottom: 0px;
      */
 }
 
 .sidebar-container {
-    background-color: #F8F8F8;
-    font-family: "Lato", sans-serif;
-    height: 100vh;
-    width: 200px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    border-right: 1px solid rgba(31,51,51,0.1);
+  background-color: #f8f8f8;
+  font-family: 'Lato', sans-serif;
+  height: 100vh;
+  width: 200px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  border-right: 1px solid rgba(31, 51, 51, 0.1);
 }
 
 a {
-    padding: 10px 0px 0px 18px;
+  padding: 10px 0px 0px 18px;
 }
 
 .icon-text {
-    font-size: 15px;
-    color: #5e6c6c;
+  font-size: 15px;
+  color: #5e6c6c;
 }
 
 img {
-    height: 30px;
-    width: 30px;
+  height: 30px;
+  width: 30px;
 }
