@@ -25,7 +25,7 @@ public final class Main {
   // GSON instance for handling JSON requests
   private static final Gson GSON = new Gson();
 
-  private static final String PATH_TO_DB = "data/groups_db.sqlite";
+  private static final String PATH_TO_DB = "data/groups_db.sqlite3";
   private static NewGroupsDatabase GROUPS_DATABASE;
 
   public static NewGroupsDatabase getGroupsDatabase() {

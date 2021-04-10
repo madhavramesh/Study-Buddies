@@ -4,3 +4,4 @@ target/
 **.DS_Store**
 *.sqlite3
 .idea/**
+data/groups_db.sqlite3
