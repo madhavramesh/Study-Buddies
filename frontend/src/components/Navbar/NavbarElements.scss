@@ -1,3 +1,29 @@
 .navbar {
-  background-color: #000000;
+  background-color: rgba(0, 0, 0, 1) !important;
+  padding: 0px 240px;
+
+  .navbar-brand {
+    color: rgba(255, 255, 255, 1);
+  }
+
+  .nav-link:not(.separator) {
+    color: rgba(255, 255, 255, 1) !important;
+    font-family: Circular, spotify-circular, Helvetica, Arial, sans-serif !important;
+    font-size: 16px !important;
+    font-weight: bold !important;
+    padding: 28px 17px !important;
+    cursor: pointer;
+  }
+
+  .separator {
+    color: rgba(255, 255, 255, 1) !important;
+    font-family: Circular, spotify-circular, Helvetica, Arial, sans-serif !important;
+    padding: 28px 17px !important;
+  }
+
+  .nav-link:hover:not(.separator),
+  .nav-link--active:not(.separator) {
+    color: #348aed !important;
+    transform: scale(1.1);
+  }
 }
