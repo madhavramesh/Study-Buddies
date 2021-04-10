@@ -1,19 +1,19 @@
 package edu.brown.cs.student.DataStructures;
 
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 public class IGNode implements Node<IGNode, IGEdge> {
   private final int value;
-  private List<IGEdge> connectedEdges;
+  private Set<IGEdge> connectedEdges;
   private Double contribution;
+  private Map<IGNode, Double> weightMap;
 
   /**
    * Constructor for an IGNode
    * @param id The value of the node that corresponds to each person's unique ID.
    * @param connectedEdges The edges that are connected to this node.
    */
-  public IGNode(int id, List<IGEdge> connectedEdges) {
+  public IGNode(int id, Set<IGEdge> connectedEdges) {
     this.value = id;
     this.connectedEdges = connectedEdges;
   }
@@ -29,7 +29,7 @@ public class IGNode implements Node<IGNode, IGEdge> {
    * @return The edges connected to the node.
    */
   @Override
-  public Collection getEdges() {
+  public Set<IGEdge> getEdges() {
     return connectedEdges;
   }
 
@@ -58,6 +58,7 @@ public class IGNode implements Node<IGNode, IGEdge> {
    * @param newContribution new contribution
    */
   public void setContribution(double newContribution) {
+    System.out.println("setting contribution");
     this.contribution = newContribution;
   }
 
@@ -67,5 +68,67 @@ public class IGNode implements Node<IGNode, IGEdge> {
    */
   public Double getContribution() {
     return contribution;
+  }
+
+  /**
+   * Populates the node -> weight map.
+   * This is to increase efficiency when updating the contribution values
+   * in the algorithm. Assumes weight values do not change.
+   */
+  public void setWeightMap() {
+    weightMap = new HashMap<>();
+    for (IGEdge edge: connectedEdges) {
+      IGNode start  = edge.getStart();
+      IGNode end    = edge.getEnd();
+      double weight = edge.getWeight();
+      if (start.equals(this)) {
+        weightMap.put(end, weight);
+      } else if (end.equals(this)) {
+        weightMap.put(start, weight);
+      }
+    }
+  }
+
+  /**
+   * Returns the weight to a certain node.
+   * @param targetNode Node to get weight to
+   * @return Weight of the edge connecting to that node
+   */
+  public double weightTo(IGNode targetNode) {
+    double res = weightMap.get(targetNode);
+    System.out.println(res);
+    return res;
+  }
+
+  public Map<IGNode, Double> getWeightMap() {
+    return weightMap;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (!(o instanceof IGNode) || (o == null)) {
+      return false;
+    }
+    IGNode otherNode = (IGNode) o;
+    boolean sameValue = value == otherNode.getValue();
+    boolean sameEdges = connectedEdges.equals(otherNode.getEdges());
+    boolean sameContribution = contribution == (otherNode.getContribution());
+
+    return sameValue && sameEdges && sameContribution;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(value, connectedEdges, contribution);
+    /*
+    int result = 17;
+    result = result * 31 + value;
+    result = result * 31 + connectedEdges.hashCode();
+    if (contribution == null) {
+      return result;
+    } else {
+      return result * 31 + contribution.hashCode();
+    }
+     */
   }
 }

@@ -8,7 +8,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.Assert.assertTrue;
 
@@ -21,7 +24,7 @@ import static org.junit.Assert.assertTrue;
  */
 public class GrouperTest {
   Grouper grouper;
-  Graph<IGNode, IGEdge> graph;
+  Graph graph;
 
   IGNode node0;
   IGNode node1;
@@ -45,21 +48,11 @@ public class GrouperTest {
   public void setUp() {
     graph = new Graph();
 
-    node0 = new IGNode(0, Lists.newArrayList(
-            edge4, edge5, edge6, edge0
-    ));
-    node1 = new IGNode(1, Lists.newArrayList(
-            edge0, edge7, edge9, edge1
-    ));
-    node2 = new IGNode(2, Lists.newArrayList(
-            edge2, edge8, edge6, edge1
-    ));
-    node3 = new IGNode(3, Lists.newArrayList(
-            edge3, edge5, edge9, edge2
-    ));
-    node4 = new IGNode(4, Lists.newArrayList(
-            edge4, edge7, edge8, edge3
-    ));
+    node0 = new IGNode(0, new HashSet<>());
+    node1 = new IGNode(1, new HashSet<>());
+    node2 = new IGNode(2, new HashSet<>());
+    node3 = new IGNode(3, new HashSet<>());
+    node4 = new IGNode(4, new HashSet<>());
 
     edge0 = new IGEdge(node0, node1, 9);
     edge1 = new IGEdge(node1, node2, 7);
@@ -117,6 +110,18 @@ public class GrouperTest {
   }
 
   @Test
+  public void weightMapSetUpTest() {
+    // Makes sure that the weight map is set up for each node
+    setUp();
+
+    assertTrue(node0.weightTo(node1) == 9);
+    assertTrue(node0.weightTo(node2) == 8);
+    assertTrue(node0.weightTo(node3) == 3);
+    assertTrue(node0.weightTo(node4) == 4);
+
+    tearDown();
+  }
+  @Test
   public void calculateContributionTest() {
     setUp();
 
@@ -139,7 +144,7 @@ public class GrouperTest {
   public void setContributionsTest() {
     setUp();
 
-    Graph<IGNode, IGEdge> newGraph = Grouper.setContributions(graph);
+    Graph newGraph = Grouper.setContributions(graph);
 
     assertTrue(newGraph.getNode(node0).getContribution() == 24);
     assertTrue(newGraph.getNode(node1).getContribution() == 23);
@@ -151,10 +156,57 @@ public class GrouperTest {
   }
 
   @Test
-  public void deconstruct() {
+  public void deconstructTest() throws Exception {
     setUp();
+    graph = Grouper.setContributions(graph);
+    Set<IGNode> graphNodes = graph.getNodes();
 
+    // Test remove 0 nodes
+    Graph g5 = Grouper.deconstruct(graph, 0);
+    assertTrue(g5.getNodes().equals(graph.getNodes()));
 
+    // Test remove 1 node
+    System.out.println("LINE 172 -------------------------------");
+    System.out.println(Grouper.deconstruct(g5, 1));
+    Graph g4 = Grouper.deconstruct(g5, 1);
+    // There are two minimum nodes, so two possible answers.
+    List<IGNode> g4ans1 = new ArrayList<>(graphNodes);
+    g4ans1.remove(node3);
+    List<IGNode> g4ans2 = new ArrayList<>(graphNodes);
+    g4ans2.remove(node4);
+
+    Set<IGNode> g4Nodes = g4.getNodes();
+    assertTrue(
+            g4Nodes.equals(g4ans1)
+                    || g4Nodes.equals(g4ans2)
+    );
+
+    // Test remove 2 nodes
+    Graph g3 = Grouper.deconstruct(graph, 2);
+    List<IGNode> g3ans = new ArrayList<>(graphNodes);
+    g3ans.remove(node3);
+    g3ans.remove(node4);
+    assertTrue(g3.getNodes().equals(g3ans));
+
+    // Test remove 2 nodes then another 2 nodes
+    Graph g2 = Grouper.deconstruct(g4, 2);
+    List<IGNode> g2ans = new ArrayList<>(graphNodes);
+    g2ans.remove(node3);
+    g2ans.remove(node4);
+    g2ans.remove(node2);
+    assertTrue(g2.getNodes().equals(g2ans));
+
+    // Test remove 4 nodes
+    Graph g1 = Grouper.deconstruct(graph, 4);
+    List<IGNode> g1ans = Lists.newArrayList(node0);
+    assertTrue(g1.getNodes().equals(g1ans));
+
+    // Test remove 4 nodes then 1 node
+    Graph g0 = Grouper.deconstruct(g1, 1);
+    assertTrue(g0.getNodes().isEmpty());
+
+    // Test remove all nodes
+    assertTrue(Grouper.deconstruct(graph, 5).getNodes().isEmpty());
 
     tearDown();
   }
