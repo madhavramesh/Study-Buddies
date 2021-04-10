@@ -2,58 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6f35fa56-7f5b-42f9-814a-3dc404b8ebaf" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/finalproject.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/DataStructures/Edge.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/DataStructures/Graph.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/DataStructures/IGEdge.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/DataStructures/IGNode.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/DataStructures/Node.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/DataStructures/Pair.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/algorithm/Grouper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/distance/DistanceUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/encryption/PasswordEncryption.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/groups/ClassInfo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/groups/DBCode.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/groups/GroupsDatabase.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/groups/NewGroupsDatabase.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/groups/Person.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/groups/PersonInfo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/groups/testcommands/CreateClassCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/groups/testcommands/GetAllClassesCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/groups/testcommands/GetClassesWithOwnerIdCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/groups/testcommands/GetEnrollmentsCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/groups/testcommands/GetPersonInfoCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/groups/testcommands/JoinClassCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/groups/testcommands/RegisterUserCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/groups/testcommands/ValidateUserCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/input/RegexParser.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/test/java/edu/brown/cs/student/DataStructures/GraphTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/test/java/edu/brown/cs/student/DataStructures/IGEdgeTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/test/java/edu/brown/cs/student/DataStructures/IGNodeTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/test/java/edu/brown/cs/student/algorithm/GrouperTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/test/java/edu/brown/cs/student/encryption/PasswordEncryptionTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/checkstyle-idea.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/checkstyle-idea.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/server/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/data/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/data/stars/MOCK_DATA.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/data/stars/one-star.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/data/stars/stardata.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/data/stars/ten-star.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/data/stars/three-star.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/data/stars/tie-star.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/server/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Signin/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Signin/index.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/control/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/control/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/control/REPL.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/control/REPL.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/control/TriggerAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/control/TriggerAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/random/GraphEdge.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/random/GraphEdge.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/random/GraphNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/random/GraphNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/random/LocationNode.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/random/Way.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

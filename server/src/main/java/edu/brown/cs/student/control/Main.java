@@ -192,7 +192,7 @@ public final class Main {
       if (code.getCode() == 0) {
         int id = result.getFirst();
         request.session().attribute("user_id", id);
-        response.redirect("/dashboard");
+        //response.redirect("/dashboard");
       }
       Map<String, Object> variables = ImmutableMap.of(
           "status", code.getCode(),

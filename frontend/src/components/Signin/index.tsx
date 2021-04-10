@@ -35,6 +35,7 @@ const Signin: React.FC = () => {
         } else {
           setValidAcct(false);
         }
+        console.log(response.data);
         setValidAcctMessage(response.data.message);
       })
       .catch((err: any) => {
