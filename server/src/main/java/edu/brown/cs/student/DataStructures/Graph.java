@@ -59,7 +59,7 @@ public class Graph<N extends Node, E extends Edge> {
    * @param e edge to be removed.
    */
   public void removeEdge(E e) {
-    nodes.remove(e);
+    edges.remove(e);
     e.getStart().removeEdge(e);
     e.getEnd().removeEdge(e);
   }
@@ -76,5 +76,17 @@ public class Graph<N extends Node, E extends Edge> {
    */
   public List<E> getEdges() {
     return edges;
+  }
+
+  /**
+   * @return specific node or null if non-existent
+   */
+  public N getNode(N node) {
+    for(N n: nodes) {
+      if (n.equals(node)) {
+        return n;
+      }
+    }
+    return null;
   }
 }

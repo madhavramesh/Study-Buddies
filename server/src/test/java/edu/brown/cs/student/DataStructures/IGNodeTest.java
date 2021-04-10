@@ -1,4 +1,4 @@
-package edu.brown.cs.student;
+package edu.brown.cs.student.DataStructures;
 
 import edu.brown.cs.student.DataStructures.Edge;
 import edu.brown.cs.student.DataStructures.IGEdge;
@@ -64,10 +64,13 @@ public class IGNodeTest {
     setUp();
 
     // Confirm initial contribution is null
-    System.out.println("here");
-    System.out.println(testNode.getContribution());
-    //assertTrue(testNode.getContribution());
+    assertTrue(testNode.getContribution() == null);
 
+    // Confirm setting contribution works
+    testNode.setContribution(0.0);
+    assertTrue(testNode.getContribution() == 0.0);
+    testNode.setContribution(-100.5);
+    assertTrue(testNode.getContribution() == -100.5);
 
     tearDown();
   }

@@ -34,6 +34,7 @@ public class Grouper {
     // Change the value of contributions of each node from "null" to an actual value.
     Graph initializedGraph = setContributions(g);
 
+
     // 1)
     // Create an initial candidate solution graph by removing the
     // lowest contribution nodes to get a graph of size groupSize.
@@ -103,16 +104,27 @@ public class Grouper {
     return bestSoFar;
   }
 
-  private Graph randomDrop(Graph g, int randomDropNum) {
+  /**
+   * Randomly removes n nodes from the graph's node list. Note: leaves edges untouched.
+   * @param g Graph to remove nodes from
+   * @param randomDropNum How many nodes to randomly remove.
+   * @return
+   */
+  protected static Graph<IGNode, IGEdge> randomDrop(Graph g, int randomDropNum) {
     Graph graphCopy = new Graph(g);
     List<IGNode> nodesCopy = graphCopy.getNodes();
 
     Collections.shuffle(nodesCopy);
-    nodesCopy.subList(0, nodesCopy.size() - randomDropNum).clear();
+    nodesCopy.subList(0, nodesCopy.size() - randomDropNum + 1).clear();
     return graphCopy;
   }
 
-  private Graph setContributions(Graph<IGNode, IGEdge> g) {
+  /**
+   * Sets the contributions of each node in the graph.
+   * @param g Graph to set contributions for.
+   * @return
+   */
+  protected static Graph<IGNode, IGEdge> setContributions(Graph<IGNode, IGEdge> g) {
     Graph graphCopy = new Graph(g);
     List<IGNode> nodes = graphCopy.getNodes();
     for (IGNode node: nodes) {
@@ -120,6 +132,72 @@ public class Grouper {
       node.setContribution(contribution);
     }
     return graphCopy;
+  }
+
+  /**
+   * Determines the contribution of a node.
+   * The contribution of a node is the sum of the edge weights that contain that node in the graph.
+   * @return the contribution
+   */
+  protected static double calculateContribution(Graph g, IGNode n) {
+    int nodeValue = n.getValue();
+    double totalContribution = 0;
+    List<IGEdge> edges = g.getEdges();
+
+    for (IGEdge edge: edges) {
+      int startValue = edge.getStart().getValue();
+      int endValue   = edge.getEnd().getValue();
+      if (startValue == nodeValue || endValue == nodeValue) {
+        totalContribution += edge.getWeight();
+      }
+    }
+
+    return totalContribution;
+  }
+
+  /**
+   * Removes the n lowest contribution elements from the graph.
+   * @param g the graph to be referenced
+   * @param n how many elements to remove
+   */
+  private Graph<IGNode, IGEdge> deconstruct(Graph<IGNode, IGEdge> g, int n) throws Exception {
+    List<IGNode> nodes = g.getNodes();
+
+    // Find the minimum contribution node
+    IGNode minNode = null;
+    for (IGNode node: nodes) {
+      double oldNodeContribution = minNode.getContribution();
+      double newNodeContribution = node.getContribution();
+
+      if (minNode == null) {
+        minNode = node;
+      } else if (newNodeContribution < oldNodeContribution) {
+        minNode = node;
+      } else if (newNodeContribution == oldNodeContribution) {
+        // Since they are equally minimum, randomly choose one.
+        List<IGNode> randomList = Lists.newArrayList(minNode, node);
+        minNode = randomList.get(r.nextInt(1));
+      }
+    }
+
+    // Remove it and update the contributions of the other nodes
+    if (!(minNode == null)) {
+      double minContribution = minNode.getContribution();
+
+      Graph graphCopy = new Graph(g);
+      graphCopy.removeNode(minNode);
+
+      List<IGNode> nodesCopy = graphCopy.getNodes();
+      for (IGNode node: nodesCopy) {
+        node.setContribution(node.getContribution() - minContribution);
+      }
+
+      return graphCopy;
+    } else {
+      // If minNode is still null, that means the input graph was empty.
+      // Therefore, we should throw an error
+      throw new Exception("Input graph was empty");
+    }
   }
 
   /**
@@ -191,80 +269,14 @@ public class Grouper {
   }
 
   /**
-   * Removes the n lowest contribution elements from the graph.
-   * @param g the graph to be referenced
-   * @param n how many elements to remove
-   */
-  private Graph<IGNode, IGEdge> deconstruct(Graph<IGNode, IGEdge> g, int n) throws Exception {
-    List<IGNode> nodes = g.getNodes();
-
-    // Find the minimum contribution node
-    IGNode minNode = null;
-    for (IGNode node: nodes) {
-      double oldNodeContribution = minNode.getContribution();
-      double newNodeContribution = node.getContribution();
-
-      if (minNode == null) {
-        minNode = node;
-      } else if (newNodeContribution < oldNodeContribution) {
-        minNode = node;
-      } else if (newNodeContribution == oldNodeContribution) {
-        // Since they are equally minimum, randomly choose one.
-        List<IGNode> randomList = Lists.newArrayList(minNode, node);
-        minNode = randomList.get(r.nextInt(1));
-      }
-    }
-
-    // Remove it and update the contributions of the other nodes
-    if (!(minNode == null)) {
-      double minContribution = minNode.getContribution();
-
-      Graph graphCopy = new Graph(g);
-      graphCopy.removeNode(minNode);
-
-      List<IGNode> nodesCopy = graphCopy.getNodes();
-      for (IGNode node: nodesCopy) {
-        node.setContribution(node.getContribution() - minContribution);
-      }
-
-      return graphCopy;
-    } else {
-      // If minNode is still null, that means the input graph was empty.
-      // Therefore, we should throw an error
-      throw new Exception("Input graph was empty");
-    }
-  }
-
-  /**
-   * Determines the contribution of a node.
-   * The contribution of a node is the sum of the edge weights that contain that node in the graph.
-   * @return the contribution
-   */
-  private double calculateContribution(Graph g, IGNode n) {
-    int nodeValue = n.getValue();
-    double totalContribution = 0;
-    List<IGEdge> edges = g.getEdges();
-    
-    for (IGEdge edge: edges) {
-      int startValue = edge.getStart().getValue();
-      int endValue   = edge.getEnd().getValue();
-      if (startValue == nodeValue || endValue == nodeValue) {
-        totalContribution += edge.getWeight();
-      }
-    }
-
-    return totalContribution;
-  }
-
-  /**
    * Returns the graph with the greater contribution values.
    * @param g1
    * @param g2
    * @return
    */
   private Graph<IGNode, IGEdge> bestGraph(Graph<IGNode, IGEdge> g1, Graph<IGNode, IGEdge> g2) {
-    double g1Score = graphHeuristic(g1);
-    double g2Score = graphHeuristic(g2);
+    double g1Score = graphScore(g1);
+    double g2Score = graphScore(g2);
 
     if (g1Score > g2Score) {
       return g1;
@@ -282,7 +294,7 @@ public class Grouper {
    * This gives a good estimate of how well a graph is composed of high contributing nodes.
    * @return Sum of all contributions of the nodes divided by 2
    */
-  private double graphHeuristic(Graph<IGNode, IGEdge> g) {
+  private double graphScore(Graph<IGNode, IGEdge> g) {
     double heuristic = 0;
     List<IGNode> nodes = g.getNodes();
 

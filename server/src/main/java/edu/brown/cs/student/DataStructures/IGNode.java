@@ -6,7 +6,7 @@ import java.util.List;
 public class IGNode implements Node<IGNode, IGEdge> {
   private final int value;
   private List<IGEdge> connectedEdges;
-  private double contribution;
+  private Double contribution;
 
   /**
    * Constructor for an IGNode
@@ -65,8 +65,7 @@ public class IGNode implements Node<IGNode, IGEdge> {
    * Returns the contribution of a node.
    * @return
    */
-  public double getContribution() {
-    System.out.println("hello");
+  public Double getContribution() {
     return contribution;
   }
 }
