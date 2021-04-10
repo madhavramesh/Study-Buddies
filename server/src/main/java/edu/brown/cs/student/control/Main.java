@@ -162,9 +162,11 @@ public final class Main {
           "status", code.getCode(),
           "message", code.getMessage()
       );
+      /*
       if (code.getCode() == 0) {
         response.redirect("/login");
       }
+      */
       return GSON.toJson(variables);
     }
   }
@@ -192,7 +194,6 @@ public final class Main {
       if (code.getCode() == 0) {
         int id = result.getFirst();
         request.session().attribute("user_id", id);
-        //response.redirect("/dashboard");
       }
       Map<String, Object> variables = ImmutableMap.of(
           "status", code.getCode(),

@@ -1,0 +1,54 @@
+.signup-header-text {
+  float: left;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.signin {
+  float: right;
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+  margin-top: 5px;
+}
+
+.signin > a:hover,
+.signin > a:visited {
+  text-decoration: none;
+}
+
+.signup-container {
+  width: 100%;
+  height: 100vh;
+  max-width: 450px;
+  padding: 15px;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.form-label {
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 15px !important;
+  font-weight: bold !important;
+}
+
+.form-group {
+  font-family: 'Poppins', sans-serif !important;
+  margin-bottom: 20px;
+}
+
+.btn {
+  color: #ffffff;
+  letter-spacing: 2px;
+  font-weight: bold !important;
+  font-size: 14px !important;
+  background-color: #2386c8;
+  padding: 12px 80px;
+  border-radius: 500px;
+  width: 100%;
+}
+
+.btn:hover {
+  background-color: #2588da;
+}

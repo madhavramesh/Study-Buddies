@@ -25,9 +25,6 @@ const Signin: React.FC = () => {
       },
     };
 
-    console.log(`Email: ${email}`);
-    console.log(`Password: ${password}`);
-
     axios
       .post('http://localhost:4567/validate_account', postParameters, config)
       .then((response: any) => {
