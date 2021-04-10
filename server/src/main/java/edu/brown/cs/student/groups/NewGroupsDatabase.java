@@ -348,6 +348,7 @@ public class NewGroupsDatabase {
     prep = conn.prepareStatement("INSERT INTO enrollments values(?,?);");
     prep.setInt(1, id);
     prep.setInt(2, classId);
+    prep.executeUpdate();
     prep.close();
     rs.close();
     return CLASS_JOIN_SUCCESS;
