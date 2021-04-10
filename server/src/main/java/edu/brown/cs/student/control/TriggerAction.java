@@ -1,5 +1,7 @@
 package edu.brown.cs.student.control;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.sql.SQLException;
 
 /**
@@ -15,5 +17,6 @@ public interface TriggerAction {
    * @param args an array of strings containing the command line arguments
    * @return true if action succeeded, false if errored
    */
-  boolean action(String[] args) throws SQLException;
+  boolean action(String[] args)
+      throws SQLException, NoSuchAlgorithmException, InvalidKeySpecException;
 }
