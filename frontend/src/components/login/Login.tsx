@@ -50,24 +50,30 @@ function Login() {
         <div className="content">
           <div className="regular-login-form">
             <div className="form-group">
-              <label htmlFor="username">Username or Email</label>
-              <input
-                type="text"
-                name="username"
-                id="username"
-                placeholder="Username or Email"
-                onChange={(e) => setEmail(e.target.value)}
-              />
+              <label htmlFor="username">
+                Username or Email
+                <br />
+                <input
+                  type="text"
+                  name="username"
+                  id="username"
+                  placeholder="Username or Email"
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </label>
             </div>
             <div className="form-group">
-              <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                name="password"
-                id="password"
-                placeholder="Password"
-                onChange={(e) => setPassword(e.target.value)}
-              />
+              <label htmlFor="password">
+                Password
+                <br />
+                <input
+                  type="password"
+                  name="password"
+                  id="password"
+                  placeholder="Password"
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </label>
             </div>
           </div>
           <div className="footer">

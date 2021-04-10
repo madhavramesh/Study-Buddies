@@ -9,6 +9,11 @@
   font-size: 20px;
 }
 
+label {
+  font-size: 20px;
+  color: black;
+}
+
 #search {
   box-shadow: none;
   border-radius: 100px;

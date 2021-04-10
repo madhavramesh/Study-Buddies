@@ -52,44 +52,56 @@ function Register() {
         <div className="content">
           <div className="regular-login-form">
             <div className="form-group">
-              <label htmlFor="first-name">First Name</label>
-              <input
-                type="text"
-                name="first-name"
-                id="first-name"
-                placeholder="First name"
-                onChange={(e) => setFirstName(e.target.value)}
-              />
+              <label htmlFor="first-name">
+                First Name
+                <br />
+                <input
+                  type="text"
+                  name="first-name"
+                  id="first-name"
+                  placeholder="First name"
+                  onChange={(e) => setFirstName(e.target.value)}
+                />
+              </label>
             </div>
             <div className="form-group">
-              <label htmlFor="last-name">Last Name</label>
-              <input
-                type="text"
-                name="last-name"
-                id="last-name"
-                placeholder="Last Name"
-                onChange={(e) => setLastName(e.target.value)}
-              />
+              <label htmlFor="last-name">
+                Last Name
+                <br />
+                <input
+                  type="text"
+                  name="last-name"
+                  id="last-name"
+                  placeholder="Last Name"
+                  onChange={(e) => setLastName(e.target.value)}
+                />
+              </label>
             </div>
             <div className="form-group">
-              <label htmlFor="email">Email</label>
-              <input
-                type="text"
-                name="email"
-                id="email"
-                placeholder="Email"
-                onChange={(e) => setEmail(e.target.value)}
-              />
+              <label htmlFor="email">
+                Email
+                <br />
+                <input
+                  type="text"
+                  name="email"
+                  id="email"
+                  placeholder="Email"
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </label>
             </div>
             <div className="form-group">
-              <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                name="password"
-                id="password"
-                placeholder="Password"
-                onChange={(e) => setPassword(e.target.value)}
-              />
+              <label htmlFor="password">
+                Password
+                <br />
+                <input
+                  type="password"
+                  name="password"
+                  id="password"
+                  placeholder="Password"
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </label>
             </div>
           </div>
           <div className="footer">

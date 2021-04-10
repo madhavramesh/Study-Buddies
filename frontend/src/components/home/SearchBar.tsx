@@ -1,17 +1,20 @@
 import React from 'react';
 import './HomeStyle.css';
+import EmojiObjectsIcon from '@material-ui/icons/EmojiObjects';
 
 function SearchBar() {
   return (
     <div className="search-container">
-      <div className="title">Search</div>
       <div className="search-bar">
-        <label htmlFor="search" />
-        <input type="text" name="search" id="search" placeholder="Search for classes..." />
+        <label htmlFor="search">
+          Search
+          <br />
+          <input type="text" name="search" id="search" placeholder="Search for classes..." />
+        </label>
       </div>
       <div className="search-hints">
         <p>
-          <i className="far fa-lightbulb" />
+          <EmojiObjectsIcon />
           Search for classes by class name or number
         </p>
       </div>
