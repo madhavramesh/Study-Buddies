@@ -58,7 +58,6 @@ public class IGNode implements Node<IGNode, IGEdge> {
    * @param newContribution new contribution
    */
   public void setContribution(double newContribution) {
-    System.out.println("setting contribution");
     this.contribution = newContribution;
   }
 
@@ -95,9 +94,7 @@ public class IGNode implements Node<IGNode, IGEdge> {
    * @return Weight of the edge connecting to that node
    */
   public double weightTo(IGNode targetNode) {
-    double res = weightMap.get(targetNode);
-    System.out.println(res);
-    return res;
+    return weightMap.get(targetNode);
   }
 
   public Map<IGNode, Double> getWeightMap() {
@@ -111,15 +108,12 @@ public class IGNode implements Node<IGNode, IGEdge> {
     }
     IGNode otherNode = (IGNode) o;
     boolean sameValue = value == otherNode.getValue();
-    boolean sameEdges = connectedEdges.equals(otherNode.getEdges());
-    boolean sameContribution = contribution == (otherNode.getContribution());
-
-    return sameValue && sameEdges && sameContribution;
+    return sameValue;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(value, connectedEdges, contribution);
+    return Objects.hash(value);
     /*
     int result = 17;
     result = result * 31 + value;

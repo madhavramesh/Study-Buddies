@@ -14,6 +14,7 @@ import java.util.*;
  */
 public class Grouper {
   private final Graph graph;
+  //private final Graph graph;
   private static Random r = new Random();
 
   /**
@@ -87,7 +88,7 @@ public class Grouper {
 
       // 6)
       // Greedily add n variables to the candidate solution
-      Graph completeSolution = greedyAdd(incompleteSolution, randomDropNum, 0);
+      Graph completeSolution = greedyAdd(incompleteSolution, randomDropNum);
 
 
       // 7)
@@ -104,23 +105,39 @@ public class Grouper {
       candidateSolution = bestGraph(candidateSolution, completeSolution);
     }
 
+    System.out.println("----------------------------");
+    System.out.println("----------------------------");
+    System.out.println("Best group of size " + groupSize + " people is of");
+    for (IGNode n: bestSoFar.getNodes()) {
+      System.out.println("Node " + n.getValue());
+    }
+    System.out.println("----------------------------");
+    System.out.println("----------------------------");
+
     return bestSoFar;
   }
 
   /**
    * Randomly removes n nodes from the graph's node list. Note: leaves edges untouched.
+   * Important: mutates original graph nodes list.
    * @param g Graph to remove nodes from
    * @param randomDropNum How many nodes to randomly remove.
    * @return
    */
-  protected static Graph randomDrop(Graph g, int randomDropNum) {
+  protected Graph randomDrop(Graph g, int randomDropNum) {
     Graph graphCopy = new Graph(g);
     Set<IGNode> nodesCopy = graphCopy.getNodes();
-
     List<IGNode> toRemove = new ArrayList<>(nodesCopy).subList(0, randomDropNum);
 
     for (IGNode nodeToRemove: toRemove) {
+      // Remove the node
       nodesCopy.remove(nodeToRemove);
+
+      // Update the contributions of the other nodes
+      for (IGNode n: nodesCopy) {
+        n.setContribution(n.getContribution() - n.weightTo(nodeToRemove));
+      }
+
     }
 
     return graphCopy;
@@ -131,7 +148,7 @@ public class Grouper {
    * @param g Graph to set contributions for.
    * @return
    */
-  protected static Graph setContributions(Graph g) {
+  protected Graph setContributions(Graph g) {
     Graph graphCopy = new Graph(g);
     Set<IGNode> nodes = graphCopy.getNodes();
     for (IGNode node: nodes) {
@@ -146,15 +163,18 @@ public class Grouper {
    * The contribution of a node is the sum of the edge weights that contain that node in the graph.
    * @return the contribution
    */
-  protected static double calculateContribution(Graph g, IGNode n) {
+  protected double calculateContribution(Graph g, IGNode n) {
     int nodeValue = n.getValue();
     double totalContribution = 0;
     Set<IGEdge> edges = g.getEdges();
+    Set<IGNode> nodes = g.getNodes();
 
     for (IGEdge edge: edges) {
-      int startValue = edge.getStart().getValue();
-      int endValue   = edge.getEnd().getValue();
-      if (startValue == nodeValue || endValue == nodeValue) {
+      IGNode start   = edge.getStart();
+      IGNode end     = edge.getEnd();
+      int startValue = start.getValue();
+      int endValue   = end.getValue();
+      if ((startValue == nodeValue && nodes.contains(end)) || (endValue == nodeValue && nodes.contains(start))) {
         totalContribution += edge.getWeight();
       }
     }
@@ -167,12 +187,10 @@ public class Grouper {
    * @param g the graph to be referenced
    * @param n how many elements to remove
    */
-  protected static Graph deconstruct(Graph g, int n) throws Exception {
-    System.out.println("inside deconstruct");
+  protected Graph deconstruct(Graph g, int n) throws Exception {
     Graph finalCopy = new Graph(g);
 
     for (int i = 0; i < n; i++) {
-      System.out.println(i);
       Set<IGNode> nodes = finalCopy.getNodes();
 
       // Find the minimum contribution node
@@ -190,52 +208,34 @@ public class Grouper {
           } else if (newNodeContribution == oldNodeContribution) {
             // Since they are equally minimum, randomly choose one.
             List<IGNode> randomList = Lists.newArrayList(minNode, node);
-            minNode = randomList.get(r.nextInt(2));
+            int randIndex = r.nextInt(2);
+            minNode = randomList.get(randIndex);
           }
         }
       }
 
-      System.out.println("min node is");
-      System.out.println(minNode);
       // Remove it and update the contributions of the other nodes
       if (!(minNode == null)) {
         // remove node
-        //Graph graphCopy = new Graph(finalCopy);
-        //graphCopy.removeNode(minNode);
-        //Set<IGNode> graphCopyNodes = graphCopy.getNodes();
-        Set<IGNode> nodesInFinal = finalCopy.getNodes();
-        nodesInFinal.remove(minNode);
-        System.out.println("MIN NODE IS " + minNode.getValue());
-        System.out.println("with cont of " + minNode.getContribution());
+        Graph graphCopy = new Graph(finalCopy);
+        graphCopy.removeNode(minNode);
+        Set<IGNode> graphCopyNodes = graphCopy.getNodes();
+        graphCopyNodes.remove(minNode);
 
-        System.out.println("min node hash is " + minNode.hashCode());
-        for (IGNode noder: nodesInFinal) {
-          System.out.println(noder.getValue() + " " + noder.hashCode());
-        }
-        System.out.println("END");
         // Update other contributions.
         // We only want to update the nodes that are in the subgraph in graphCopyNodes.
         // Note that connected edges contains edges to ALL nodes (not just the ones in subgraph).
-        for (IGNode node: nodesInFinal) {
-          System.out.println(node.getWeightMap().containsKey(minNode));
-          System.out.println("----");
-          for (Map.Entry<IGNode, Double> entry : node.getWeightMap().entrySet()) {
-            System.out.println(entry.getKey().getValue() + " " + entry.getKey().hashCode());
-          }
-          System.out.println(node.weightTo(minNode));
-          System.out.println("----");
-          double toSubtract = node.weightTo(minNode);
+        for (IGNode node: graphCopyNodes) {
           node.setContribution(node.getContribution() - node.weightTo(minNode));
         }
-        System.out.println("end of loop");
-        //finalCopy =  graphCopy;
+        finalCopy =  graphCopy;
       } else {
         // If minNode is still null, that means the input graph was empty.
         // Therefore, we should throw an error
         throw new Exception("Input graph was empty");
       }
     }
-    System.out.println("before return");
+
     return finalCopy;
   }
 
@@ -243,22 +243,22 @@ public class Grouper {
    * Runs the construction algorithm "numToAdd" times.
    * @param g the reference graph/graph to modify
    * @param numToAdd how many elements to add to the partial graph
-   * @param counter the counter that tracks the recursion
    * @return
    */
-  private Graph greedyAdd(Graph g, int numToAdd, int counter) throws Exception {
-    if (counter < numToAdd) {
-      return greedyAdd(construct(g), numToAdd, counter + 1);
-    } else {
-      return g;
+  protected Graph greedyAdd(Graph g, int numToAdd) throws Exception {
+    Graph finalAnswer = new Graph(g);
+    for (int i = 0; i < numToAdd; i++) {
+      Graph newAnswer = construct(finalAnswer);
+      finalAnswer = newAnswer;
     }
+    return finalAnswer;
   }
 
   /**
    * Adds the highest contribution element that is not already in the graph
    * @param g graph to be referenced
    */
-  private Graph construct(Graph g) throws Exception {
+  protected Graph construct(Graph g) throws Exception {
 
     // TODO: See if you can potentially make this more efficient by not recalculating everytime.
     // For each node not in the graph, calculate its contribution to the given subgraph g
@@ -279,7 +279,7 @@ public class Grouper {
       } else if (maxNodeMap.getValue() < entry.getValue()) {
         // if the entry has a greater contribution key, replace the current maxNode with it
         maxNodeMap = entry;
-      } else if (maxNodeMap.getValue() == entry.getValue()) {
+      } else if (maxNodeMap.getValue().equals(entry.getValue())) {
         // if there is a tie, randomly choose one
         List<Map.Entry<IGNode, Double>> potentialMaxes = Lists.newArrayList(maxNodeMap, entry);
         maxNodeMap = potentialMaxes.get(r.nextInt(2));
@@ -333,15 +333,15 @@ public class Grouper {
    * This gives a good estimate of how well a graph is composed of high contributing nodes.
    * @return Sum of all contributions of the nodes divided by 2
    */
-  private double graphScore(Graph g) {
-    double heuristic = 0;
+  protected double graphScore(Graph g) {
+    double score = 0;
     Set<IGNode> nodes = g.getNodes();
 
     for (IGNode node: nodes) {
-      heuristic = heuristic + node.getContribution();
+      score = score + node.getContribution();
     }
 
-    return heuristic / 2;
+    return score / 2;
   }
 
   /**
@@ -349,7 +349,7 @@ public class Grouper {
    * @param g The subset graph
    * @return The list of nodes that are not in the subset graph
    */
-  private Set<IGNode> nodesNotInGraph(Graph g) {
+  protected Set<IGNode> nodesNotInGraph(Graph g) {
     Set<IGNode> allNodes = new HashSet<IGNode>(graph.getNodes());
     Set<IGNode> nodesInSubgraph = g.getNodes();
     allNodes.removeAll(nodesInSubgraph);

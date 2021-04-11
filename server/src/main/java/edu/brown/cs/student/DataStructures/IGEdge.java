@@ -51,7 +51,7 @@ public class IGEdge implements Edge<IGNode, IGEdge> {
     boolean sameNodes =
             (startNode.getValue() == oStartValue && endNode.getValue() == oEndValue ||
                     startNode.getValue() == oEndValue && endNode.getValue() == oStartValue);
-    boolean sameWeight = weight.equals(otherEdge.getWeight());
+    boolean sameWeight = weight == (otherEdge.getWeight());
     return sameNodes && sameWeight;
   }
 
