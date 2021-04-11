@@ -185,11 +185,12 @@ public final class Main {
         messages.put("email", code.getMessage());
         messages.put("password2", code.getMessage());
       }
-      String RECAPTCHA_SECRET_KEY = System.getenv("RECAPTCHA_SECRET_KEY");
-      String reCAPTCHAToken = data.getString("token");
-      messages
-          .put("token", ReCAPTCHAVerification.isCaptchaValid(RECAPTCHA_SECRET_KEY, reCAPTCHAToken)
-              ? "Confirm that you're not a robot!" : "");
+//      String RECAPTCHA_SECRET_KEY = System.getenv("RECAPTCHA_SECRET_KEY");
+//      String reCAPTCHAToken = data.getString("token");
+//      messages
+//          .put("token", ReCAPTCHAVerification.isCaptchaValid(RECAPTCHA_SECRET_KEY, reCAPTCHAToken)
+//              ? "Confirm that you're not a robot!" : "");
+      messages.put("token", "");
       Map<String, Object> variables = Map.of(
           "status", code.getCode(),
           "first_name", messages.get("first_name"),
@@ -289,8 +290,6 @@ public final class Main {
    * class_number: ...,
    * class_description: ...,
    * class_term: ...,
-   * class_code: ...,
-   * owner_id: ...,
    * }
    * The returned JSON object will have the form:
    * {
@@ -301,18 +300,31 @@ public final class Main {
   private static class CreateClass implements Route {
     @Override
     public Object handle(Request request, Response response) throws Exception {
+      if (request.session().attribute("user_id") == null) {
+        DBCode code = DBCode.USER_NOT_LOGGED_IN;
+        Map<String, Object> variables = ImmutableMap.of(
+            "status", code.getCode(),
+            "message", code.getMessage(),
+            "class_id", "",
+            "class_code", ""
+        );
+        return GSON.toJson(variables);
+      }
       JSONObject data = new JSONObject(request.body());
       String className = data.getString("class_name");
       String classNumber = data.getString("class_number");
       String classDescription = data.getString("class_description");
       String classTerm = data.getString("class_term");
-      String classCode = data.getString("class_code");
-      int ownerId = data.getInt("owner_id");
-      DBCode code = GROUPS_DATABASE.createClass(className, classNumber, classDescription,
-          classTerm, classCode, ownerId);
+      int ownerId = request.session().attribute("user_id");
+      Pair<Pair<Integer, String>, DBCode> result =
+          GROUPS_DATABASE.createClass(className, classNumber, classDescription, classTerm, ownerId);
+      DBCode code = result.getSecond();
+      boolean status = code.getCode() == 0;
       Map<String, Object> variables = ImmutableMap.of(
           "status", code.getCode(),
-          "message", code.getMessage()
+          "message", code.getMessage(),
+          "class_id", status ? result.getFirst().getFirst() : "",
+          "class_code", status ? result.getFirst().getSecond() : ""
       );
       return GSON.toJson(variables);
     }
