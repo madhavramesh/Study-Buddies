@@ -2,13 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6f35fa56-7f5b-42f9-814a-3dc404b8ebaf" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/AboutPage/AboutStyle.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/AboutPage/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/term-project-asingir1-jcheng46-mramesh5-rtang26.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/term-project-asingir1-jcheng46-mramesh5-rtang26.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/DataStructures/Graph.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/DataStructures/Graph.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/DataStructures/IGEdge.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/DataStructures/IGEdge.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/DataStructures/IGNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/DataStructures/IGNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/algorithm/Grouper.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/algorithm/Grouper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/test/java/edu/brown/cs/student/DataStructures/GraphTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/test/java/edu/brown/cs/student/DataStructures/GraphTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/test/java/edu/brown/cs/student/DataStructures/IGEdgeTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/test/java/edu/brown/cs/student/DataStructures/IGEdgeTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/test/java/edu/brown/cs/student/DataStructures/IGNodeTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/test/java/edu/brown/cs/student/DataStructures/IGNodeTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/test/java/edu/brown/cs/student/algorithm/GrouperTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/test/java/edu/brown/cs/student/algorithm/GrouperTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,7 +86,7 @@
       <workItem from="1617604217886" duration="9000" />
       <workItem from="1618137359140" duration="2315000" />
       <workItem from="1618141373045" duration="4252000" />
-      <workItem from="1618146058710" duration="1560000" />
+      <workItem from="1618146058710" duration="1829000" />
     </task>
     <servers />
   </component>
