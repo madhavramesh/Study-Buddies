@@ -15,6 +15,7 @@ import edu.brown.cs.student.groups.testcommands.GetPersonInfoCommand;
 import edu.brown.cs.student.groups.testcommands.JoinClassCommand;
 import edu.brown.cs.student.groups.testcommands.RegisterUserCommand;
 import edu.brown.cs.student.groups.testcommands.ValidateUserCommand;
+import edu.brown.cs.student.input.ReCAPTCHAVerification;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import org.json.JSONObject;
@@ -54,6 +55,13 @@ public final class Main {
   private static final Gson GSON = new Gson();
 
   private static final String PATH_TO_DB = "data/groups_db.sqlite3";
+  private static final String RECAPTCHA_SECRET_KEY =
+      System.getenv("REACT_APP_RECAPTCHA_SECRET_KEY");
+
+  public static String getRecaptchaSecretKey() {
+    return RECAPTCHA_SECRET_KEY;
+  }
+
   private static NewGroupsDatabase GROUPS_DATABASE;
 
   public static NewGroupsDatabase getGroupsDatabase() {
@@ -183,13 +191,18 @@ public final class Main {
         messages.put("email", code.getMessage());
         messages.put("password2", code.getMessage());
       }
+      String reCAPTCHAToken = data.getString("token");
+      messages
+          .put("token", ReCAPTCHAVerification.isCaptchaValid(RECAPTCHA_SECRET_KEY, reCAPTCHAToken)
+              ? "Confirm that you're not a robot!" : "");
       Map<String, Object> variables = Map.of(
           "status", code.getCode(),
           "first_name", messages.get("first_name"),
           "last_name", messages.get("last_name"),
           "email", messages.get("email"),
           "password", messages.get("password"),
-          "password2", messages.get("password2")
+          "password2", messages.get("password2"),
+          "token", messages.get("token")
       );
       return GSON.toJson(variables);
     }
