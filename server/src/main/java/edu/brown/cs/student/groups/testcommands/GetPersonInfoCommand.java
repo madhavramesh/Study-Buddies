@@ -47,7 +47,7 @@ public class GetPersonInfoCommand implements TriggerAction {
     }
     System.out.println("Enrollments: ");
     for (ClassInfo ci : enrollments) {
-      System.out.println("-" + ci);
+      System.out.println("- " + ci);
     }
     return code.getCode() == 0;
   }
