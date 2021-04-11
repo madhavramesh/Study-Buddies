@@ -28,7 +28,7 @@ const TestDisplayClassesPage: React.FC = () => {
       console.log(c['classId']);
       return (
         <ClassCard
-          // cid={c['classId']}
+          cid={c['classId']}
           name={c['className']}
           number={c['classNumber']}
           desc={c['classDescription']}

@@ -4,7 +4,7 @@ import './ClassCard.scss';
 import axios from 'axios';
 
 type ClassProps = {
-  // cid: any;
+  cid: number;
   name: string;
   number: string;
   desc: string;
@@ -12,7 +12,7 @@ type ClassProps = {
   owner: any;
 };
 
-const ClassCard: React.FC<ClassProps> = ({ name, number, desc, term, owner }) => {
+const ClassCard: React.FC<ClassProps> = ({ cid, name, number, desc, term, owner }) => {
   const [show, setShow] = useState(false);
   const [code, setCode] = useState('');
 
@@ -22,7 +22,7 @@ const ClassCard: React.FC<ClassProps> = ({ name, number, desc, term, owner }) =>
   const checkJoinCode = async () => {
     const postParameters = {
       id: localStorage.getItem('user_id'),
-      class_id: 1,
+      class_id: cid,
       class_code: code,
     };
 
@@ -55,7 +55,7 @@ const ClassCard: React.FC<ClassProps> = ({ name, number, desc, term, owner }) =>
 
       <Modal size="lg" show={show} onHide={() => setShow(false)} centered>
         <Modal.Header className="class-modal-header" closeButton>
-          {number}
+          {number} [{cid}]
         </Modal.Header>
         <Modal.Body className="class-modal-body">
           <p>
@@ -79,7 +79,7 @@ const ClassCard: React.FC<ClassProps> = ({ name, number, desc, term, owner }) =>
                   className="mb-2"
                   id="inlineFormInput"
                   placeholder="Enter Class Code..."
-                  isInvalid={!validCode && code !== ''}
+                  isInvalid={!validCode && validCodeMessage !== ''}
                   onChange={(e: any) => setCode(e.target.value)}
                 />
                 <Form.Control.Feedback type="invalid">{validCodeMessage}</Form.Control.Feedback>
