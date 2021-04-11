@@ -5,6 +5,11 @@ import NavBar from './components/Navbar';
 import Footer from './components/Footer';
 import Signin from './components/Signin';
 import Signup from './components/Signup';
+import Preferences from './components/Preferences';
+import ClassCard from './components/ClassCard';
+import PeopleCard from './PeopleCard';
+import TimeCard from './components/TimeCard';
+import TimesPane from './components/TimesPane';
 
 const App: React.FC = () => {
   return (
@@ -15,6 +20,8 @@ const App: React.FC = () => {
           <Route exact path="/footer" component={Footer} />
           <Route path="/signin" component={Signin} />
           <Route path="/signup" component={Signup} />
+          <Route path="/preferences" component={Preferences} />
+          <Route path="/carddemo" component={() => <TimesPane slotLength={30} />} />
         </Switch>
       </Router>
     </div>

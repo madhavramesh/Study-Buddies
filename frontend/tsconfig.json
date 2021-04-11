@@ -18,7 +18,7 @@
     "sourceMap": true,
     "declaration": true,
     "noUnusedParameters": true,
-    "incremental": true,
+    "incremental": true
   },
   "include": ["src"],
   "exclude": ["node_modules", "build"]
