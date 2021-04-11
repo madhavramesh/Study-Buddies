@@ -3,10 +3,12 @@ package edu.brown.cs.student.groups.testcommands;
 import edu.brown.cs.student.DataStructures.Pair;
 import edu.brown.cs.student.control.Main;
 import edu.brown.cs.student.control.TriggerAction;
+import edu.brown.cs.student.groups.ClassInfo;
 import edu.brown.cs.student.groups.DBCode;
 import edu.brown.cs.student.groups.PersonInfo;
 
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * REPL testing command to get person info.
@@ -37,10 +39,15 @@ public class GetPersonInfoCommand implements TriggerAction {
     }
     int id = Integer.parseInt(args[1]);
     Pair<DBCode, PersonInfo> result = Main.getGroupsDatabase().getPersonInfo(id);
+    List<ClassInfo> enrollments = Main.getGroupsDatabase().getEnrollments(id);
     DBCode code = result.getFirst();
     System.out.printf("status: %d; message: %s%n", code.getCode(), code.getMessage());
     if (code.getCode() == 0) {
       System.out.println(result.getSecond());
+    }
+    System.out.println("Enrollments: ");
+    for (ClassInfo ci : enrollments) {
+      System.out.println("- " + ci);
     }
     return code.getCode() == 0;
   }

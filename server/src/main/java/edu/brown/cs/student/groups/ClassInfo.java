@@ -137,7 +137,7 @@ public class ClassInfo {
   @Override
   public String toString() {
     return String.format("[classId: %d, className: %s, classNumber: %s, classDescription: %s, " +
-            "classTerm: %s, ownerId: %d]",
-        classId, className, classNumber, classDescription, classTerm, ownerId);
+            "classTerm: %s, classCode: %s, ownerId: %d]",
+        classId, className, classNumber, classDescription, classTerm, classCode, ownerId);
   }
 }
