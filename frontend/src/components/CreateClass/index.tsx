@@ -55,7 +55,6 @@ const CreateClass: React.FC<CreateClassProps> = ({ onHide, show }: CreateClassPr
       class_number: classNumber,
       class_description: classDescription,
       class_term: `${classTerm} ${classYear}`,
-      class_code: '123',
     };
 
     const config = {

@@ -1,12 +1,26 @@
 import React, { useState } from 'react';
-import { Button, Form, FormControl } from 'react-bootstrap';
+import { Button, Form, FormControl, InputGroup } from 'react-bootstrap';
+import SearchIcon from '@material-ui/icons/Search';
 import './SearchBarStyle.scss';
 
 const SearchBar = () => {
   return (
-    <Form className="search-bar-form" inline>
-      <FormControl type="text" placeholder="Search" className="search-bar-form-control mr-sm-2" />
-    </Form>
+    <>
+      <div className="search-header">Search</div>
+      <InputGroup className="search-bar-input-group mb-2">
+        <InputGroup.Prepend>
+          <Button variant="outline-light">
+            <SearchIcon />
+          </Button>
+        </InputGroup.Prepend>
+        <FormControl
+          type="text"
+          placeholder="Search for classes"
+          className="search-bar-form-control mr-sm-2"
+        />
+      </InputGroup>
+      <Form.Text className="text-muted">Search for classes by class name or number</Form.Text>
+    </>
   );
 };
 

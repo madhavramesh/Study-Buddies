@@ -3,12 +3,17 @@ import { Button } from 'react-bootstrap';
 import { Create } from '@material-ui/icons';
 import CreateClass from '../../components/CreateClass';
 import './DashboardPageStyle.scss';
+import SearchBar from '../../components/SearchBar/SearchBar';
 
 const DashboardPage: React.FC = () => {
   const [modalShow, setModalShow] = useState(false);
 
   return (
     <div className="dashboard-page">
+      <div className="search-bar-container">
+        <SearchBar />
+      </div>
+
       <div className="create-class-container">
         <Button variant="primary" onClick={() => setModalShow(true)}>
           Create class
