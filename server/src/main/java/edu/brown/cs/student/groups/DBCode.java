@@ -8,6 +8,7 @@ package edu.brown.cs.student.groups;
  * 2: Email error (email taken, invalid email)
  * 3: Password error (invalid password, passwords don't match)
  * 4: Class formation error (owner create multiple classes, ...)
+ * 5: ReCAPTCHA error
  * }
  */
 public enum DBCode {
@@ -25,7 +26,8 @@ public enum DBCode {
   PASSWORD_MISMATCH(3, "Passwords do not match!"),
   OWNER_CLASS_ALREADY_CREATED(4, "Already made class with that name/number!"),
   CLASS_OWNER_DOES_NOT_EXIST(4, "Owner ID not created! Ensure the owner actually exists."),
-  INVALID_CLASS_CODE(4, "Invalid class code!");
+  INVALID_CLASS_CODE(4, "Invalid class code!"),
+  RECAPTCHA_FAILED(5, "Confirm that you're not a robot!");
 
   private final int code;
   private final String message;
