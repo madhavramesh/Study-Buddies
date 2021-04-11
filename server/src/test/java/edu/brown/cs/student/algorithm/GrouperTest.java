@@ -447,4 +447,14 @@ public class GrouperTest {
     tearDown();
   }
 
+  @Test
+  public void makeGroupTest() throws Exception {
+    setUp();
+    grouper.setContributions(graph);
+    System.out.println("MAKE GROUPER TESTING");
+    grouper.makeGroups(graph, 2);
+    System.out.println("END");
+    tearDown();
+  }
+
 }

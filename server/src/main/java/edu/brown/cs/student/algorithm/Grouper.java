@@ -14,7 +14,6 @@ import java.util.*;
  */
 public class Grouper {
   private final Graph graph;
-  //private final Graph graph;
   private static Random r = new Random();
 
   /**
@@ -26,6 +25,66 @@ public class Grouper {
     for (IGNode node: graph.getNodes()) {
       node.setWeightMap();
     }
+  }
+
+  public List<Set<IGNode>> makeGroups(Graph g, int groupSize) throws Exception {
+    List<Set<IGNode>> groups = new ArrayList<>();
+
+    Graph workingGraph = g;
+    // Make groups while there are still enough people left
+    while (groupSize <= workingGraph.getNodes().size()) {
+      // Add the newest group to the groups list
+      Graph newGroup = findGroup(workingGraph, groupSize);
+      groups.add(newGroup.getNodes());
+      // Remove the nodes from that group from the working graph
+      for (IGNode n: newGroup.getNodes()) {
+        workingGraph.removeNode(n);
+      }
+    }
+
+
+    // Assign groups to the leftovers
+
+    /*
+    // TODO: Assign leftover to groups that would have most value added
+    for (IGNode leftOverNode: workingGraph.getNodes()) {
+      Set<IGNode> bestGroup = null;
+      for (Set<IGNode> group: groups) {
+        if (group.size() == groupSize) {
+          if (bestGroup == null) {
+            bestGroup = group;
+          } else {
+
+          }
+        }
+      }
+    }
+     */
+    Set<IGNode> leftOverNodes = workingGraph.getNodes();
+    if (groups.size() <= leftOverNodes.size()) {
+      groups.add(leftOverNodes);
+    } else {
+      int count = 0;
+      for (IGNode n: leftOverNodes) {
+        groups.get(groups.size() - 1 - count).add(n);
+        count += 1;
+      }
+    }
+
+    System.out.println("----------------------------");
+    System.out.println("----------------------------");
+    System.out.println("Created groups of size " + groupSize + " are");
+    for (Set<IGNode> group: groups) {
+      for (IGNode n: group) {
+        System.out.print(n.getValue() + " ");
+      }
+      System.out.println();
+    }
+    System.out.println("----------------------------");
+    System.out.println("----------------------------");
+
+
+    return groups;
   }
 
   /**
@@ -42,7 +101,7 @@ public class Grouper {
     // 1)
     // Create an initial candidate solution graph by removing the
     // lowest contribution nodes to get a graph of size groupSize.
-    Graph candidateSolution = deconstruct(initializedGraph, graph.getNodes().size() - groupSize);
+    Graph candidateSolution = deconstruct(initializedGraph, initializedGraph.getNodes().size() - groupSize);
 
 
     // 2)
@@ -105,15 +164,6 @@ public class Grouper {
       candidateSolution = bestGraph(candidateSolution, completeSolution);
     }
 
-    System.out.println("----------------------------");
-    System.out.println("----------------------------");
-    System.out.println("Best group of size " + groupSize + " people is of");
-    for (IGNode n: bestSoFar.getNodes()) {
-      System.out.println("Node " + n.getValue());
-    }
-    System.out.println("----------------------------");
-    System.out.println("----------------------------");
-
     return bestSoFar;
   }
 
@@ -128,7 +178,6 @@ public class Grouper {
     Graph graphCopy = new Graph(g);
     Set<IGNode> nodesCopy = graphCopy.getNodes();
     List<IGNode> toRemove = new ArrayList<>(nodesCopy).subList(0, randomDropNum);
-
     for (IGNode nodeToRemove: toRemove) {
       // Remove the node
       nodesCopy.remove(nodeToRemove);
