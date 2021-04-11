@@ -2,16 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6f35fa56-7f5b-42f9-814a-3dc404b8ebaf" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/frontend/src/images/blue_book.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/images/blue_book.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/images/home_screen2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/images/home_screen2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/images/home_screen3.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/public/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/App 2.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/App.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/HomePage/HomePage.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/HomePage/HomePage.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/HomePage/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/HomePage/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/Navbar/NavbarElements.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Navbar/NavbarElements.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/Signin/SigninStyle.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Signin/SigninStyle.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/Signup/SignupStyle.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Signup/SignupStyle.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/.eslintrc.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.eslintrc.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Footer/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Footer/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Navbar/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Navbar/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/HomePage/HomePage.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/HomePage/HomePage.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/HomePage/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/HomePage/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/finalproject.iml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -6,7 +6,7 @@ import './FooterStyle.scss';
 
 const Footer = () => {
   return (
-    <Navbar className="navbar" bg="black" variant="dark" fixed="bottom">
+    <Navbar className="navbar" bg="black" variant="dark">
       <Navbar.Brand className="navbar-brand" href="/">
         <img alt="" src={logo} width="60" height="60" />
         Chunky

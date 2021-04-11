@@ -42,10 +42,12 @@
       }
     ],
     "import/no-extraneous-dependencies": [
-      "error",
-      {
-        "devDependencies": true
-      }
+      "error", {
+       "devDependencies": true, 
+       "optionalDependencies": false, 
+       "peerDependencies": false, 
+       "packageDir": "./"
+    }
     ],
     "prettier/prettier": "error",
     "@typescript-eslint/explicit-function-return-type": "off",

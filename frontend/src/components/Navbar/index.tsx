@@ -9,7 +9,7 @@ const NavBar: React.FC = () => {
     <Navbar className="navbar" bg="black" variant="dark" sticky="top">
       <Navbar.Brand className="navbar-brand" href="/">
         <img alt="" src={logo} width="60" height="60" />
-        Chunky
+        Chunky Study Buddies
       </Navbar.Brand>
       <Nav className="ml-auto">
         <Nav.Link href="/">Home</Nav.Link>
