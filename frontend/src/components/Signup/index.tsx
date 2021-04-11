@@ -180,14 +180,16 @@ const Signup: React.FC = () => {
             <Form.Control.Feedback type="invalid">{password2Message}</Form.Control.Feedback>
           </Form.Group>
 
-          <Form.Group controlId="formRECAPTCHA" className="recaptcha">
-            <ReCAPTCHA
-              ref={recaptchaRef}
-              sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY!}
-              onExpired={() => setRecaptchaToken('')}
-            />
-            {recaptchaMessage !== '' && <div className="recaptcha-error">{recaptchaMessage}</div>}
-          </Form.Group>
+          {process.env.REACT_APP_RECAPTCHA_SITE_KEY && (
+            <Form.Group controlId="formRECAPTCHA" className="recaptcha">
+              <ReCAPTCHA
+                ref={recaptchaRef}
+                sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY!}
+                onExpired={() => setRecaptchaToken('')}
+              />
+              {recaptchaMessage !== '' && <div className="recaptcha-error">{recaptchaMessage}</div>}
+            </Form.Group>
+          )}
 
           <Form.Group>
             <Button variant="primary" size="sm" onClick={onSignUp}>
