@@ -5,14 +5,12 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.Assert.assertTrue;
 
 public class GraphTest {
-  Graph<IGNode, IGEdge> testGraph;
+  Graph testGraph;
 
   IGNode testNode0;
   IGNode testNode1;
@@ -21,10 +19,10 @@ public class GraphTest {
 
   @Before
   public void setUp() {
-    testGraph = new Graph<IGNode, IGEdge>();
+    testGraph = new Graph();
 
-    testNode0 = new IGNode(0, Lists.newArrayList(testEdge0));
-    testNode1 = new IGNode(1, Lists.newArrayList(testEdge0));
+    testNode0 = new IGNode(0, new HashSet<>(Lists.newArrayList(testEdge0)));
+    testNode1 = new IGNode(1, new HashSet<>(Lists.newArrayList(testEdge0)));
     testGraph.addNode(testNode0);
     testGraph.addNode(testNode1);
 
@@ -44,11 +42,10 @@ public class GraphTest {
   public void getNodesTest() {
     setUp();
 
-    List<IGNode> nodesInGraph = testGraph.getNodes();
-
+    Set<IGNode> nodesInGraph = testGraph.getNodes();
 
     // Test same references
-    List<IGNode> answer = Lists.newArrayList(testNode0, testNode1);
+    Set<IGNode> answer = new HashSet<>(Lists.newArrayList(testNode0, testNode1));
     assertTrue(nodesInGraph.equals(answer));
 
     // TODO: Consider if you should create a custom equals method
@@ -71,8 +68,8 @@ public class GraphTest {
   public void getEdgesTest() {
     setUp();
 
-    List<IGEdge> edgesInGraph = testGraph.getEdges();
-    List<IGEdge> answer = Lists.newArrayList(testEdge0);
+    Set<IGEdge> edgesInGraph = testGraph.getEdges();
+    Set<IGEdge> answer = new HashSet<>(Lists.newArrayList(testEdge0));
     assertTrue(edgesInGraph.equals(answer));
 
     tearDown();
@@ -83,18 +80,19 @@ public class GraphTest {
     setUp();
 
     // Create new nodes
-    IGNode newNode2 = new IGNode(2, new ArrayList<>());
-    IGNode newNode3 = new IGNode(3, new ArrayList<>());
+    IGNode newNode2 = new IGNode(2, new HashSet<>());
+    IGNode newNode3 = new IGNode(3, new HashSet<>());
     IGEdge newEdge1 = new IGEdge(testNode0, newNode3, -5);
     newNode3.addEdge(newEdge1);
 
     testGraph.addNode(newNode2);
     assertTrue(testGraph.getNodes().equals(
-            Lists.newArrayList(testNode0, testNode1, newNode2)
+            new HashSet<>(Lists.newArrayList(testNode0, testNode1, newNode2))
     ));
+
     testGraph.addNode(newNode3);
     assertTrue(testGraph.getNodes().equals(
-            Lists.newArrayList(testNode0, testNode1, newNode2, newNode3)
+            new HashSet<>(Lists.newArrayList(testNode0, testNode1, newNode2, newNode3))
     ));
 
     tearDown();
@@ -105,19 +103,39 @@ public class GraphTest {
     setUp();
 
     // Create new edges
-    IGNode newNode2 = new IGNode(2, new ArrayList<>());
-    IGNode newNode3 = new IGNode(3, new ArrayList<>());
+    IGNode newNode2 = new IGNode(2, new HashSet<>());
+    IGNode newNode3 = new IGNode(3, new HashSet<>());
+
     IGEdge newEdge1 = new IGEdge(testNode0, newNode3, -5);
-    newNode3.addEdge(newEdge1);
     IGEdge newEdge2 = new IGEdge(newNode2, newNode3, 0);
 
+    // Test adding one edge
     testGraph.addEdge(newEdge2);
+
     assertTrue(testGraph.getEdges().equals(
-            Lists.newArrayList(testEdge0, newEdge2)
+            new HashSet<>(Lists.newArrayList(testEdge0, newEdge2))
     ));
+    assertTrue(newNode2.getEdges().equals(
+            new HashSet<>(Lists.newArrayList(newEdge2))
+    ));
+    assertTrue(newNode3.getEdges().equals(
+            new HashSet<>(Lists.newArrayList(newEdge2))
+    ));
+    assertTrue(testNode0.getEdges().equals(
+       new HashSet<>(Lists.newArrayList(testEdge0))
+    ));
+
+    // Test adding another edge
     testGraph.addEdge(newEdge1);
+
     assertTrue(testGraph.getEdges().equals(
-            Lists.newArrayList(testEdge0, newEdge2, newEdge1)
+            new HashSet<>(Lists.newArrayList(testEdge0, newEdge2, newEdge1))
+    ));
+    assertTrue(testNode0.getEdges().equals(
+            new HashSet<>(Lists.newArrayList(newEdge1, testEdge0))
+    ));
+    assertTrue(newNode3.getEdges().equals(
+            new HashSet<>(Lists.newArrayList(newEdge2, newEdge1))
     ));
 
     tearDown();
@@ -129,13 +147,13 @@ public class GraphTest {
 
     testGraph.removeNode(testNode0);
     assertTrue(testGraph.getNodes().equals(
-            Lists.newArrayList(testNode1)
+            new HashSet<>(Lists.newArrayList(testNode1))
     ));
 
     testGraph.removeNode(testNode0);
     testGraph.removeNode(testNode1);
     assertTrue(testGraph.getNodes().equals(
-            Collections.emptyList()
+            Collections.emptySet()
     ));
 
 
@@ -149,7 +167,7 @@ public class GraphTest {
     testGraph.removeEdge(testEdge0);
 
     assertTrue(testGraph.getEdges().equals(
-            Collections.emptyList()
+            Collections.emptySet()
     ));
 
     tearDown();

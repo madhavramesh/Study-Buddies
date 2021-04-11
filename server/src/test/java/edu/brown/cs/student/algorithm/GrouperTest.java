@@ -8,7 +8,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.List;
+import java.util.*;
 
 import static org.junit.Assert.assertTrue;
 
@@ -21,7 +21,7 @@ import static org.junit.Assert.assertTrue;
  */
 public class GrouperTest {
   Grouper grouper;
-  Graph<IGNode, IGEdge> graph;
+  Graph graph;
 
   IGNode node0;
   IGNode node1;
@@ -45,21 +45,11 @@ public class GrouperTest {
   public void setUp() {
     graph = new Graph();
 
-    node0 = new IGNode(0, Lists.newArrayList(
-            edge4, edge5, edge6, edge0
-    ));
-    node1 = new IGNode(1, Lists.newArrayList(
-            edge0, edge7, edge9, edge1
-    ));
-    node2 = new IGNode(2, Lists.newArrayList(
-            edge2, edge8, edge6, edge1
-    ));
-    node3 = new IGNode(3, Lists.newArrayList(
-            edge3, edge5, edge9, edge2
-    ));
-    node4 = new IGNode(4, Lists.newArrayList(
-            edge4, edge7, edge8, edge3
-    ));
+    node0 = new IGNode(0, new HashSet<>());
+    node1 = new IGNode(1, new HashSet<>());
+    node2 = new IGNode(2, new HashSet<>());
+    node3 = new IGNode(3, new HashSet<>());
+    node4 = new IGNode(4, new HashSet<>());
 
     edge0 = new IGEdge(node0, node1, 9);
     edge1 = new IGEdge(node1, node2, 7);
@@ -117,14 +107,27 @@ public class GrouperTest {
   }
 
   @Test
+  public void weightMapSetUpTest() {
+    // Makes sure that the weight map is set up for each node
+    setUp();
+
+    assertTrue(node0.weightTo(node1) == 9);
+    assertTrue(node0.weightTo(node2) == 8);
+    assertTrue(node0.weightTo(node3) == 3);
+    assertTrue(node0.weightTo(node4) == 4);
+
+    tearDown();
+  }
+
+  @Test
   public void calculateContributionTest() {
     setUp();
 
-    double contribution0 = Grouper.calculateContribution(graph, node0);
-    double contribution1 = Grouper.calculateContribution(graph, node1);
-    double contribution2 = Grouper.calculateContribution(graph, node2);
-    double contribution3 = Grouper.calculateContribution(graph, node3);
-    double contribution4 = Grouper.calculateContribution(graph, node4);
+    double contribution0 = grouper.calculateContribution(graph, node0);
+    double contribution1 = grouper.calculateContribution(graph, node1);
+    double contribution2 = grouper.calculateContribution(graph, node2);
+    double contribution3 = grouper.calculateContribution(graph, node3);
+    double contribution4 = grouper.calculateContribution(graph, node4);
 
     assertTrue(contribution0 == 24);
     assertTrue(contribution1 == 23);
@@ -139,7 +142,7 @@ public class GrouperTest {
   public void setContributionsTest() {
     setUp();
 
-    Graph<IGNode, IGEdge> newGraph = Grouper.setContributions(graph);
+    Graph newGraph = grouper.setContributions(graph);
 
     assertTrue(newGraph.getNode(node0).getContribution() == 24);
     assertTrue(newGraph.getNode(node1).getContribution() == 23);
@@ -151,66 +154,137 @@ public class GrouperTest {
   }
 
   @Test
-  public void deconstruct() {
+  public void deconstructTest() throws Exception {
+    // We need to setUp() and tearDown() between each test type because
+    // removal modifies the original node.
+
+    Set<IGNode> graphNodes;
+
+    // -------------------------------------------------------
+    // Test remove 0 nodes
     setUp();
 
+    graph = grouper.setContributions(graph);
 
+    Graph g5 = grouper.deconstruct(graph, 0);
+    assertTrue(g5.getNodes().equals(graph.getNodes()));
+
+    tearDown();
+
+    // -------------------------------------------------------
+    // Test remove 1 node
+    setUp();
+    graph = grouper.setContributions(graph);
+    graphNodes = graph.getNodes();
+
+    Graph g4 = grouper.deconstruct(g5, 1);
+
+    // There are two minimum nodes, so two possible answers.
+    Set<IGNode> g4ans1 = new HashSet<>(graphNodes);
+    g4ans1.remove(node3);
+    Set<IGNode> g4ans2 = new HashSet<>(graphNodes);
+    g4ans2.remove(node4);
+
+    Set<IGNode> g4Nodes = g4.getNodes();
+    assertTrue(
+            g4Nodes.equals(g4ans1)
+                    || g4Nodes.equals(g4ans2)
+    );
+
+    // -------------------------------------------------------
+    // Test remove 2 nodes
+    // There are 3 possible answers
+    setUp();
+    graph = grouper.setContributions(graph);
+    graphNodes = graph.getNodes();
+
+    Graph g3 = grouper.deconstruct(graph, 2);
+    Set<IGNode> g3ans1 = new HashSet<>(graphNodes);
+    g3ans1.remove(node3);
+    g3ans1.remove(node0);
+    Set<IGNode> g3ans2 = new HashSet<>(graphNodes);
+    g3ans2.remove(node3);
+    g3ans2.remove(node1);
+    Set<IGNode> g3ans3 = new HashSet<>(graphNodes);
+    g3ans3.remove(node4);
+    g3ans3.remove(node3);
+
+    Set<IGNode> g3nodes = g3.getNodes();
+
+    assertTrue(
+            (g3nodes.equals(g3ans1) ||
+                    g3nodes.equals(g3ans2) ||
+                    g3nodes.equals(g3ans3)));
+
+    tearDown();
+
+    // -------------------------------------------------------
+    // Test remove 1 nodes then another 2 nodes
+    setUp();
+    graph = grouper.setContributions(graph);
+    graphNodes = graph.getNodes();
+
+    Graph g2 = grouper.deconstruct(g4, 2);
+    Set<IGNode> g2ans = new HashSet<>(graphNodes);
+    g2ans.remove(node3);
+    g2ans.remove(node4);
+    g2ans.remove(node2);
+
+    assertTrue(g2.getNodes().equals(g2ans));
+
+    tearDown();
+
+    // -------------------------------------------------------
+    // Test remove 4 nodes
+    setUp();
+    graph = grouper.setContributions(graph);
+
+    Graph g1 = grouper.deconstruct(graph, 4);
+    Set<IGNode> g1ans1 = new HashSet<>(Lists.newArrayList(node0));
+    Set<IGNode> g1ans2 = new HashSet<>(Lists.newArrayList(node1));
+    assertTrue(g1.getNodes().equals(g1ans1) ||
+            g1.getNodes().equals(g1ans2));
+
+    tearDown();
+
+    // -------------------------------------------------------
+    // Test remove 4 nodes then 1 node
+    setUp();
+    graph = grouper.setContributions(graph);
+
+    Graph g0 = grouper.deconstruct(g1, 1);
+    assertTrue(g0.getNodes().isEmpty());
+
+    tearDown();
+
+    // -------------------------------------------------------
+    // Test remove all nodes
+    setUp();
+    graph = grouper.setContributions(graph);
+
+    assertTrue(grouper.deconstruct(graph, 5).getNodes().isEmpty());
 
     tearDown();
   }
 
   @Test
   public void randomDropTest() {
-
     setUp();
+    grouper.setContributions(graph);
 
-    /*
-    System.out.println(graph.getNodes().size());
-    Graph graphThree = Grouper.randomDrop(graph, 2);
-    List<IGNode> nodesThree = graphThree.getNodes();
+    Graph g5 = grouper.randomDrop(graph, 0);
+    Graph g4 = grouper.randomDrop(graph, 1);
+    Graph g3 = grouper.randomDrop(graph, 2);
+    Graph g2 = grouper.randomDrop(graph, 3);
+    Graph g1 = grouper.randomDrop(graph, 4);
+    //Graph g0 = grouper.randomDrop(graph, 5);
 
-    System.out.println("---------");
-    System.out.println(graph.getNodes().size());
-    System.out.println(nodesThree.size());
-
-    assertTrue(nodesThree.size() == 3);
-     */
-
-    tearDown();
-  }
-
-  @Test
-  public void greedyAddTest() {
-    setUp();
-
-
-
-    tearDown();
-  }
-
-  @Test
-  public void constructTest() {
-    setUp();
-
-
-
-    tearDown();
-  }
-
-  @Test
-  public void bestGraphTest() {
-    setUp();
-
-
-
-    tearDown();
-  }
-
-  @Test
-  public void graphScoreTest() {
-    setUp();
-
-
+    assertTrue(g5.getNodes().size() == 5);
+    assertTrue(g4.getNodes().size() == 4);
+    assertTrue(g3.getNodes().size() == 3);
+    assertTrue(g2.getNodes().size() == 2);
+    assertTrue(g1.getNodes().size() == 1);
+    //assertTrue(g0.getNodes().size() == 0);
 
     tearDown();
   }
@@ -219,7 +293,168 @@ public class GrouperTest {
   public void nodesNotInGraph() {
     setUp();
 
+    Graph smallerGraph = new Graph(graph);
+
+    // Test remove no nodes
+    Set<IGNode> result0 = grouper.nodesNotInGraph(smallerGraph);
+    Set<IGNode> ans0    = Collections.emptySet();
+    assertTrue(result0.equals(ans0));
+
+    // Test remove 1 node
+    smallerGraph.removeNode(node0);
+    Set<IGNode> result1 = grouper.nodesNotInGraph(smallerGraph);
+    Set<IGNode> ans1    = new HashSet<>(Lists.newArrayList(node0));
+    assertTrue(result1.equals(ans1));
+
+    // Test remove 2 nodes
+    smallerGraph.removeNode(node3);
+    Set<IGNode> result2 = grouper.nodesNotInGraph(smallerGraph);
+    Set<IGNode> ans2    = new HashSet<>(Lists.newArrayList(node0, node3));
+    assertTrue(result2.equals(ans2));
+
+    // Test remove 5 nodes
+    smallerGraph.removeNode(node1);
+    smallerGraph.removeNode(node2);
+    smallerGraph.removeNode(node4);
+    Set<IGNode> result5 = grouper.nodesNotInGraph(smallerGraph);
+    Set<IGNode> ans5    = new HashSet<>(Lists.newArrayList(node0, node1, node2, node3, node4));
+    assertTrue(result5.equals(ans5));
+
+    tearDown();
+  }
+
+  @Test
+  public void constructTest() throws Exception {
+    setUp();
+    grouper.setContributions(graph);
+    Graph ogGraph = new Graph(graph);
+
+    // start with node 0
+    graph.removeNode(node1);
+    graph.removeNode(node2);
+    graph.removeNode(node3);
+    graph.removeNode(node4);
+
+    Graph res1 = grouper.construct(graph);
+    graph.addNode(node1);
+    assertTrue(res1.getNodes().equals(graph.getNodes()));
+
+    Graph res2 = grouper.construct(res1);
+    graph.addNode(node2);
+    assertTrue(res2.getNodes().equals(graph.getNodes()));
+
+    Graph res3 = grouper.construct(res2);
+    Graph ans1 = new Graph(res3);
+    ans1.addNode(node3);
+    Graph ans2 = new Graph(res3);
+    ans2.addNode(node4);
+    assertTrue(
+            res3.getNodes().equals(ans1.getNodes()) ||
+            res3.getNodes().equals(ans2.getNodes()));
+
+    Graph res4 = grouper.construct(res3);
+    assertTrue(res4.getNodes().equals(ogGraph.getNodes()));
+
+    // start with node 3
+    graph.removeNode(node0);
+    graph.removeNode(node1);
+    graph.removeNode(node2);
+    graph.addNode(node3);
+    Graph ans3 = grouper.construct(graph);
+    graph.addNode(node4);
+    assertTrue(ans3.getNodes().equals(graph.getNodes()));
+
+    tearDown();
+  }
+
+  @Test
+  public void greedyAddTest() throws Exception {
+    setUp();
+    grouper.setContributions(graph);
+
+    Graph graphCopy = new Graph(graph);
+
+    // start with only node 3
+    graphCopy.removeNode(node0);
+    graphCopy.removeNode(node1);
+    graphCopy.removeNode(node2);
+    graphCopy.removeNode(node4);
+
+    Graph ans1 = grouper.greedyAdd(graphCopy, 1);
+    graphCopy.addNode(node4);
+    assertTrue(ans1.getNodes().equals(graphCopy.getNodes()));
+
+    // start with only node 0
+    graphCopy.removeNode(node4);
+    graphCopy.removeNode(node3);
+    graphCopy.addNode(node1);
+
+    Graph ans2 = grouper.greedyAdd(graphCopy, 2);
+    assertTrue(ans2.getNodes().equals(new HashSet<>(Lists.newArrayList(node0, node1, node2))));
+
+    tearDown();
+  }
+
+  @Test
+  public void graphScoreTest() {
+    setUp();
+    grouper.setContributions(graph);
+
+    // Full graph
+    assertTrue(grouper.graphScore(graph) == (54));
+
+    // Subgraph
+    graph.removeNode(node0);
+    graph.removeNode(node1);
+    graph.removeNode(node2);
+    // Note, this wouldn't be the actual score if the removal was done by
+    // the functions in the algorithm. This is because removeNode doesn't update
+    // the contribution.
+    assertTrue(grouper.graphScore(graph) == 20);
+
+    // Empty graph
+    graph.removeNode(node3);
+    graph.removeNode(node4);
+    assertTrue(grouper.graphScore(graph) == 0);
+
+    tearDown();
+  }
+
+  /*
+  @Test
+  public void bestGraphTest() {
+    setUp();
+    tearDown();
+  }
+   */
+
+  @Test
+  public void findGroupTest() throws Exception {
+    setUp();
+    grouper.setContributions(graph);
+
+    Graph groupOf1 = grouper.findGroup(graph, 1);
+
+    Graph groupOf2 = grouper.findGroup(graph, 2);
+
+    Graph groupOf3 = grouper.findGroup(graph, 3);
+
+    Graph groupOf4 = grouper.findGroup(graph, 4);
+
+    Graph groupOf5 = grouper.findGroup(graph, 5);
 
 
-    tearDown();}
+    tearDown();
+  }
+
+  @Test
+  public void makeGroupTest() throws Exception {
+    setUp();
+    grouper.setContributions(graph);
+    System.out.println("MAKE GROUPER TESTING");
+    grouper.makeGroups(graph, 2);
+    System.out.println("END");
+    tearDown();
+  }
+
 }

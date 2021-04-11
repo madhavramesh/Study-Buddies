@@ -11,6 +11,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 
 import static org.junit.Assert.assertTrue;
 
@@ -19,7 +20,7 @@ public class IGNodeTest {
 
   @Before
   public void setUp() {
-    testNode = new IGNode(13, new ArrayList<>());
+    testNode = new IGNode(13, new HashSet<>());
   }
 
   @After
@@ -42,17 +43,17 @@ public class IGNodeTest {
     assertTrue(testNode.getEdges().isEmpty());
 
     // Confirm add edges works
-    IGNode newNode  = new IGNode(0, new ArrayList<>());
+    IGNode newNode  = new IGNode(0, new HashSet<>());
     IGEdge newEdge1 = new IGEdge(newNode, testNode, 0);
     IGEdge newEdge2 = new IGEdge(newNode, testNode, 100);
     testNode.addEdge(newEdge1);
-    assertTrue(testNode.getEdges().equals(Arrays.asList(newEdge1)));
+    assertTrue(testNode.getEdges().equals(new HashSet<>(Arrays.asList(newEdge1))));
     testNode.addEdge(newEdge2);
-    assertTrue(testNode.getEdges().equals(Arrays.asList(newEdge1, newEdge2)));
+    assertTrue(testNode.getEdges().equals(new HashSet<>(Arrays.asList(newEdge1, newEdge2))));
 
     // Confirm removing edges works
     testNode.removeEdge(newEdge1);
-    assertTrue(testNode.getEdges().equals(Arrays.asList(newEdge2)));
+    assertTrue(testNode.getEdges().equals(new HashSet<>(Arrays.asList(newEdge2))));
     testNode.removeEdge(newEdge2);
     assertTrue(testNode.getEdges().isEmpty());
 

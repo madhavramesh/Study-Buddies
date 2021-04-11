@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Collections;
+import java.util.HashSet;
 
 import static org.junit.Assert.assertTrue;
 
@@ -16,8 +17,8 @@ public class IGEdgeTest {
 
   @Before
   public void setUp() {
-    testStart = new IGNode(0, Lists.newArrayList(testEdge));
-    testEnd   = new IGNode(1, Lists.newArrayList(testEdge));
+    testStart = new IGNode(0, new HashSet<>(Lists.newArrayList(testEdge)));
+    testEnd   = new IGNode(1, new HashSet<>(Lists.newArrayList(testEdge)));
     testEdge  = new IGEdge(testStart, testEnd, 10);
   }
 
