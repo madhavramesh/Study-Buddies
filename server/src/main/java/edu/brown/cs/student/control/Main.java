@@ -15,6 +15,7 @@ import edu.brown.cs.student.groups.testcommands.GetPersonInfoCommand;
 import edu.brown.cs.student.groups.testcommands.JoinClassCommand;
 import edu.brown.cs.student.groups.testcommands.RegisterUserCommand;
 import edu.brown.cs.student.groups.testcommands.ValidateUserCommand;
+import edu.brown.cs.student.input.ReCAPTCHAVerification;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import org.json.JSONObject;
@@ -28,6 +29,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -53,6 +55,13 @@ public final class Main {
   private static final Gson GSON = new Gson();
 
   private static final String PATH_TO_DB = "data/groups_db.sqlite3";
+  private static final String RECAPTCHA_SECRET_KEY =
+      System.getenv("REACT_APP_RECAPTCHA_SECRET_KEY");
+
+  public static String getRecaptchaSecretKey() {
+    return RECAPTCHA_SECRET_KEY;
+  }
+
   private static NewGroupsDatabase GROUPS_DATABASE;
 
   public static NewGroupsDatabase getGroupsDatabase() {
@@ -128,7 +137,7 @@ public final class Main {
     Spark.get("/get_enrollments/:id", new GetEnrollments());
     Spark.post("/create_class", new CreateClass());
     Spark.post("/join_class", new JoinClass());
-    Spark.get("/person_info/:id", new GetPersonInfo());
+    Spark.get("/person_info", new GetPersonInfo());
   }
 
   /**
@@ -139,34 +148,62 @@ public final class Main {
    * email: ...,
    * password: ...,
    * password2: ...,
+   * token: ...,
    * }.
    * The returned JSON object will have the form:
    * {
    * status: [status of registration command],
-   * message: [message explaining registration status]
+   * first_name: [message if first name validation failed],
+   * last_name: [message if last name validation failed],
+   * email: [message if email validation failed],
+   * password: [message if password is invalid],
+   * password2: [message if confirm password is invalid]
    * }
    */
   private static class RegisterUserHandler implements Route {
     @Override
     public Object handle(Request request, Response response) throws Exception {
       JSONObject data = new JSONObject(request.body());
+      Map<String, String> messages = new HashMap<>();
+      // if first name is empty, set the error message
       String firstName = data.getString("firstname");
+      messages.put("first_name", firstName.isEmpty() ? "Enter a first name!" : "");
+      // if last name is empty, set the error message
       String lastName = data.getString("lastname");
+      messages.put("last_name", lastName.isEmpty() ? "Enter a last name!" : "");
+      // if email is empty, set the error message
       String email = data.getString("email");
+      messages.put("email", email.isEmpty() ? "Enter an email!" : "");
+      // if password is <6 characters, set the error message
       String password = data.getString("password");
       String password2 = data.getString("password2");
+      messages
+          .put("password", password.length() < 6 ? "Password must be 6 or more characters!" : "");
+      // if passwords don't match, set error message; otherwise, register the user
       DBCode code = password.equals(password2)
           ? GROUPS_DATABASE.registerUser(firstName, lastName, email, password)
-          : DBCode.INVALID_PASSWORD;
-      Map<String, Object> variables = ImmutableMap.of(
-          "status", code.getCode(),
-          "message", code.getMessage()
-      );
-      /*
-      if (code.getCode() == 0) {
-        response.redirect("/login");
+          : DBCode.PASSWORD_MISMATCH;
+      // if error code is related to password, means password mismatch, so set that message
+      if (code.getCode() == 3) {
+        messages.put("password2", code.getMessage());
+        // otherwise, an error occurred with the email
+      } else if (code.getCode() == 2) {
+        messages.put("email", code.getMessage());
+        messages.put("password2", code.getMessage());
       }
-      */
+      String reCAPTCHAToken = data.getString("token");
+      messages
+          .put("token", ReCAPTCHAVerification.isCaptchaValid(RECAPTCHA_SECRET_KEY, reCAPTCHAToken)
+              ? "Confirm that you're not a robot!" : "");
+      Map<String, Object> variables = Map.of(
+          "status", code.getCode(),
+          "first_name", messages.get("first_name"),
+          "last_name", messages.get("last_name"),
+          "email", messages.get("email"),
+          "password", messages.get("password"),
+          "password2", messages.get("password2"),
+          "token", messages.get("token")
+      );
       return GSON.toJson(variables);
     }
   }
@@ -251,7 +288,6 @@ public final class Main {
   }
 
   /**
-   * //TODO: Redirect to newly created class page
    * Processes class creation requests. JSON objects must have the form:
    * {
    * class_name: ...,
@@ -288,7 +324,6 @@ public final class Main {
   }
 
   /**
-   * //TODO: Redirect to newly joined class page
    * Attempts to join a class. JSON objects must have the form:
    * {
    * id: ...,
@@ -318,22 +353,30 @@ public final class Main {
   }
 
   /**
-   * // TODO: Integrate getting the enrollments
    * Gets the person's info. The returned JSON object will have the form:
    * {
-   *   status: [the status of the person fetching operation],
-   *   message: [message explaining person fetching status],
-   *   id: person's id,
-   *   first_name: person's first name,
-   *   last_name: person's last name,
-   *   email: person's email,
+   * status: [the status of the person fetching operation],
+   * message: [message explaining person fetching status],
+   * id: person's id,
+   * first_name: person's first name,
+   * last_name: person's last name,
+   * email: person's email,
+   * enrollments: person's enrollments
    * }
    * The last 3 will be the empty string if the query fails.
    */
   private static class GetPersonInfo implements Route {
     @Override
     public Object handle(Request request, Response response) throws Exception {
-      int id = Integer.parseInt(request.params(":id"));
+      if (request.session().attribute("user_id") == null) {
+        DBCode code = DBCode.USER_NOT_LOGGED_IN;
+        Map<String, Object> variables = ImmutableMap.of(
+            "status", code.getCode(),
+            "message", code.getMessage()
+        );
+        return GSON.toJson(variables);
+      }
+      int id = request.session().attribute("user_id");
       Pair<DBCode, PersonInfo> result = GROUPS_DATABASE.getPersonInfo(id);
       DBCode code = result.getFirst();
       PersonInfo personInfo = result.getSecond();
@@ -344,7 +387,8 @@ public final class Main {
           "id", id,
           "first_name", success ? personInfo.getFirstName() : "",
           "last_name", success ? personInfo.getLastName() : "",
-          "email", success ? personInfo.getEmail() : ""
+          "email", success ? personInfo.getEmail() : "",
+          "enrollments", success ? GROUPS_DATABASE.getEnrollments(id) : ""
       );
       return GSON.toJson(variables);
     }
