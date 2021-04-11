@@ -4,7 +4,7 @@ package edu.brown.cs.student.groups;
  * Database Codes.
  * KEY: {
  * 0: Success! (registration, login, delete, classes)
- * 1: User not found
+ * 1: User error (not found, not logged in)
  * 2: Email error (email taken, invalid email)
  * 3: Password error (invalid password, passwords don't match)
  * 4: Class formation error (owner create multiple classes, ...)
@@ -17,6 +17,7 @@ public enum DBCode {
   DELETE_SUCCESS(0, "User info successfully deleted!"),
   CLASS_CREATION_SUCCESS(0, "Successfully created class!"),
   CLASS_JOIN_SUCCESS(0, "Successfully joined class!"),
+  USER_NOT_LOGGED_IN(1, "User not logged in!"),
   USER_NOT_FOUND(1, "User not found!"),
   EMAIL_TAKEN(2, "Email was taken!"),
   INVALID_EMAIL(2, "Invalid email format!"),
