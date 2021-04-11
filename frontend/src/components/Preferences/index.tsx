@@ -17,6 +17,7 @@ const Preferences: React.FC = () => {
       <ListGroup>
         {people.map((person) => (
           <ClassCard
+            cid={1}
             name={person.FirstName}
             number={person.LastName}
             term="Spring"
