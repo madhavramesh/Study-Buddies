@@ -5,6 +5,8 @@ import NavBar from './components/Navbar';
 import Preferences from './components/Preferences';
 import ClassCard from './components/ClassCard';
 import PeopleCard from './PeopleCard';
+import TimeCard from './components/TimeCard';
+import TimesPane from './components/TimesPane';
 
 const App: React.FC = () => {
   return (
@@ -13,10 +15,7 @@ const App: React.FC = () => {
         <Switch>
           <Route exact path="/" component={NavBar} />
           <Route path="/preferences" component={Preferences} />
-          <Route
-            path="/carddemo"
-            component={() => <PeopleCard firstName="Akash" lastName="Singirikonda" id="asingir1" />}
-          />
+          <Route path="/carddemo" component={() => <TimesPane slotLength={30} />} />
         </Switch>
       </Router>
     </div>
