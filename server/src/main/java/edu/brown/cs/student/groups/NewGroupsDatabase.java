@@ -324,7 +324,6 @@ public class NewGroupsDatabase {
   }
 
   /**
-   * // TODO: Don't join class when already in
    * Enroll the person with the specified ID into the class. Must provide correct code.
    *
    * @param id        the person's id
@@ -336,6 +335,13 @@ public class NewGroupsDatabase {
   public DBCode joinClass(int id, int classId, String classCode) throws SQLException {
     PreparedStatement prep;
     ResultSet rs;
+    prep = conn.prepareStatement("SELECT * FROM enrollments WHERE person_id=? AND class_id=?;");
+    prep.setInt(1, id);
+    prep.setInt(2, classId);
+    rs = prep.executeQuery();
+    if (rs.next()) {
+      return ALREADY_JOINED_CLASS;
+    }
     // select class with specified ID
     prep = conn.prepareStatement("SELECT * FROM classes WHERE class_id=? AND class_code=?;");
     prep.setInt(1, classId);
