@@ -270,19 +270,15 @@ public class NewGroupsDatabase {
       throws SQLException {
     PreparedStatement prep;
     ResultSet rs;
-    // select owner's current owned classes
-    prep = conn.prepareStatement("SELECT * FROM classes WHERE owner_id=?;");
-    prep.setInt(1, ownerId);
+    // select current classes and see if one with the class number already exists
+    prep = conn.prepareStatement("SELECT * FROM classes WHERE class_number=?;");
+    prep.setString(1, classNumber);
     rs = prep.executeQuery();
-    // get the owned classes' names and numbers
-    List<String> classNamesAndNumbers = new ArrayList<>();
-    while (rs.next()) {
-      classNamesAndNumbers.add(rs.getString("class_name"));
-      classNamesAndNumbers.add(rs.getString("class_number"));
-    }
-    // if owner already has classes with the same name or number, return an error
-    if (classNamesAndNumbers.contains(className) || classNamesAndNumbers.contains(classNumber)) {
-      return new Pair<>(new Pair<>(-1, ""), OWNER_CLASS_ALREADY_CREATED);
+    // check if class with number already exists; if so, indicate an error
+    if (rs.next()) {
+      prep.close();
+      rs.close();
+      return new Pair<>(new Pair<>(-1, ""), CLASS_ALREADY_CREATED);
     }
     // create a new class
     String classCode = CodeGenerator.generateCode(6);
@@ -298,6 +294,8 @@ public class NewGroupsDatabase {
       prep.executeUpdate();
       // if foreign key owner_id doesn't exist, return an error code
     } catch (SQLException e) {
+      prep.close();
+      rs.close();
       return new Pair<>(new Pair<>(-1, ""), CLASS_OWNER_DOES_NOT_EXIST);
     }
     // get the class ID, since it's an auto-incrementing primary key

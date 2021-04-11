@@ -24,7 +24,7 @@ public enum DBCode {
   INVALID_EMAIL(2, "Invalid email format!"),
   INVALID_PASSWORD(3, "Invalid password!"),
   PASSWORD_MISMATCH(3, "Passwords do not match!"),
-  OWNER_CLASS_ALREADY_CREATED(4, "Already made class with that name/number!"),
+  CLASS_ALREADY_CREATED(4, "Class with that number already exists!"),
   CLASS_OWNER_DOES_NOT_EXIST(4, "Owner ID not created! Ensure the owner actually exists."),
   INVALID_CLASS_CODE(4, "Invalid class code!"),
   ALREADY_JOINED_CLASS(4, "Already joined class!"),
