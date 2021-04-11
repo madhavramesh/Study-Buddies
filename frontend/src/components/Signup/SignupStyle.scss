@@ -52,7 +52,13 @@
 
 .recaptcha {
   margin: 24px 0px 24px 0px;
-  align-items: center;
+}
+
+.recaptcha-error {
+  width: 100%;
+  margin-top: .25rem;
+  font-size: 80%;
+  color: #dc3545;
 }
 
 .btn {

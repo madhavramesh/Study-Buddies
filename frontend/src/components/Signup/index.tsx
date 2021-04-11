@@ -16,12 +16,12 @@ const Signup: React.FC = () => {
   const [emailMessage, setEmailMessage] = useState('');
   const [passwordMessage, setPasswordMessage] = useState('');
   const [password2Message, setPassword2Message] = useState('');
-  const [firstNameMesssage, setFirstNameMessage] = useState('');
-  const [lastNameMessage, setLastNameMesssage] = useState('');
+  const [firstNameMessage, setFirstNameMessage] = useState('');
+  const [lastNameMessage, setLastNameMessage] = useState('');
 
   const recaptchaRef = useRef<ReCAPTCHA>(null);
   const [recaptchaToken, setRecaptchaToken] = useState('');
-  const [recaptchaMessage, setRecaptchaMesssage] = useState('');
+  const [recaptchaMessage, setRecaptchaMessage] = useState('');
 
   const [registered, setRegistered] = useState(true);
 
@@ -80,14 +80,14 @@ const Signup: React.FC = () => {
 
     const isHuman = await axios
       .post('https://www.google.com/recaptcha/api/siteverify', postParameters, config)
-      .then((response: any) => response.data.success)
+      .then((response: any) => console.log(response))
       .catch((_: any) => {
-        setRecaptchaMesssage("Confirm that you're not a robot");
+        setRecaptchaMessage("Confirm that you're not a robot");
         return false;
       });
 
     if (recaptchaToken === '' || !isHuman) {
-      setRecaptchaMesssage("Confirm that you're not a robot");
+      setRecaptchaMessage("Confirm that you're not a robot");
       return false;
     }
     return true;
@@ -102,7 +102,10 @@ const Signup: React.FC = () => {
       setRecaptchaToken(recaptchaValue);
     }
 
-    registerPerson();
+    const isHuman = true; // await validateHuman();
+    if (isHuman) {
+      registerPerson();
+    }
   };
 
   return (
@@ -115,6 +118,30 @@ const Signup: React.FC = () => {
           </div>
         </div>
         <Form className="signup">
+          <Form.Group controlId="formFirstName">
+            <Form.Label>What&apos;s your first name?</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter your first name."
+              required
+              isInvalid={firstNameMessage !== ''}
+              onChange={(e: any) => setFirstName(e.target.value)}
+            />
+            <Form.Control.Feedback type="invalid">{firstNameMessage}</Form.Control.Feedback>
+          </Form.Group>
+
+          <Form.Group controlId="formLastName">
+            <Form.Label>What&apos;s your last name?</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter your last name."
+              required
+              isInvalid={lastNameMessage !== ''}
+              onChange={(e: any) => setLastName(e.target.value)}
+            />
+            <Form.Control.Feedback type="invalid">{lastNameMessage}</Form.Control.Feedback>
+          </Form.Group>
+
           <Form.Group controlId="formGroupEmail">
             <Form.Label>What&apos;s your email?</Form.Label>
             <Form.Control
@@ -151,37 +178,13 @@ const Signup: React.FC = () => {
             <Form.Control.Feedback type="invalid">{password2Message}</Form.Control.Feedback>
           </Form.Group>
 
-          <Form.Group controlId="formFirstName">
-            <Form.Label>What&apos;s your first name?</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter your first name."
-              required
-              isInvalid={firstNameMesssage !== ''}
-              onChange={(e: any) => setFirstName(e.target.value)}
-            />
-            <Form.Control.Feedback type="invalid">{firstNameMesssage}</Form.Control.Feedback>
-          </Form.Group>
-
-          <Form.Group controlId="formLastName">
-            <Form.Label>What&apos;s your last name?</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter your last name."
-              required
-              isInvalid={lastNameMessage !== ''}
-              onChange={(e: any) => setLastName(e.target.value)}
-            />
-            <Form.Control.Feedback type="invalid">{lastNameMessage}</Form.Control.Feedback>
-          </Form.Group>
-
           <Form.Group controlId="formRECAPTCHA" className="recaptcha">
             <ReCAPTCHA
               ref={recaptchaRef}
               sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY!}
               onExpired={() => setRecaptchaToken('')}
             />
-            <Form.Control.Feedback type="invalid">{recaptchaMessage}</Form.Control.Feedback>
+            {recaptchaMessage !== '' && <div className="recaptcha-error">{recaptchaMessage}</div>}
           </Form.Group>
 
           <Form.Group>
