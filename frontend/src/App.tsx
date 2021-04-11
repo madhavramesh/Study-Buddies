@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Signin from './components/Signin';
 import Signup from './components/Signup';
 import HomePage from './components/HomePage';
+import AboutPage from './components/AboutPage';
 
 const App: React.FC = () => {
   return (
@@ -13,6 +14,7 @@ const App: React.FC = () => {
           <Route exact path="/" component={HomePage} />
           <Route path="/signin" component={Signin} />
           <Route path="/signup" component={Signup} />
+          <Route path="/about" component={AboutPage} />
           {/* <Route path="/preferences" component={Preferences} />
           <Route path="/carddemo" component={() => <TimesPane slotLength={30} />} /> */}
         </Switch>
