@@ -55,12 +55,6 @@ public final class Main {
   private static final Gson GSON = new Gson();
 
   private static final String PATH_TO_DB = "data/groups_db.sqlite3";
-  private static final String RECAPTCHA_SECRET_KEY =
-      System.getenv("REACT_APP_RECAPTCHA_SECRET_KEY");
-
-  public static String getRecaptchaSecretKey() {
-    return RECAPTCHA_SECRET_KEY;
-  }
 
   private static NewGroupsDatabase GROUPS_DATABASE;
 
@@ -191,6 +185,7 @@ public final class Main {
         messages.put("email", code.getMessage());
         messages.put("password2", code.getMessage());
       }
+      String RECAPTCHA_SECRET_KEY = System.getenv("RECAPTCHA_SECRET_KEY");
       String reCAPTCHAToken = data.getString("token");
       messages
           .put("token", ReCAPTCHAVerification.isCaptchaValid(RECAPTCHA_SECRET_KEY, reCAPTCHAToken)

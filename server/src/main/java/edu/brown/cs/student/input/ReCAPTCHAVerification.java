@@ -29,6 +29,7 @@ public class ReCAPTCHAVerification {
     try {
       String url = "https://www.google.com/recaptcha/api/siteverify",
           params = "secret=" + secretKey + "&response=" + response;
+      System.out.println("RESPONSE: " + response);
 
       HttpURLConnection http = (HttpURLConnection) new URL(url).openConnection();
       http.setDoOutput(true);
