@@ -295,6 +295,8 @@ public final class Main {
    * {
    * status: [status of class creation request],
    * message: [message explaining class creation status],
+   * class_id: [id of class created],
+   * class_code: [code of class created]
    * }
    */
   private static class CreateClass implements Route {
