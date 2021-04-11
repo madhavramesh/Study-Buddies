@@ -15,7 +15,7 @@ const App: React.FC = () => {
         <Switch>
           <Route exact path="/" component={NavBar} />
           <Route path="/preferences" component={Preferences} />
-          <Route path="/carddemo" component={() => <TimesPane slotLength={30} />} />
+          <Route path="/carddemo" component={() => <TimesPane slotLength={60} />} />
         </Switch>
       </Router>
     </div>
