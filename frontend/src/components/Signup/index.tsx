@@ -55,10 +55,15 @@ const Signup: React.FC = () => {
         } else {
           setRegistered(false);
         }
-        console.log(response.data.message);
+        setEmailMessage(response.data.email);
+        setPasswordMessage(response.data.password);
+        setPassword2Message(response.data.password2);
+        setFirstNameMessage(response.data.first_name);
+        setLastNameMessage(response.data.last_name);
+        setRecaptchaMessage(response.data.token);
       })
-      .catch((err: any) => {
-        console.log(err);
+      .catch((_: any) => {
+        setRegistered(false);
       });
   };
 
@@ -102,10 +107,7 @@ const Signup: React.FC = () => {
       setRecaptchaToken(recaptchaValue);
     }
 
-    const isHuman = true; // await validateHuman();
-    if (isHuman) {
-      registerPerson();
-    }
+    registerPerson();
   };
 
   return (

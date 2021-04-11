@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import './SigninStyle.scss';
 
 const axios = require('axios');
@@ -11,6 +11,8 @@ const Signin: React.FC = () => {
   const [rememberMe, setRememberMe] = useState(false);
   const [validAcct, setValidAcct] = useState(false);
   const [validAcctMessage, setValidAcctMessage] = useState('');
+
+  const history = useHistory();
 
   const checkValidAccount = () => {
     const postParameters = {
@@ -30,6 +32,7 @@ const Signin: React.FC = () => {
       .then((response: any) => {
         if (response.data.status === 0) {
           setValidAcct(true);
+          history.push('/');
         } else {
           setValidAcct(false);
         }
