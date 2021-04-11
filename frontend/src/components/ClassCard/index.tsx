@@ -33,6 +33,7 @@ const ClassCard: React.FC<ClassProps> = ({ cid, name, number, desc, term, owner 
       },
     };
     const response = await axios.post('http://localhost:4567/join_class', postParameters, config);
+    console.log(response.data);
     if (response.data.status === 0) {
       setValidCode(true);
     } else {
@@ -55,7 +56,8 @@ const ClassCard: React.FC<ClassProps> = ({ cid, name, number, desc, term, owner 
 
       <Modal size="lg" show={show} onHide={() => setShow(false)} centered>
         <Modal.Header className="class-modal-header" closeButton>
-          {number} [{cid}]
+          {number}
+          {/* [{cid}] */}
         </Modal.Header>
         <Modal.Body className="class-modal-body">
           <p>

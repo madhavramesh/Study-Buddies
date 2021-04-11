@@ -337,7 +337,7 @@ public final class Main {
     @Override
     public Object handle(Request request, Response response) throws Exception {
       JSONObject data = new JSONObject(request.body());
-      int id = data.getInt("id");
+      int id = Integer.parseInt(data.getString("id"));
       int classId = data.getInt("class_id");
       String classCode = data.getString("class_code");
       DBCode code = GROUPS_DATABASE.joinClass(id, classId, classCode);
