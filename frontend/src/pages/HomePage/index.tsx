@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
-import NavBar from '../Navbar';
+import NavBar from '../../components/Navbar';
 import './HomePage.scss';
+import Footer from '../../components/Footer';
 
 const HomePage: React.FC = () => {
   return (
@@ -8,6 +9,7 @@ const HomePage: React.FC = () => {
       <NavBar />
       <p className="homepage-title">Chunky Study Buddies</p>
       <p className="homepage-title homepage-info">Study Groups Done Better</p>
+      <Footer />
     </div>
   );
 };
