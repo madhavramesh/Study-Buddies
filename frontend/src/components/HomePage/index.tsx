@@ -45,7 +45,7 @@ const HomePage: React.FC = () => {
         <Button className="homepage-signup-button" onClick={redirectSignup}>
           Join Now
         </Button>
-        <p className="homepage-signup-addendum">&#42;this is very possibly cap</p>
+        <p className="homepage-signup-addendum">&#42;this is possibly cap</p>
       </div>
       <Footer />
     </div>

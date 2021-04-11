@@ -2,8 +2,8 @@
 
 .homepage-signup-container {
   width: 100%;
-  height: 50vh;
-  background-color: #3682dd;
+  height: 70vh;
+  background-color: #348AED;
 
   .homepage-signup-shill {
     font-family: 'poppins', courier, sans-serif;
@@ -11,14 +11,14 @@
     font-size: 40px;
     text-align: center;
     left: 12%;
-    top: 15%;
+    top: 25%;
     position: relative;
   }
 
   .homepage-signup-addendum {
     font-size: 12px;
     font-family: 'poppins', courier, sans-serif;
-    top: 50%;
+    top: 63%;
     position: relative;
   }
 
@@ -27,7 +27,7 @@
     background-color: black;
     width: 50%;
     left: 25%;
-    transform: translate(0, 300%);
+    transform: translate(0, 450%);
     position: relative;
     transition-duration: 0.2s;
   }
@@ -50,7 +50,7 @@
     top: 15%;
     left: 12%;
     position: relative;
-    color: #3682dd;
+    color: #348AED;
 
     -webkit-animation: fadein 4.5s ease;
     /* Safari, Chrome and Opera > 12.1 */
@@ -83,7 +83,7 @@
   .homepage-info-button {
     font-family: 'Poppins', Courier, sans-serif;
     color: black;
-    background-color: #3682dd;
+    background-color: #348AED;
     width: 40%;
     left: -23%;
     transform: translate(0, 50%);
