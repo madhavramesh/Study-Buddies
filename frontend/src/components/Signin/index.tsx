@@ -33,6 +33,7 @@ const Signin: React.FC = () => {
         if (response.data.status === 0) {
           setValidAcct(true);
           history.push('/dashboard');
+          localStorage.setItem('user_id', response.data.id);
         } else {
           setValidAcct(false);
         }

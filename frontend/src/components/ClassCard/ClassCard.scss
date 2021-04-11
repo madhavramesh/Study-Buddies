@@ -1,12 +1,19 @@
-.CardBody {
-  background-color: lightgray;
-  color: #2386c8;
-  border-radius: 0.5rem;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap');
+
+.class-card {
+  margin: 2rem;
+  background-color: #ddd;
   border: none;
 }
 
-.CardOutline {
-  border-radius: 0.5rem;
-  border: none;
-  margin: 0.25rem;
+.class-modal-header {
+  padding-top: 10rem;
+  font-family: 'poppins', courier, sans-serif;
+  font-size: 32px;
+  // font-weight: bold;
+}
+
+.class-modal-body {
+  font-family: 'poppins', courier, sans-serif;
+  font-size: 16px;
 }
