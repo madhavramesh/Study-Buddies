@@ -32,7 +32,7 @@ const Signin: React.FC = () => {
       .then((response: any) => {
         if (response.data.status === 0) {
           setValidAcct(true);
-          history.push('/');
+          history.push('/dashboard');
         } else {
           setValidAcct(false);
         }

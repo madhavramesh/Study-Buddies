@@ -4,14 +4,18 @@ import { Create } from '@material-ui/icons';
 import CreateClass from '../../components/CreateClass';
 import './DashboardPageStyle.scss';
 import SearchBar from '../../components/SearchBar/SearchBar';
+import ModifiedNavBar from '../../components/ModifiedNavbar';
 
 const DashboardPage: React.FC = () => {
   const [modalShow, setModalShow] = useState(false);
 
   return (
     <div className="dashboard-page">
+      <ModifiedNavBar username="Madhav Ramesh" />
       <div className="search-bar-container">
-        <SearchBar />
+        <div className="search-bar-inner-container">
+          <SearchBar />
+        </div>
       </div>
 
       <div className="create-class-container">

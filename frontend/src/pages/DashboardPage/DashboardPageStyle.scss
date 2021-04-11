@@ -3,6 +3,19 @@
     width: auto;
   }
 
+  .search-bar-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 15px;
+
+    .search-bar-inner-container {
+      width: 80%;
+    }
+  }
+
   .create-class-container {
     position: fixed;
     bottom: 0;
