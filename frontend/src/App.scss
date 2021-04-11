@@ -1,25 +1,24 @@
-/*
-.main-container {
-  display: flex;
-}
-
-button {
-  font-size: 15px;
-  padding: 10px 70px;
-  border: 0;
-  border-radius: 200px;
-  outline: none;
+.btn {
+  color: #ffffff;
+  letter-spacing: 2px;
+  font-weight: bold !important;
+  font-size: 14px !important;
   background-color: #2386c8;
-  color: #fff;
-  transition: all 250ms ease-in-out;
-  cursor: pointer;
+  padding: 12px 80px;
+  border-radius: 500px;
+  width: 100%;
 }
 
-button:hover {
-  background-color: #696969;
+.btn:hover {
+  background-color: #2588da;
 }
 
-button:focus {
-  outline: none;
+.form-label {
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 15px !important;
+  font-weight: bold !important;
 }
-*/
+
+.form-control {
+  font-family: 'Poppins', sans-serif !important;
+}

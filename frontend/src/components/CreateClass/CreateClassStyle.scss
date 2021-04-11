@@ -1,0 +1,54 @@
+.create-class-modal .modal-content {
+  font-family: 'Poppins', sans-serif !important;
+
+  .create-class-icon {
+    width: 30%;
+    height: 30%;
+  }
+
+  .modal-header {
+    font-weight: 500 !important;
+  }
+
+  .modal-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-left: 50px;
+    padding-right: 50px;
+
+
+    div {
+      font-weight: 500 !important;
+      font-size: 20px !important;
+      margin-bottom: 15px;
+    }
+
+    p {
+      text-align: center;
+      font-size: 13px;
+      color: rgb(90, 97, 103) !important;
+      margin-bottom: 40px;
+    }
+
+    .class-information-form {
+      width: 100% !important;
+
+      .invalid-feedback {
+        width: 100%;
+        margin-top: .25rem;
+        margin-bottom: 0px;
+        font-size: 12px !important;
+        color: #dc3545;
+      }
+
+      .btn {
+        align-content: center;
+      }
+    }
+  }
+}
+
+
+
