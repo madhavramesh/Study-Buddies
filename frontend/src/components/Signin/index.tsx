@@ -1,4 +1,4 @@
-import React, { FormEvent, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import './SigninStyle.scss';
@@ -60,64 +60,66 @@ const Signin: React.FC = () => {
   }, []);
 
   return (
-    <div className="signin-container">
-      <div className="signin-header">
-        <div className="signin-header-text">Sign in</div>
-        <div className="signup">
-          or&nbsp;<Link to="/signup">create an account</Link>
+    <div className="container-fluid">
+      <div className="signin-container">
+        <div className="signin-header">
+          <div className="signin-header-text">Sign in</div>
+          <div className="signup">
+            or&nbsp;<Link to="/signup">create an account</Link>
+          </div>
         </div>
+        <Form className="signin">
+          <Form.Group controlId="formGroupEmail">
+            <Form.Label>Email address</Form.Label>
+            <Form.Control
+              type="email"
+              placeholder="Enter email"
+              value={email}
+              required
+              isInvalid={!validAcct && validAcctMessage !== ''}
+              onChange={(e: any) => setEmail(e.target.value)}
+            />
+            <Form.Control.Feedback type="invalid">{validAcctMessage}</Form.Control.Feedback>
+          </Form.Group>
+
+          <Form.Group controlId="formGroupPassword">
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Password"
+              required
+              isInvalid={!validAcct && validAcctMessage !== ''}
+              onChange={(e: any) => setPassword(e.target.value)}
+            />
+            <Form.Control.Feedback type="invalid" />
+          </Form.Group>
+          <p className="forgot-password">
+            <Link to="/">Forgot your password?</Link>
+          </p>
+
+          <Form.Group controlId="formGroupRememberMe">
+            <Form.Check
+              label="Remember me"
+              onClick={() => {
+                setRememberMe(!rememberMe);
+              }}
+            />
+          </Form.Group>
+
+          <Form.Group>
+            <Button
+              variant="primary"
+              size="sm"
+              onClick={() => {
+                checkValidAccount();
+                storeUser();
+              }}
+            >
+              LOG IN
+            </Button>
+          </Form.Group>
+        </Form>
       </div>
-      <Form className="signin">
-        <Form.Group controlId="formGroupEmail">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control
-            type="email"
-            placeholder="Enter email"
-            value={email}
-            required
-            isInvalid={!validAcct && validAcctMessage !== ''}
-            onChange={(e: any) => setEmail(e.target.value)}
-          />
-          <Form.Control.Feedback type="invalid">{validAcctMessage}</Form.Control.Feedback>
-        </Form.Group>
-
-        <Form.Group controlId="formGroupPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Password"
-            required
-            isInvalid={!validAcct && validAcctMessage !== ''}
-            onChange={(e: any) => setPassword(e.target.value)}
-          />
-          <Form.Control.Feedback type="invalid" />
-        </Form.Group>
-        <p className="forgot-password">
-          <Link to="/">Forgot your password?</Link>
-        </p>
-
-        <Form.Group controlId="formGroupRememberMe">
-          <Form.Check
-            label="Remember me"
-            onClick={() => {
-              setRememberMe(!rememberMe);
-            }}
-          />
-        </Form.Group>
-
-        <Form.Group>
-          <Button
-            variant="primary"
-            size="sm"
-            onClick={() => {
-              checkValidAccount();
-              storeUser();
-            }}
-          >
-            LOG IN
-          </Button>
-        </Form.Group>
-      </Form>
     </div>
   );
 };
