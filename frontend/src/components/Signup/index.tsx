@@ -55,6 +55,7 @@ const Signup: React.FC = () => {
         } else {
           setRegistered(false);
         }
+        console.log(response.data);
         setEmailMessage(response.data.email);
         setPasswordMessage(response.data.password);
         setPassword2Message(response.data.password2);
@@ -166,6 +167,9 @@ const Signup: React.FC = () => {
               onChange={(e: any) => setPassword(e.target.value)}
             />
             <Form.Control.Feedback type="invalid">{passwordMessage}</Form.Control.Feedback>
+            <Form.Text id="passwordHelpBlock" muted>
+              Your password must be at least 6 characters long
+            </Form.Text>
           </Form.Group>
 
           <Form.Group controlId="formGroupConfirmPassword">
