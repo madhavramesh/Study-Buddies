@@ -32,7 +32,8 @@ const Signin: React.FC = () => {
       .then((response: any) => {
         if (response.data.status === 0) {
           setValidAcct(true);
-          history.push('/');
+          localStorage.setItem('user_id', response.data.id);
+          history.push('/test_display_classes');
         } else {
           setValidAcct(false);
         }

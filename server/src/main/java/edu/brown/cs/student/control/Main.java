@@ -129,7 +129,7 @@ public final class Main {
     Spark.get("/get_all_classes", new GetAllClasses());
     Spark.get("/get_classes_with/:owner_id", new GetClassesWithOwnerId());
     Spark.get("/get_enrollments/:id", new GetEnrollments());
-    Spark.post("/create_class", new CreateClass());
+    Spark.post("/create_class/:id", new CreateClass());
     Spark.post("/join_class", new JoinClass());
     Spark.get("/person_info", new GetPersonInfo());
   }
@@ -224,13 +224,10 @@ public final class Main {
       String password = data.getString("password");
       Pair<Integer, DBCode> result = GROUPS_DATABASE.validateUser(email, password);
       DBCode code = result.getSecond();
-      if (code.getCode() == 0) {
-        int id = result.getFirst();
-        request.session().attribute("user_id", id);
-      }
       Map<String, Object> variables = ImmutableMap.of(
           "status", code.getCode(),
-          "message", code.getMessage()
+          "message", code.getMessage(),
+          "id", code.getCode() == 0 ? result.getFirst() : -1
       );
       return GSON.toJson(variables);
     }
@@ -302,22 +299,12 @@ public final class Main {
   private static class CreateClass implements Route {
     @Override
     public Object handle(Request request, Response response) throws Exception {
-      if (request.session().attribute("user_id") == null) {
-        DBCode code = DBCode.USER_NOT_LOGGED_IN;
-        Map<String, Object> variables = ImmutableMap.of(
-            "status", code.getCode(),
-            "message", code.getMessage(),
-            "class_id", "",
-            "class_code", ""
-        );
-        return GSON.toJson(variables);
-      }
       JSONObject data = new JSONObject(request.body());
       String className = data.getString("class_name");
       String classNumber = data.getString("class_number");
       String classDescription = data.getString("class_description");
       String classTerm = data.getString("class_term");
-      int ownerId = request.session().attribute("user_id");
+      int ownerId = Integer.parseInt(request.params(":id"));
       Pair<Pair<Integer, String>, DBCode> result =
           GROUPS_DATABASE.createClass(className, classNumber, classDescription, classTerm, ownerId);
       DBCode code = result.getSecond();
