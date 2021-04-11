@@ -1,4 +1,7 @@
 .dashboard-page {
+  background-color: #202020;
+  height: 100vh;
+
   .btn {
     width: auto;
   }
@@ -13,6 +16,14 @@
 
     .search-bar-inner-container {
       width: 80%;
+
+      .search-header {
+        color: #ffffff;
+      }
+
+      .text-muted {
+        color: #ffffff !important;
+      }
     }
   }
 
