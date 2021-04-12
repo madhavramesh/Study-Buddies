@@ -20,6 +20,10 @@ const CONFIG = {
 // Size of study groups to form
 const GROUP_SIZE = 4;
 
+const IMG_WIDTH = 430;
+const IMG_HEIGHT = 200;
+const RANDOM_IMAGE_URL = `https://source.unsplash.com/featured/${IMG_WIDTH}x${IMG_HEIGHT}/?dark, study`;
+
 const OwnerDashboardPage: React.FC = ({ match }: any) => {
   const {
     params: { classID },
@@ -73,11 +77,16 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
     axios
       .get(`http://localhost:4567/form_groups/${classID}/${4}`, CONFIG)
       .then((response: any) => {
-        setStudyGroups(response.data);
+        console.log(response.data);
+        setStudyGroups(response.data.class);
       })
       .catch((err: any) => {
         console.log(err.response.data);
       });
+  };
+
+  const getStudyGroupStudents = (studyGroup: any) => {
+    return studyGroup.map((s: any) => `${s.second.firstName} ${s.second.lastName}`);
   };
 
   const removeStudent = (studentID: string) => {
@@ -146,9 +155,17 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
         <div className="page-section study-groups">
           <div className="study-groups-header">Study Groups</div>
           <div className="study-groups-body">
-            {studyGroups.map((studyGroup) => (
-              <StudyGroupDisplay groupID="sample" studentNames={studyGroup} />
-            ))}
+            {studyGroups.map((studyGroup: any) => {
+              const studyGroupNames = getStudyGroupStudents(studyGroup);
+              console.log(studyGroupNames);
+              return (
+                <StudyGroupDisplay
+                  groupID={studyGroup[0].first}
+                  studentNames={studyGroupNames}
+                  imageURL={RANDOM_IMAGE_URL}
+                />
+              );
+            })}
           </div>
         </div>
 

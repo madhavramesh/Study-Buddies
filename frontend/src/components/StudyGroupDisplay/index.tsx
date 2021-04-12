@@ -5,15 +5,13 @@ import './StudyGroupDisplayStyle.scss';
 type StudyGroupDisplayProps = {
   groupID: string;
   studentNames: Array<string>;
+  imageURL: string;
 };
-
-const IMG_WIDTH = 430;
-const IMG_HEIGHT = 200;
-const RANDOM_IMAGE_URL = `https://source.unsplash.com/featured/${IMG_WIDTH}x${IMG_HEIGHT}/?dark, studyr`;
 
 const StudyGroupDisplay: React.FC<StudyGroupDisplayProps> = ({
   groupID,
   studentNames,
+  imageURL,
 }: StudyGroupDisplayProps) => {
   const [studentNamesFirstHalf, setStudentNamesFirstHalf] = useState<Array<string>>([]);
   const [studentNamesSecondHalf, setStudentNamesSecondHalf] = useState<Array<string>>([]);
@@ -27,18 +25,18 @@ const StudyGroupDisplay: React.FC<StudyGroupDisplayProps> = ({
   return (
     <>
       <Card className="study-group-card">
-        <Card.Img src={RANDOM_IMAGE_URL} alt="" />
+        <Card.Img src={imageURL} alt="" />
         <div>
           <Card.ImgOverlay>
             <Card.Title className="card-header">{groupID}</Card.Title>
             <Card.Text className="student-cols">
               <div className="students-col-1">
-                {studentNamesFirstHalf.map((studentName: any) => (
+                {studentNamesFirstHalf.map((studentName: string) => (
                   <div className={`student ${studentName}`}>{studentName}</div>
                 ))}
               </div>
               <div className="students-col-2">
-                {studentNamesSecondHalf.map((studentName: any) => (
+                {studentNamesSecondHalf.map((studentName: string) => (
                   <div className={`student ${studentName}`}>{studentName}</div>
                 ))}
               </div>
