@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Card, Form, FormControl, ListGroup, Nav, Table } from 'react-bootstrap';
 import './TimesPane.scss';
-import { blue } from '@material-ui/core/colors';
-import TimeCard from '../TimeCard';
 
 // TimeProps consumes a number which is either is a multiple is a factor of 60.
 // this indicates the length of
@@ -26,6 +24,9 @@ const TimesPane: React.FC<TimeProps> = ({ slotLength }) => {
       }
     } else {
       hoursBase = `00${(Math.floor(balancedTime / 100) - 12).toString()}`;
+      if (hoursBase === '000') {
+        hoursBase = '0012';
+      }
     }
 
     const minutesBase = `00${(time % 100).toString()}`;
@@ -41,6 +42,7 @@ const TimesPane: React.FC<TimeProps> = ({ slotLength }) => {
   const times: Array<string> = [];
   let curTime = 0;
   let timeToAdd = '';
+
   // Adds the times into times
   while (curTime < 2400) {
     if ((curTime + slotLength) % 100 === 60) {
@@ -79,6 +81,27 @@ const TimesPane: React.FC<TimeProps> = ({ slotLength }) => {
   const singleDayBooleans: Array<boolean> = times.map(() => false);
   const initialSelections: Array<Array<boolean>> = days.map(() => [...singleDayBooleans]);
   const [selectedTimes, setSelectedTimes] = useState(initialSelections);
+  const [lastToggledCell, setLastToggledCell] = useState([-1, -1]);
+
+  const [isMouseDown, setIsMouseDown] = useState(false);
+  function detectMouseDown(e: any) {
+    e.preventDefault();
+    const { cellIndex } = e.target;
+    const { rowIndex } = e.target.parentElement;
+
+    setIsMouseDown(true);
+    // There are 7 cell index, they coincide with the first index of the 2d array
+    const newSelectedTimes = [...selectedTimes];
+    newSelectedTimes[cellIndex][rowIndex - 1] = !newSelectedTimes[cellIndex][rowIndex - 1];
+    setSelectedTimes(newSelectedTimes);
+    setLastToggledCell([cellIndex, rowIndex]);
+  }
+
+  function detectMouseUp(e: any) {
+    e.preventDefault();
+    setIsMouseDown(false);
+    setLastToggledCell([-1, -1]);
+  }
 
   function selectTimes(e: any) {
     e.preventDefault();
@@ -86,15 +109,18 @@ const TimesPane: React.FC<TimeProps> = ({ slotLength }) => {
     const { cellIndex } = e.target;
     const { rowIndex } = e.target.parentElement;
 
-    console.log(e.target.style);
-    console.log(cellIndex);
-    console.log(rowIndex);
-    // There are 7 cell index, they coincide with the first index of the 2d array
-    const newSelectedTimes = [...selectedTimes];
-    newSelectedTimes[cellIndex][rowIndex - 1] = !newSelectedTimes[cellIndex][rowIndex - 1];
-    setSelectedTimes(newSelectedTimes);
-    console.log('Selected Times');
-    console.log(selectedTimes);
+    if (isMouseDown && !(cellIndex === lastToggledCell[0] && rowIndex === lastToggledCell[1])) {
+      console.log(e.target.style);
+      console.log(cellIndex);
+      console.log(rowIndex);
+      // There are 7 cell index, they coincide with the first index of the 2d array
+      const newSelectedTimes = [...selectedTimes];
+      newSelectedTimes[cellIndex][rowIndex - 1] = !newSelectedTimes[cellIndex][rowIndex - 1];
+      setSelectedTimes(newSelectedTimes);
+      setLastToggledCell([cellIndex, rowIndex]);
+      console.log('Selected Times');
+      console.log(selectedTimes);
+    }
   }
 
   return (
@@ -107,18 +133,18 @@ const TimesPane: React.FC<TimeProps> = ({ slotLength }) => {
             ))}
           </tr>
         </thead>
-        <tbody>
-          {times.map((timeText) => (
+        <tbody className="times-pane-table-body">
+          {times.map((timeText, rowIndex) => (
             <tr>
-              {days.map(() => (
+              {days.map((_day, cellIndex) => (
                 <td
                   role="presentation"
                   className={
-                    selectedTimes[this.cellIndex][this.parentElement.rowIndex]
-                      ? 'selected-time'
-                      : 'unselected-time'
+                    selectedTimes[cellIndex][rowIndex] ? 'selected-time' : 'unselected-time'
                   }
-                  onClick={selectTimes}
+                  onMouseDown={detectMouseDown}
+                  onMouseUp={detectMouseUp}
+                  onMouseMove={selectTimes}
                   onKeyDown={selectTimes}
                 >
                   {' '}
