@@ -1,6 +1,6 @@
 package edu.brown.cs.student.groups;
 
-import edu.brown.cs.student.distance.DistanceUtils;
+import edu.brown.cs.student.obsoletedistanceutils.DistanceUtils;
 import org.json.JSONException;
 
 import java.io.IOException;

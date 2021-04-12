@@ -98,6 +98,7 @@ public class NewGroupsDatabase {
     String email = rs.getString("email");
     return new Pair<>(RETRIEVE_USER_SUCCESS, new PersonInfo(personId, firstName, lastName, email));
   }
+
   /**
    * Validates a user's credentials.
    *
@@ -286,7 +287,8 @@ public class NewGroupsDatabase {
    * @return a DBCode representing the status of the class creation
    */
   public Pair<Pair<Integer, String>, DBCode> createClass(String className, String classNumber,
-                                       String classDescription, String classTerm, int ownerId)
+                                                         String classDescription, String classTerm,
+                                                         int ownerId)
       throws SQLException {
     PreparedStatement prep;
     ResultSet rs;
@@ -378,6 +380,31 @@ public class NewGroupsDatabase {
     prep.close();
     rs.close();
     return CLASS_JOIN_SUCCESS;
+  }
+
+  /**
+   * Selects all persons in the specified class.
+   *
+   * @param classId class id
+   * @return the list of all person preferences in the class
+   * @throws SQLException if an error occurs while connecting to the database
+   */
+  public List<PersonPreferences> getPersonsInClass(int classId) throws SQLException {
+    PreparedStatement prep;
+    ResultSet rs;
+    prep = conn.prepareStatement("SELECT * FROM class WHERE class_id=?;");
+    prep.setInt(1, classId);
+    rs = prep.executeQuery();
+    List<PersonPreferences> personPreferences = new LinkedList<>();
+    while (rs.next()) {
+      int personId = rs.getInt("person_id");
+      String times = rs.getString("times");
+      String dorm = rs.getString("dorm");
+      String preferences = rs.getString("preferences");
+      int groupId = rs.getInt("group_id") != 0 ? rs.getInt("group_id") : -1;
+      personPreferences.add(new PersonPreferences(personId, times, dorm, preferences, groupId));
+    }
+    return personPreferences;
   }
 
   /**
