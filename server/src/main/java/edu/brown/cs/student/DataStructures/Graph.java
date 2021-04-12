@@ -48,7 +48,9 @@ public class Graph {
    * @param n node to be removed.
    */
   public void removeNode(IGNode n) {
+
     nodes.remove(n);
+
   }
 
   /**
