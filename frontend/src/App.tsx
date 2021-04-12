@@ -12,7 +12,6 @@ import Preferences from './components/Preferences';
 import HomePage from './pages/HomePage';
 import DashboardPage from './pages/DashboardPage';
 import OwnerDashboardPage from './pages/OwnerDashboardPage';
-import OwnersDashboard from './pages/OwnersDashboard';
 
 const App: React.FC = () => {
   return (
@@ -26,7 +25,7 @@ const App: React.FC = () => {
           <Route path="/dashboard" component={DashboardPage} />
           <Route path="/owner-dashboard" component={OwnerDashboardPage} />
           <Route path="/profile" component={Signin} />
-          <Route path="/owners-dashboard" component={OwnersDashboard} />
+          <Route path="/class/:classID" component={OwnerDashboardPage} />
           {/* <Route path="/preferences" component={Preferences} />
           <Route path="/carddemo" component={() => <TimesPane slotLength={30} />} /> */}
         </Switch>
