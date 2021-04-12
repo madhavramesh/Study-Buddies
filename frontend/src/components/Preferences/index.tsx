@@ -23,7 +23,8 @@ const Preferences: React.FC = () => {
             term="Spring"
             desc="This is weird"
             classCode="123123"
-            owner="guys"
+            owner
+            // enrolled={false}
           />
         ))}
       </ListGroup>

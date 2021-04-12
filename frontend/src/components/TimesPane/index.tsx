@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
-import { Button, Card, Form, FormControl, ListGroup, Nav, Table } from 'react-bootstrap';
+import { Table } from 'react-bootstrap';
 import './TimesPane.scss';
 
 // TimeProps consumes a number which is either is a multiple is a factor of 60.
 // this indicates the length of
 type TimeProps = {
   slotLength: number;
+  selectedTimes: Array<Array<number>>;
+  setSelectedTimes: any;
 };
 
-const TimesPane: React.FC<TimeProps> = ({ slotLength }) => {
+const TimesPane: React.FC<TimeProps> = ({ slotLength, selectedTimes, setSelectedTimes }) => {
   const convertToTime = (time: number): string => {
     const balancedTime: number = time % 2400;
     let am = true;
@@ -80,7 +82,6 @@ const TimesPane: React.FC<TimeProps> = ({ slotLength }) => {
 
   const singleDayBooleans: Array<boolean> = times.map(() => false);
   const initialSelections: Array<Array<boolean>> = days.map(() => [...singleDayBooleans]);
-  const [selectedTimes, setSelectedTimes] = useState(initialSelections);
   const [lastToggledCell, setLastToggledCell] = useState([-1, -1]);
 
   const [isMouseDown, setIsMouseDown] = useState(false);
@@ -92,7 +93,7 @@ const TimesPane: React.FC<TimeProps> = ({ slotLength }) => {
     setIsMouseDown(true);
     // There are 7 cell index, they coincide with the first index of the 2d array
     const newSelectedTimes = [...selectedTimes];
-    newSelectedTimes[cellIndex][rowIndex - 1] = !newSelectedTimes[cellIndex][rowIndex - 1];
+    newSelectedTimes[cellIndex][rowIndex - 1] = newSelectedTimes[cellIndex][rowIndex - 1] ? 0 : 1;
     setSelectedTimes(newSelectedTimes);
     setLastToggledCell([cellIndex, rowIndex]);
   }
@@ -110,22 +111,22 @@ const TimesPane: React.FC<TimeProps> = ({ slotLength }) => {
     const { rowIndex } = e.target.parentElement;
 
     if (isMouseDown && !(cellIndex === lastToggledCell[0] && rowIndex === lastToggledCell[1])) {
-      console.log(e.target.style);
-      console.log(cellIndex);
-      console.log(rowIndex);
+      // console.log(e.target.style);
+      // console.log(cellIndex);
+      // console.log(rowIndex);
       // There are 7 cell index, they coincide with the first index of the 2d array
       const newSelectedTimes = [...selectedTimes];
-      newSelectedTimes[cellIndex][rowIndex - 1] = !newSelectedTimes[cellIndex][rowIndex - 1];
+      newSelectedTimes[cellIndex][rowIndex - 1] = newSelectedTimes[cellIndex][rowIndex - 1] ? 0 : 1;
       setSelectedTimes(newSelectedTimes);
       setLastToggledCell([cellIndex, rowIndex]);
-      console.log('Selected Times');
-      console.log(selectedTimes);
+      // console.log('Selected Times');
+      // console.log(selectedTimes);
     }
   }
 
   return (
     <div>
-      <Table striped bordered hover>
+      <Table responsive striped bordered hover>
         <thead>
           <tr>
             {days.map((day) => (

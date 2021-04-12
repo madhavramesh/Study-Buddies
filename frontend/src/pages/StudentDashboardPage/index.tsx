@@ -89,3 +89,25 @@ const StudentDashboardPage: React.FC = ({ match }: any) => {
 };
 
 export default StudentDashboardPage;
+
+/*
+const leaveClass = () => {
+    const postParameters = {
+      id: sessionStorage.get('user_id'),
+      class_id: { classID },
+    };
+
+    axios
+      .post(`http://localhost:4567/leave_class`, postParameters, CONFIG)
+      .then((response: any) => {
+        if (response.status === 0) {
+          history.push('/dashboard');
+        } else {
+          console.log('User not allowed to be on this page');
+        }
+      })
+      .catch((err: any) => {
+        console.log(err);
+      });
+  };
+ */

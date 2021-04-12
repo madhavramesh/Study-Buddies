@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
 import ModifiedNavBar from '../../components/ModifiedNavbar';
 import ClassCreatedModal from '../../components/ClassCreatedModal';
 import GeneralInfoClass from '../../components/GeneralInfoClass';
-import './OwnersDashboard.scss';
 import StudentInfo from '../../components/StudentInfo';
 import StudyGroupDisplay from '../../components/StudyGroupDisplay';
+import './OwnersDashboard.scss';
 
 const axios = require('axios');
 
@@ -24,6 +25,8 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
     params: { classID },
   } = match;
 
+  const history = useHistory();
+
   const [className, setClassName] = useState('');
   const [classNumber, setClassNumber] = useState('');
   const [classDescription, setClassDescription] = useState('');
@@ -33,6 +36,8 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
 
   const [students, setStudents] = useState([]);
   const [studyGroups, setStudyGroups] = useState([]);
+
+  const username = `${sessionStorage.getItem('first_name')} ${sessionStorage.getItem('last_name')}`;
 
   const getClassInfo = () => {
     axios
@@ -75,20 +80,58 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
       });
   };
 
+  const removeStudent = (studentID: string) => {
+    const postParameters = {
+      id: studentID,
+      class_id: classID,
+    };
+
+    axios
+      .post(`http://localhost:4567/leave_class`, postParameters, CONFIG)
+      .then((response: any) => {
+        if (response.data.status === 0) {
+          const studentsCopy = [...students];
+          setStudents(studentsCopy.filter((studentCopy: any) => studentCopy.id !== studentID));
+          console.log('User successfully removed');
+        } else {
+          console.log('User not allowed to be on this page');
+        }
+      })
+      .catch((err: any) => {
+        console.log(err);
+      });
+  };
+
+  const deleteClass = () => {
+    const postParameters = {
+      id: sessionStorage.getItem('user_id'),
+      class_id: { classID },
+    };
+
+    axios
+      .post(`http://localhost:4567/delete_class`, postParameters, CONFIG)
+      .then((response: any) => {
+        if (response.status === 0) {
+          history.push('/dashboard');
+        } else {
+          console.log('User not allowed to be on this page');
+        }
+      })
+      .catch((err: any) => {
+        console.log(err);
+      });
+  };
+
   const [modalShow, setModalShow] = useState(true);
 
   useEffect(() => {
     getClassInfo();
     getStudents();
-    students.map((student) => {
-      console.log(student);
-      return 0;
-    });
   }, []);
 
   return (
     <div className="owner-dashboard-page">
-      <ModifiedNavBar username="Madhav Ramesh" />
+      <ModifiedNavBar username={username} />
 
       <div className="class-created-modal-container">
         <ClassCreatedModal
@@ -130,13 +173,16 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
             {students.map((student: any) => (
               <StudentInfo
                 studentName={`${student.firstName} ${student.lastName}`}
-                removeStudent={() => console.log('Removing')}
+                removeStudent={() => removeStudent(student.id)}
+                removeButton
               />
             ))}
           </div>
-          {/* <Button className="button" size="sm"> */}
-          {/*  Delete Students */}
-          {/* </Button> */}
+          <div className="leave-class-container">
+            <Button className="leave-class-button" onClick={deleteClass}>
+              Leave Class
+            </Button>
+          </div>
         </div>
       </div>
     </div>

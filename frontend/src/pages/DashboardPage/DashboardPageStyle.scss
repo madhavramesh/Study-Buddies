@@ -31,6 +31,22 @@
         }
       }
 
+      .enrolled-toggle-container {
+        margin-top: 20px;
+
+        .btn {
+          border-radius: 0px;
+          outline: none;
+          color: #ffffff;
+          padding: 12px 60px;
+        }
+
+        .btn:not(.active) {
+          color: #000000;
+          background-color: #cccccc;
+        }
+      }
+
       .card-pane-container {
         overflow: auto;
       }
@@ -44,12 +60,4 @@
     margin-bottom: 30px;
     margin-right: 30px;
   }
-}
-
-.buttons{
-  display: flex;
-}
-
-.button{
-
 }

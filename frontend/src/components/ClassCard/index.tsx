@@ -1,7 +1,9 @@
+/* eslint-disable no-nested-ternary */
 import React, { useState, useEffect } from 'react';
 import { Button, Card, Col, Form, Modal } from 'react-bootstrap';
 import './ClassCard.scss';
 import axios from 'axios';
+import { useHistory } from 'react-router';
 
 type ClassProps = {
   cid: number;
@@ -10,7 +12,7 @@ type ClassProps = {
   desc: string;
   term: string;
   classCode: string;
-  owner: any;
+  owner: boolean;
 };
 
 function emojifyTerm(term: string): string {
@@ -28,6 +30,7 @@ function emojifyTerm(term: string): string {
 }
 
 const ClassCard: React.FC<ClassProps> = ({ cid, name, number, desc, term, classCode, owner }) => {
+  const history = useHistory();
   const [show, setShow] = useState(false);
   const [code, setCode] = useState('');
 
@@ -48,9 +51,11 @@ const ClassCard: React.FC<ClassProps> = ({ cid, name, number, desc, term, classC
       },
     };
     const response = await axios.post('http://localhost:4567/join_class', postParameters, config);
-    console.log(response.data);
     if (response.data.status === 0) {
       setValidCode(true);
+      setTimeout(() => {
+        history.push(`/class/student/${cid}`);
+      }, 2000);
     }
     setValidCodeMessage(response.data.message);
   };
@@ -95,13 +100,31 @@ const ClassCard: React.FC<ClassProps> = ({ cid, name, number, desc, term, classC
           <Card.Text style={{ fontSize: '16px' }}>
             {owner ? `Owner | Class Code: ${classCode}` : ''}
           </Card.Text>
-          <Button
-            className="class-card-button"
-            variant="outline-info"
-            onClick={() => setShow(true)}
-          >
-            More Info
-          </Button>
+          {owner ? (
+            <Button
+              className="class-card-button"
+              variant="outline-info"
+              onClick={() => history.push(`/class/owner/${cid}`)}
+            >
+              Dashboard
+            </Button>
+          ) : validCode ? (
+            <Button
+              className="class-card-button"
+              variant="outline-info"
+              onClick={() => history.push(`/class/student/${cid}`)}
+            >
+              Go to Class
+            </Button>
+          ) : (
+            <Button
+              className="class-card-button"
+              variant="outline-info"
+              onClick={() => setShow(true)}
+            >
+              More Info
+            </Button>
+          )}
         </Card.Body>
       </Card>
 
@@ -131,7 +154,7 @@ const ClassCard: React.FC<ClassProps> = ({ cid, name, number, desc, term, classC
                 <Form.Control
                   className="mb-2"
                   id="inlineFormInput"
-                  placeholder={validCode ? 'Already joined class!' : 'Enter Class Code...'}
+                  placeholder={validCode ? 'Successfully joined class!' : 'Enter Class Code...'}
                   isInvalid={!validCode && validCodeMessage !== ''}
                   onChange={(e: any) => setCode(e.target.value)}
                   disabled={!!validCode}
@@ -140,20 +163,16 @@ const ClassCard: React.FC<ClassProps> = ({ cid, name, number, desc, term, classC
                 <Form.Control.Feedback type="invalid">{validCodeMessage}</Form.Control.Feedback>
                 <Form.Control.Feedback>{validCodeMessage}</Form.Control.Feedback>
               </Col>
-              {!validCode ? (
-                <Col xs="auto">
-                  <Button
-                    variant="primary"
-                    className="mb-2"
-                    onClick={checkJoinCode}
-                    disabled={!!validCode}
-                  >
-                    JOIN CLASS
-                  </Button>
-                </Col>
-              ) : (
-                ''
-              )}
+              <Col xs="auto">
+                <Button
+                  variant="primary"
+                  className="mb-2"
+                  onClick={checkJoinCode}
+                  disabled={!!validCode}
+                >
+                  JOIN CLASS
+                </Button>
+              </Col>
             </Form.Row>
           </Form>
         </Modal.Footer>

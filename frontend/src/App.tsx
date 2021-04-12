@@ -12,6 +12,7 @@ import PeoplePane from './components/PeoplePane';
 import TimesPane from './components/TimesPane';
 import StudentDashboardPage from './pages/StudentDashboardPage';
 import ProfilePage from './pages/ProfilePage';
+import PreferencesButton from './components/PreferencesButton';
 
 const App: React.FC = () => {
   return (
@@ -24,14 +25,14 @@ const App: React.FC = () => {
           <Route path="/signup" component={Signup} />
           <Route path="/about" component={AboutPage} />
           <Route path="/dashboard" component={DashboardPage} />
-          <Route path="/owner-dashboard" component={OwnerDashboardPage} />
-          <Route path="/student-dashboard" component={StudentDashboardPage} />
           <Route path="/profile" component={Signin} />
-          <Route path="/class/:classID" component={OwnerDashboardPage} />
           <Route path="/profile-page" component={ProfilePage} />
+          <Route path="/class/owner/:classID" component={OwnerDashboardPage} />
+          <Route path="/class/student/:classID" component={StudentDashboardPage} />
           <Route path="/test_people_pane" component={PeoplePane} />
+          <Route path="/test_preferences_modal" component={PreferencesButton} />
           {/* <Route path="/preferences" component={Preferences} /> */}
-          <Route path="/carddemo" component={() => <TimesPane slotLength={60} />} />
+          {/* <Route path="/carddemo" component={() => <TimesPane slotLength={60} />} /> */}
         </Switch>
       </Router>
     </div>

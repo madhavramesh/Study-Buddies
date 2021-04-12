@@ -19,8 +19,6 @@ import edu.brown.cs.student.groups.testcommands.JoinClassCommand;
 import edu.brown.cs.student.groups.testcommands.RegisterUserCommand;
 import edu.brown.cs.student.groups.testcommands.ValidateUserCommand;
 import edu.brown.cs.student.input.ReCAPTCHAVerification;
-import joptsimple.OptionParser;
-import joptsimple.OptionSet;
 import org.json.JSONObject;
 import spark.ExceptionHandler;
 import spark.Request;
@@ -42,10 +40,9 @@ import java.util.Map;
 
 public final class Main {
 
-  private static final int DEFAULT_PORT = 4567;
   private static final String RECAPTCHA_SECRET_KEY = "6LfWUKQaAAAAALzRNvkz7PQtNeVml5WIprs-BzlA";
 
-  // list of trigger actions
+  // list of trigger actions for testing
   private final List<TriggerAction> actionList = List.of(
       new RegisterUserCommand(),
       new ValidateUserCommand(),
@@ -79,23 +76,11 @@ public final class Main {
     new Main(args).run();
   }
 
-  private final String[] args;
-
   private Main(String[] args) {
-    this.args = args;
   }
 
   private void run() throws SQLException, ClassNotFoundException, IOException {
-    // Parse command line arguments
-    OptionParser parser = new OptionParser();
-    parser.accepts("gui");
-    parser.accepts("port").withRequiredArg().ofType(Integer.class)
-        .defaultsTo(DEFAULT_PORT);
-    OptionSet options = parser.parse(args);
-
-    if (options.has("gui")) {
-      runSparkServer((int) options.valueOf("port"));
-    }
+    runSparkServer();
 
     GROUPS_DATABASE = new NewGroupsDatabase(PATH_TO_DB);
     heuristic = new HeuristicUtils();
@@ -109,8 +94,8 @@ public final class Main {
     repl.run();
   }
 
-  private void runSparkServer(int port) {
-    Spark.port(port);
+  private void runSparkServer() {
+    Spark.port(4567);
     Spark.externalStaticFileLocation("src/main/resources/static");
 
     Spark.options("/*", (request, response) -> {
@@ -133,18 +118,26 @@ public final class Main {
     Spark.exception(Exception.class, new ExceptionPrinter());
 
     // Setup Spark Routes
+    // account setup
     Spark.post("/register_account", new RegisterUserHandler());
     Spark.post("/validate_account", new LoginUserHandler());
+    Spark.post("/delete_account", new DeleteUserHandler());
+    // join/create/get all class info handlers
     Spark.get("/get_all_classes", new GetAllClasses());
     Spark.get("/get_classes_with/:owner_id", new GetClassesWithOwnerId());
     Spark.get("/get_class_with/:class_id", new GetClassWithClassId());
     Spark.get("/get_enrollments/:id", new GetEnrollments());
     Spark.post("/create_class", new CreateClass());
     Spark.post("/join_class", new JoinClass());
+    Spark.post("/leave_class", new LeaveClass());
+    Spark.post("/delete_class", new DeleteClass());
+    // person info
     Spark.get("/person_info/:id", new GetPersonInfo());
+    // specific class handlers
     Spark.get("/get_persons_in/:class_id", new GetPersonsInClass());
     Spark.get("/get_person_pref_in/:class_id/:id", new GetPersonPrefInClass());
     Spark.get("/get_person_prefs_in/:class_id", new GetPersonsPrefsInClass());
+    Spark.post("/set_preferences", new SetPreferences());
     Spark.get("/form_groups/:class_id/:group_size", new FormGroups());
   }
 
@@ -238,10 +231,42 @@ public final class Main {
       String password = data.getString("password");
       Pair<Integer, DBCode> result = GROUPS_DATABASE.validateUser(email, password);
       DBCode code = result.getSecond();
+      boolean success = code.getCode() == 0;
+      Pair<DBCode, PersonInfo> personInfo = success
+        ?  GROUPS_DATABASE.getPersonInfo(result.getFirst()) : null;
       Map<String, Object> variables = ImmutableMap.of(
           "status", code.getCode(),
           "message", code.getMessage(),
-          "id", code.getCode() == 0 ? result.getFirst() : -1
+          "id", success ? result.getFirst() : -1,
+          "first_name", success ? personInfo.getSecond().getFirstName() : "",
+          "last_name", success ? personInfo.getSecond().getLastName() : ""
+      );
+      return GSON.toJson(variables);
+    }
+  }
+
+  /**
+   * Deletes a user from the database.JSON objects must be in the form:
+   * {
+   *   id: ...,
+   *   password: ...,
+   * }.
+   * The returned JSON object will have the form:
+   * {
+   *   status: [status of delete request],
+   *   message: [message explaining delete status],
+   * }
+   */
+  private static class DeleteUserHandler implements Route {
+    @Override
+    public Object handle(Request request, Response response) throws Exception {
+      JSONObject data = new JSONObject(request.body());
+      int id = Integer.parseInt(data.getString("id"));
+      String password = data.getString("password");
+      DBCode code = GROUPS_DATABASE.deleteUser(id, password);
+      Map<String, Object> variables = ImmutableMap.of(
+          "status", code.getCode(),
+          "message", code.getMessage()
       );
       return GSON.toJson(variables);
     }
@@ -288,17 +313,17 @@ public final class Main {
     @Override
     public Object handle(Request request, Response response) throws Exception {
       ClassInfo c =
-              GROUPS_DATABASE.getClassByClassId(Integer.parseInt(request.params(":class_id")));
+          GROUPS_DATABASE.getClassByClassId(Integer.parseInt(request.params(":class_id")));
       Map<String, Object> variables =
-              Map.of("class_name", c.getClassName(), "class_number", c.getClassNumber(),
-                      "class_description", c.getClassDescription(), "class_term", c.getClassTerm(),
-                      "class_code", c.getClassCode(), "owner_id", c.getOwnerId());
+          Map.of("class_name", c.getClassName(), "class_number", c.getClassNumber(),
+              "class_description", c.getClassDescription(), "class_term", c.getClassTerm(),
+              "class_code", c.getClassCode(), "owner_id", c.getOwnerId());
       return GSON.toJson(variables);
     }
   }
 
   /**
-   * Forms groups
+   * Forms groups.
    * {
    * class: the ClassInfo
    * }
@@ -306,10 +331,10 @@ public final class Main {
   private static class FormGroups implements Route {
     @Override
     public Object handle(Request request, Response response) throws Exception {
-      List<List<PersonInfo>> theGroups =
-              heuristic.getGroups(
-                      Integer.parseInt(request.params(":class_id")), 
-                      Integer.parseInt(request.params(":group_size")));
+      List<List<Pair<Integer, PersonInfo>>> theGroups =
+          heuristic.getGroups(
+              Integer.parseInt(request.params(":class_id")),
+              Integer.parseInt(request.params(":group_size")));
       Map<String, Object> variables = ImmutableMap.of("class", theGroups);
       return GSON.toJson(variables);
     }
@@ -401,6 +426,60 @@ public final class Main {
   }
 
   /**
+   * Attempts to leave a class. JSON objects must be in the form:
+   * {
+   *   id: ...,
+   *   class_id: ...,
+   * }.
+   * The returned JSON object will have the form:
+   * {
+   *   status: [status explaining leave class request],
+   *   message: [message explaining leave class status]
+   * }
+   */
+  private static class LeaveClass implements Route {
+    @Override
+    public Object handle(Request request, Response response) throws Exception {
+      JSONObject data = new JSONObject(request.body());
+      int id = Integer.parseInt(data.getString("id"));
+      int classId = data.getInt("class_id");
+      DBCode code = GROUPS_DATABASE.leaveClass(id, classId);
+      Map<String, Object> variables = ImmutableMap.of(
+          "status", code.getCode(),
+          "message", code.getMessage()
+      );
+      return GSON.toJson(variables);
+    }
+  }
+
+  /**
+   * Attempts to delete a class. JSON objects must be in the form:
+   * {
+   *   id: ...,
+   *   class_id: ...,
+   * }.
+   * The returned JSON object will have the form:
+   * {
+   *   status: [status explaining delete class request],
+   *   message: [message explaining delete class status]
+   * }
+   */
+  private static class DeleteClass implements Route {
+    @Override
+    public Object handle(Request request, Response response) throws Exception {
+      JSONObject data = new JSONObject(request.body());
+      int id = Integer.parseInt(data.getString("id"));
+      int classId = data.getInt("class_id");
+      DBCode code = GROUPS_DATABASE.deleteClass(id, classId);
+      Map<String, Object> variables = ImmutableMap.of(
+          "status", code.getCode(),
+          "message", code.getMessage()
+      );
+      return GSON.toJson(variables);
+    }
+  }
+
+  /**
    * Gets the person's info. The returned JSON object will have the form:
    * {
    * status: [the status of the person fetching operation],
@@ -416,7 +495,7 @@ public final class Main {
   private static class GetPersonInfo implements Route {
     @Override
     public Object handle(Request request, Response response) throws Exception {
-      int id = Integer.parseInt(request.params(":id"));
+      int id = Integer.valueOf(request.params(":id"));
       Pair<DBCode, PersonInfo> result = GROUPS_DATABASE.getPersonInfo(id);
       DBCode code = result.getFirst();
       PersonInfo personInfo = result.getSecond();
@@ -438,7 +517,7 @@ public final class Main {
    * Gets the person info of all enrollees in the class. The returned JSON object will have the
    * form:
    * {
-   *   persons: [a list of PersonInfo objects]
+   * persons: [a list of PersonInfo objects]
    * }
    */
   private static class GetPersonsInClass implements Route {
@@ -456,9 +535,9 @@ public final class Main {
   /**
    * Gets the person's preferences in a class. The returned JSON object will have the form:
    * {
-   *   status: [the status of the preferences fetching operation],
-   *   message: [message explaining preferences fetching status],
-   *   preferences: [person's preferences if successful, or empty string]
+   * status: [the status of the preferences fetching operation],
+   * message: [message explaining preferences fetching status],
+   * preferences: [person's preferences if successful, or empty string]
    * }
    */
   private static class GetPersonPrefInClass implements Route {
@@ -478,10 +557,11 @@ public final class Main {
       return GSON.toJson(variables);
     }
   }
+
   /**
    * Gets all persons in a specified class. The returned JSON object will have the form:
    * {
-   *   persons: {list of persons in a class},
+   * persons: {list of persons in a class},
    * }
    */
   private static class GetPersonsPrefsInClass implements Route {
@@ -492,6 +572,41 @@ public final class Main {
       System.out.println(persons);
       Map<String, Object> variables = ImmutableMap.of(
           "persons", persons
+      );
+      return GSON.toJson(variables);
+    }
+  }
+
+  /**
+   * Sets preferences given information from the frontend. JSON objects must have the form:
+   * {
+   * person_id: ...,
+   * class_id: ...,
+   * dorm: ...,
+   * person_preferences: ...,
+   * time_preferences: ...,
+   * }
+   * The returned JSON object will have the form:
+   * {
+   * status: [status of setting preferences operation]
+   * message: [message explaining status],
+   * }
+   */
+  private static class SetPreferences implements Route {
+    @Override
+    public Object handle(Request request, Response response) throws Exception {
+      JSONObject data = new JSONObject(request.body());
+      int personId = data.getInt("person_id");
+      int classId = data.getInt("class_id");
+      String dorm = data.getString("dorm");
+      String personPreferences = data.getString("person_preferences");
+      String timePreferences = data.getString("time_preferences");
+      DBCode code =
+          GROUPS_DATABASE
+              .setPreferences(personId, classId, dorm, personPreferences, timePreferences);
+      Map<String, Object> variables = ImmutableMap.of(
+          "status", code.getCode(),
+          "message", code.getMessage()
       );
       return GSON.toJson(variables);
     }

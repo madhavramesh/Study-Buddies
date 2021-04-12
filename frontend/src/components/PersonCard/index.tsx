@@ -22,10 +22,12 @@ const PersonCard: React.FC<PersonProps> = ({
     selectedValue === -1 ? 'not-preferred' : selectedValue === 1 ? 'preferred' : '';
   return (
     <Card className={`person-card ${background}`} onClick={handleClick}>
-      <Card.Title>
+      {/* <Card.Title className="person-title"> */}
+      <div className="person-title">
         {firstName} {lastName}
-      </Card.Title>
-      <div style={{ textAlign: 'right', paddingRight: '10px' }}>{id}</div>
+      </div>
+      {/* </Card.Title> */}
+      <div className="bottom-right-id">{id}</div>
     </Card>
   );
 };
