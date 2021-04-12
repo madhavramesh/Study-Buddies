@@ -37,7 +37,7 @@ const ModifiedNavBar: React.FC<ModifiedNavBarProps> = ({ username }) => {
           <Dropdown.Item
             as="button"
             onClick={() => {
-              localStorage.removeItem('user_id');
+              sessionStorage.removeItem('user_id');
               history.push('/signin');
             }}
           >
