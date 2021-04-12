@@ -12,6 +12,7 @@ import edu.brown.cs.student.groups.testcommands.GetAllClassesCommand;
 import edu.brown.cs.student.groups.testcommands.GetClassesWithOwnerIdCommand;
 import edu.brown.cs.student.groups.testcommands.GetEnrollmentsCommand;
 import edu.brown.cs.student.groups.testcommands.GetPersonInfoCommand;
+import edu.brown.cs.student.groups.testcommands.GetPersonsInClassCommand;
 import edu.brown.cs.student.groups.testcommands.JoinClassCommand;
 import edu.brown.cs.student.groups.testcommands.RegisterUserCommand;
 import edu.brown.cs.student.groups.testcommands.ValidateUserCommand;
@@ -51,7 +52,8 @@ public final class Main {
       new GetEnrollmentsCommand(),
       new CreateClassCommand(),
       new JoinClassCommand(),
-      new GetPersonInfoCommand()
+      new GetPersonInfoCommand(),
+      new GetPersonsInClassCommand()
   );
   // GSON instance for handling JSON requests
   private static final Gson GSON = new Gson();
