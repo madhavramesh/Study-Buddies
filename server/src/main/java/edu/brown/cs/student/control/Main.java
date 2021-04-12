@@ -130,6 +130,7 @@ public final class Main {
     Spark.post("/validate_account", new LoginUserHandler());
     Spark.get("/get_all_classes", new GetAllClasses());
     Spark.get("/get_classes_with/:owner_id", new GetClassesWithOwnerId());
+    Spark.get("/get_class_with/:class_id", new GetClassWithClassId());
     Spark.get("/get_enrollments/:id", new GetEnrollments());
     Spark.post("/create_class", new CreateClass());
     Spark.post("/join_class", new JoinClass());
@@ -262,6 +263,22 @@ public final class Main {
       List<ClassInfo> classes =
           GROUPS_DATABASE.getClassesByOwnerId(Integer.parseInt(request.params(":owner_id")));
       Map<String, Object> variables = ImmutableMap.of("classes", classes);
+      return GSON.toJson(variables);
+    }
+  }
+
+  /**
+   * Retrieves the class with specified ID. The returned JSON object will have the form:
+   * {
+   * class: the ClassInfo
+   * }
+   */
+  private static class GetClassWithClassId implements Route {
+    @Override
+    public Object handle(Request request, Response response) throws Exception {
+      ClassInfo theClass =
+              GROUPS_DATABASE.getClassByClassId(Integer.parseInt(request.params(":class_id")));
+      Map<String, Object> variables = ImmutableMap.of("class", theClass);
       return GSON.toJson(variables);
     }
   }

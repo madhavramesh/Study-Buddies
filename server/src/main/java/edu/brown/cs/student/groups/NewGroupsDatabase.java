@@ -207,6 +207,26 @@ public class NewGroupsDatabase {
   }
 
   /**
+   * Gets the class with specified ID.
+   * @param classId the class's ID
+   * @return the class
+   * @throws SQLException if an error occurs while connecting to the database
+   */
+  public ClassInfo getClassByClassId(int classId) throws SQLException {
+    System.out.println(classId);
+    ClassInfo res = null;
+    PreparedStatement prep = conn.prepareStatement("SELECT * FROM classes WHERE class_id=?");
+    prep.setInt(1, classId);
+    ResultSet rs = prep.executeQuery();
+    if (rs.next()) {
+      res = processClassInfo(rs);
+    } 
+    prep.close();
+    rs.close();
+    return res;
+  }
+
+  /**
    * Gets all enrollments of a person.
    *
    * @param id the person's id
