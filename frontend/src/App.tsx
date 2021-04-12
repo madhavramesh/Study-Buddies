@@ -12,7 +12,6 @@ import Preferences from './components/Preferences';
 import HomePage from './pages/HomePage';
 import DashboardPage from './pages/DashboardPage';
 import TestDisplayClassesPage from './pages/TestDisplayClassesPage';
-import OwnerDashboard from './components/ClassCreatedModal';
 import OwnerDashboardPage from './pages/OwnerDashboardPage';
 
 const App: React.FC = () => {

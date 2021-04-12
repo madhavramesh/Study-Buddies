@@ -12,7 +12,9 @@ public class Heuristic {
    * @param p2 Person 2
    * @return Final weight metric
    */
-  public double calculate(PersonInfo p1, PersonInfo p2) {}
+  public double calculate(PersonInfo p1, PersonInfo p2) {
+    return 0;
+  }
 
   /**
    * Calculates the metric of people preferring eachother.
@@ -22,7 +24,7 @@ public class Heuristic {
    * @return matching metric
    */
   private double matchingMetric(PersonInfo p1, PersonInfo p2) {
-
+    return 0;
   }
 
   /**
@@ -32,7 +34,9 @@ public class Heuristic {
    * @param p2 Person 2
    * @return overlap metric
    */
-  private double hoursOverlapMetric(PersonInfo p1, PersonInfo p2) {}
+  private double hoursOverlapMetric(PersonInfo p1, PersonInfo p2) {
+    return 0;
+  }
 
   /**
    * Calculates the metric of the dorm location distance.
@@ -40,6 +44,8 @@ public class Heuristic {
    * @param p2 Person 2
    * @return location distance metric
    */
-  private double dormLocationMetric(PersonInfo p1, PersonInfo p2) {}
+  private double dormLocationMetric(PersonInfo p1, PersonInfo p2) {
+    return 0;
+  }
 
 }

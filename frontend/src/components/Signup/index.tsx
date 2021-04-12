@@ -49,7 +49,7 @@ const Signup: React.FC = () => {
       .then((response: any) => {
         if (response.data.status === 0) {
           console.log(true);
-          history.push('/dashboard');
+          history.push('/signin');
         } else {
           console.log(response.data);
           setEmailMessage(response.data.email);
