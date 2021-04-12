@@ -14,7 +14,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -353,9 +352,19 @@ public class NewGroupsDatabase {
     if (!rs.next()) {
       return INVALID_CLASS_CODE;
     }
+    // enroll the person into the class
     prep = conn.prepareStatement("INSERT INTO enrollments values(?,?);");
     prep.setInt(1, id);
     prep.setInt(2, classId);
+    prep.executeUpdate();
+    // add the person's default preferences to the class database
+    prep = conn.prepareStatement("INSERT INTO class(class_id, person_id, times, dorm, preferences)" +
+        "values(?, ?, ?, ?, ?)");
+    prep.setInt(1, classId);
+    prep.setInt(2, id);
+    prep.setString(3, ("0".repeat(24) + ":").repeat(7).substring(0, 174));
+    prep.setString(4, "");
+    prep.setString(5, "");
     prep.executeUpdate();
     prep.close();
     rs.close();
@@ -363,13 +372,71 @@ public class NewGroupsDatabase {
   }
 
   /**
-   * Selects all persons in the specified class.
+   * Selects a specific person's preferences in the class.
+   *
+   * @param personId the person's id
+   * @param classId  the class's id
+   * @return the person's preferences in the class
+   * @throws SQLException if an error occurs while connecting to the database
+   */
+  public Pair<DBCode, PersonPreferences> getPersonPrefInClass(int personId, int classId)
+      throws SQLException {
+    PreparedStatement prep = conn.prepareStatement("SELECT * FROM class WHERE class_id=? AND " +
+        "person_id=?;");
+    prep.setInt(1, classId);
+    prep.setInt(2, personId);
+    ResultSet rs = prep.executeQuery();
+    if (rs.next()) {
+      int id = rs.getInt("person_id");
+      String times = rs.getString("times");
+      String dorm = rs.getString("dorm");
+      String pp = rs.getString("preferences");
+      int groupId = rs.getInt("group_id") != 0 ? rs.getInt("group_id") : -1;
+      rs.close();
+      prep.close();
+      return new Pair<>(RETRIEVE_PREFERENCES_SUCCESS, new PersonPreferences(id, times, dorm, pp,
+          groupId));
+    } else {
+      rs.close();
+      prep.close();
+      return new Pair<>(PERSON_NOT_IN_CLASS, null);
+    }
+  }
+
+  /**
+   * Gets all person info of enrollees in a class.
+   *
+   * @param classId the class's id
+   * @return a list of person info of all enrollees in a class
+   * @throws SQLException if an error occurs while connecting to the database
+   */
+  public List<PersonInfo> getPersonsInClass(int classId) throws SQLException {
+    PreparedStatement prep;
+    ResultSet rs;
+    // We select the person info of all enrolled students in the class
+    prep = conn.prepareStatement("SELECT * FROM logins WHERE id IN (" +
+        "SELECT person_id FROM enrollments WHERE class_id=?);");
+    prep.setInt(1, classId);
+    rs = prep.executeQuery();
+    List<PersonInfo> personInfos = new LinkedList<>();
+    while (rs.next()) {
+      int personId = rs.getInt("id");
+      String firstName = rs.getString("first_name");
+      String lastName = rs.getString("last_name");
+      String email = rs.getString("email");
+      personInfos.add(new PersonInfo(personId, firstName, lastName, email));
+    }
+    return personInfos;
+  }
+
+  /**
+   * Selects all person preferences in the specified class.
    *
    * @param classId class id
    * @return the list of all person preferences in the class
    * @throws SQLException if an error occurs while connecting to the database
    */
-  public List<PersonPreferences> getPersonsInClass(int classId) throws SQLException {
+  public List<PersonPreferences> getPersonsPrefsInClass(int classId) throws SQLException {
     PreparedStatement prep;
     ResultSet rs;
     prep = conn.prepareStatement("SELECT * FROM class WHERE class_id=?;");
@@ -384,6 +451,8 @@ public class NewGroupsDatabase {
       int groupId = rs.getInt("group_id") != 0 ? rs.getInt("group_id") : -1;
       personPreferences.add(new PersonPreferences(personId, times, dorm, preferences, groupId));
     }
+    prep.close();
+    rs.close();
     return personPreferences;
   }
 

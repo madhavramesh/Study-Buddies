@@ -124,7 +124,7 @@ const TimesPane: React.FC<TimeProps> = ({ slotLength }) => {
   }
 
   return (
-    <>
+    <div>
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -155,7 +155,7 @@ const TimesPane: React.FC<TimeProps> = ({ slotLength }) => {
           ))}
         </tbody>
       </Table>
-    </>
+    </div>
   );
 };
 

@@ -23,7 +23,7 @@ public class GetPersonsInClassCommand implements TriggerAction {
           "use the following format: `get_persons_in_class <class_id>`");
     }
     int classId = Integer.parseInt(args[1]);
-    List<PersonPreferences> personPreferences = Main.getGroupsDatabase().getPersonsInClass(classId);
+    List<PersonPreferences> personPreferences = Main.getGroupsDatabase().getPersonsPrefsInClass(classId);
     System.out.println("Person preferences: ");
     for (PersonPreferences pp : personPreferences) {
       System.out.println("- " + pp);
