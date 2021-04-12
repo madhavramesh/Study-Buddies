@@ -28,7 +28,7 @@ const ModifiedNavBar: React.FC<ModifiedNavBarProps> = ({ username }) => {
           <Dropdown.Item
             as="button"
             onClick={() => {
-              history.push('/profile');
+              history.push('/profile-page');
             }}
           >
             Profile
