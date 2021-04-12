@@ -5,6 +5,7 @@ import CreateClass from '../../components/CreateClass';
 import './DashboardPageStyle.scss';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import ModifiedNavBar from '../../components/ModifiedNavbar';
+import ClassCardPane from '../../components/ClassCardPane';
 
 const DashboardPage: React.FC = () => {
   const [modalShow, setModalShow] = useState(false);
@@ -16,6 +17,10 @@ const DashboardPage: React.FC = () => {
         <div className="search-bar-inner-container">
           <SearchBar />
         </div>
+      </div>
+
+      <div className="card-pane-container">
+        <ClassCardPane />
       </div>
 
       <div className="create-class-container">
