@@ -37,6 +37,8 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
   const [students, setStudents] = useState([]);
   const [studyGroups, setStudyGroups] = useState([]);
 
+  const username = `${sessionStorage.getItem('first_name')} ${sessionStorage.getItem('last_name')}`;
+
   const getClassInfo = () => {
     axios
       .get(`http://localhost:4567/get_class_with/${classID}`, CONFIG)
@@ -87,7 +89,7 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
     axios
       .post(`http://localhost:4567/leave_class`, postParameters, CONFIG)
       .then((response: any) => {
-        if (response.status === 0) {
+        if (response.data.status === 0) {
           const studentsCopy = [...students];
           setStudents(studentsCopy.filter((studentCopy: any) => studentCopy.id !== studentID));
           console.log('User successfully removed');
@@ -129,7 +131,7 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
 
   return (
     <div className="owner-dashboard-page">
-      <ModifiedNavBar username="Madhav Ramesh" />
+      <ModifiedNavBar username={username} />
 
       <div className="class-created-modal-container">
         <ClassCreatedModal

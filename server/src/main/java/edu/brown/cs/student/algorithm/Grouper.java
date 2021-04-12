@@ -30,18 +30,44 @@ public class Grouper {
   public List<Set<IGNode>> makeGroups(Graph g, int groupSize) throws Exception {
     List<Set<IGNode>> groups = new ArrayList<>();
 
-    Graph workingGraph = g;
+    Graph workingGraph = new Graph(g);
     // Make groups while there are still enough people left
     while (groupSize <= workingGraph.getNodes().size()) {
+      System.out.println("Original graph");
+      for (IGNode n: workingGraph.getNodes()) {
+        System.out.println(n.getValue());
+      }
+      for (IGEdge e: workingGraph.getEdges()) {
+        System.out.println(e.getStart().getValue() + " " + e.getEnd().getValue());
+      }
+      System.out.println("----nodes to remove-----");
       // Add the newest group to the groups list
       Graph newGroup = findGroup(workingGraph, groupSize);
       groups.add(newGroup.getNodes());
       // Remove the nodes from that group from the working graph
       for (IGNode n: newGroup.getNodes()) {
+        System.out.println(n.getValue());
         workingGraph.removeNode(n);
       }
-    }
 
+      // Remove the edges
+      Set<IGEdge> edgesToRemove = new HashSet<>(newGroup.getEdges());
+      Set<IGNode> nodesLeft = workingGraph.getNodes();
+      for (IGEdge e: edgesToRemove) {
+        if (!(nodesLeft.contains(e.getStart()) || nodesLeft.contains(e.getEnd()))) {
+          workingGraph.removeEdge(e);
+        }
+      }
+
+      System.out.println("----------------------------");
+      //TODO
+      for (IGNode n : workingGraph.getNodes()) {
+        System.out.println(n.getValue());
+      }
+
+      System.out.println("----------------------------");
+      System.out.println("----------------------------");
+    }
 
     // Assign groups to the leftovers
 
@@ -93,9 +119,13 @@ public class Grouper {
    * @param groupSize Group size to find
    */
   public Graph findGroup(Graph g, int groupSize) throws Exception {
+    // make a copy
+    Graph workingGraph = new Graph(g);
+
+
     // 0)
     // Change the value of contributions of each node from "null" to an actual value.
-    Graph initializedGraph = setContributions(g);
+    Graph initializedGraph = setContributions(workingGraph);
 
 
     // 1)
@@ -163,6 +193,7 @@ public class Grouper {
       // Update the candidate solution which is the solution we are iterating through
       candidateSolution = bestGraph(candidateSolution, completeSolution);
     }
+
 
     return bestSoFar;
   }

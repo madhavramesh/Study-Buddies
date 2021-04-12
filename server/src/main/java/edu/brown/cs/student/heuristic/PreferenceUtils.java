@@ -89,6 +89,9 @@ public class PreferenceUtils {
    */
   public static double getDistanceMetric(PersonPreferences p1, PersonPreferences p2)
       throws IOException, JSONException {
+    if (p1.getDorm().isEmpty() || p2.getDorm().isEmpty()) {
+      return 0;
+    }
     double[] p1Loc = getLatLong(p1.getDorm()), p2Loc = getLatLong(p2.getDorm());
     return 1 - (haversineDistance(p1Loc, p2Loc) / maxDistance());
   }

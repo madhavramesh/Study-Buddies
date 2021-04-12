@@ -19,9 +19,19 @@ import java.util.List;
 
 import static edu.brown.cs.student.groups.DBCode.*;
 
+/**
+ * Database connection class.
+ */
 public class NewGroupsDatabase {
   private static Connection conn = null;
 
+  /**
+   * Establishes a connection to the groups database.
+   *
+   * @param fileName the path to the groups database; currently "data/groups_db.sqlite3"
+   * @throws SQLException           if an error occurs while connecting to the database
+   * @throws ClassNotFoundException if org.sqlite3.JDBC is not loaded
+   */
   public NewGroupsDatabase(String fileName) throws SQLException, ClassNotFoundException {
     Class.forName("org.sqlite.JDBC");
     String urlToDB = "jdbc:sqlite:" + fileName;
@@ -36,9 +46,12 @@ public class NewGroupsDatabase {
       throw new SQLException("ERROR: SQL database not found!" + e.getMessage());
     }
     Statement stat = conn.createStatement();
+    // Enable foreign keys. [NOTE: for some reason, this does not seem to work.]
     stat.executeUpdate("PRAGMA foreign_keys = ON;");
 
+    // Create database tables if not already existing
     PreparedStatement prep;
+    // represent user logins
     prep = conn.prepareStatement("CREATE TABLE IF NOT EXISTS logins(" +
         "id INTEGER NOT NULL PRIMARY KEY, " +
         "first_name TEXT, " +
@@ -47,6 +60,7 @@ public class NewGroupsDatabase {
         "pass_token TEXT);");
     prep.executeUpdate();
 
+    // represent all classes and their metadata
     prep = conn.prepareStatement("CREATE TABLE IF NOT EXISTS classes(" +
         "class_id INTEGER NOT NULL PRIMARY KEY, " +
         "class_name TEXT, " +
@@ -59,6 +73,7 @@ public class NewGroupsDatabase {
         "ON DELETE CASCADE ON UPDATE CASCADE);");
     prep.executeUpdate();
 
+    // represent person enrollments into classes
     prep = conn.prepareStatement("CREATE TABLE IF NOT EXISTS enrollments(" +
         "person_id INTEGER, " +
         "class_id INTEGER, " +
@@ -67,6 +82,7 @@ public class NewGroupsDatabase {
         "ON DELETE CASCADE ON UPDATE CASCADE);");
     prep.executeUpdate();
 
+    // represent preferences for each class
     prep = conn.prepareStatement("CREATE TABLE IF NOT EXISTS class(" +
         "class_id INTEGER, " +
         "person_id INTEGER, " +
@@ -82,12 +98,29 @@ public class NewGroupsDatabase {
     prep.close();
   }
 
+  // =============================================================================================
+  // =============================================================================================
+  // LOGINS DATABASE INTERACTION
+  // These commands deal with getting personal info, and registering, validating, and deleting
+  // users from the database.
+  // =============================================================================================
+  // =============================================================================================
+
+  /**
+   * Gets person info from the logins database.
+   *
+   * @param id the person's id
+   * @return a PersonInfo object representing their info
+   * @throws SQLException if an error occurs while connecting to the database
+   */
   public Pair<DBCode, PersonInfo> getPersonInfo(int id) throws SQLException {
     PreparedStatement prep;
     ResultSet rs;
+    // get the desired person's info
     prep = conn.prepareStatement("SELECT * FROM logins WHERE id=?;");
     prep.setInt(1, id);
     rs = prep.executeQuery();
+    // if not found, return an error code
     if (!rs.next()) {
       return new Pair<>(USER_NOT_FOUND, null);
     }
@@ -110,6 +143,7 @@ public class NewGroupsDatabase {
    */
   public Pair<Integer, DBCode> validateUser(String email, String password)
       throws SQLException, InvalidKeySpecException, NoSuchAlgorithmException {
+    // if email is invalid, return an error code
     if (!EmailValidator.getInstance().isValid(email)) {
       return new Pair<>(-1, INVALID_EMAIL);
     }
@@ -119,6 +153,7 @@ public class NewGroupsDatabase {
     int id;
     if (rs.next()) {
       id = rs.getInt("id");
+      // if user with the given email is not found, return an error
     } else {
       return new Pair<>(-1, USER_NOT_FOUND);
     }
@@ -128,6 +163,7 @@ public class NewGroupsDatabase {
     if (PasswordEncryption.validatePBKDF2Password(password, encryptedPass)) {
       return new Pair<>(id, LOGIN_SUCCESS);
     } else {
+      // if user supplies an invalid password, return an erro
       return new Pair<>(-1, INVALID_PASSWORD);
     }
   }
@@ -146,12 +182,14 @@ public class NewGroupsDatabase {
    */
   public DBCode registerUser(String firstName, String lastName, String email, String password)
       throws SQLException, InvalidKeySpecException, NoSuchAlgorithmException {
+    // if email is invalid, throw an error
     if (!EmailValidator.getInstance().isValid(email)) {
       return INVALID_EMAIL;
     }
     PreparedStatement prep = conn.prepareStatement("SELECT * FROM logins WHERE email=?;");
     prep.setString(1, email);
     ResultSet rs = prep.executeQuery();
+    // if an account with the email already exists, throw an error
     if (rs.next()) {
       rs.close();
       return EMAIL_TAKEN;
@@ -167,6 +205,46 @@ public class NewGroupsDatabase {
     rs.close();
     return REGISTRATION_SUCCESS;
   }
+
+  public DBCode deleteUser(int id, String password)
+      throws SQLException, InvalidKeySpecException, NoSuchAlgorithmException {
+    // first, see if user is even in the database
+    PreparedStatement prep;
+    ResultSet rs;
+    prep = conn.prepareStatement("SELECT * FROM logins WHERE id=?;");
+    rs = prep.executeQuery();
+    String encryptedPass;
+    // if not in database, return an error code
+    if (rs.next()) {
+      encryptedPass = rs.getString("pass_token");
+    } else {
+      return USER_NOT_FOUND;
+    }
+    // if the password they entered is incorrect, return an error code
+    if (!PasswordEncryption.validatePBKDF2Password(password, encryptedPass)) {
+      return INVALID_PASSWORD;
+    }
+    // now, we DELETE
+    prep = conn.prepareStatement("DELETE FROM class WHERE person_id=?;");
+    prep.setInt(1, id);
+    prep.executeUpdate();
+    prep = conn.prepareStatement("DELETE FROM enrollments WHERE person_id=?;");
+    prep.setInt(1, id);
+    prep.executeUpdate();
+    prep = conn.prepareStatement("DELETE FROM logins WHERE id=?;");
+    prep.setInt(1, id);
+    prep.executeUpdate();
+    return DELETE_SUCCESS;
+  }
+
+
+  // =============================================================================================
+  // =============================================================================================
+  // CLASSES DATABASE INTERACTION
+  // These commands deal with creating, joining, and leaving classes, retrieving all class info,
+  // and getting enrollments of a specific person.
+  // =============================================================================================
+  // =============================================================================================
 
   /**
    * Gets all classes.
@@ -208,6 +286,7 @@ public class NewGroupsDatabase {
 
   /**
    * Gets the class with specified ID.
+   *
    * @param classId the class's ID
    * @return the class
    * @throws SQLException if an error occurs while connecting to the database
@@ -220,7 +299,7 @@ public class NewGroupsDatabase {
     if (rs.next()) {
       System.out.println(rs);
       res = processClassInfo(rs);
-    } 
+    }
     prep.close();
     rs.close();
     return res;
@@ -360,6 +439,7 @@ public class NewGroupsDatabase {
     prep.setInt(1, id);
     prep.setInt(2, classId);
     rs = prep.executeQuery();
+    // if already in the class, return an error
     if (rs.next()) {
       return ALREADY_JOINED_CLASS;
     }
@@ -378,8 +458,9 @@ public class NewGroupsDatabase {
     prep.setInt(2, classId);
     prep.executeUpdate();
     // add the person's default preferences to the class database
-    prep = conn.prepareStatement("INSERT INTO class(class_id, person_id, times, dorm, preferences)" +
-        "values(?, ?, ?, ?, ?)");
+    prep =
+        conn.prepareStatement("INSERT INTO class(class_id, person_id, times, dorm, preferences)" +
+            "values(?, ?, ?, ?, ?)");
     prep.setInt(1, classId);
     prep.setInt(2, id);
     prep.setString(3, ("0".repeat(24) + ":").repeat(7).substring(0, 174));
@@ -392,36 +473,58 @@ public class NewGroupsDatabase {
   }
 
   /**
-   * Selects a specific person's preferences in the class.
-   *
-   * @param personId the person's id
-   * @param classId  the class's id
-   * @return the person's preferences in the class
+   * Leaves the class.
+   * @param id the person's id
+   * @param classId the class's id
+   * @return a code representing the operation's status
    * @throws SQLException if an error occurs while connecting to the database
    */
-  public Pair<DBCode, PersonPreferences> getPersonPrefInClass(int personId, int classId)
-      throws SQLException {
-    PreparedStatement prep = conn.prepareStatement("SELECT * FROM class WHERE class_id=? AND " +
-        "person_id=?;");
-    prep.setInt(1, classId);
-    prep.setInt(2, personId);
-    ResultSet rs = prep.executeQuery();
-    if (rs.next()) {
-      int id = rs.getInt("person_id");
-      String times = rs.getString("times");
-      String dorm = rs.getString("dorm");
-      String pp = rs.getString("preferences");
-      int groupId = rs.getInt("group_id") != 0 ? rs.getInt("group_id") : -1;
-      rs.close();
-      prep.close();
-      return new Pair<>(RETRIEVE_PREFERENCES_SUCCESS, new PersonPreferences(id, times, dorm, pp,
-          groupId));
-    } else {
-      rs.close();
-      prep.close();
-      return new Pair<>(PERSON_NOT_IN_CLASS, null);
-    }
+  public DBCode leaveClass(int id, int classId) throws SQLException {
+    PreparedStatement prep = conn.prepareStatement("DELETE FROM class WHERE person_id=? AND " +
+        "class_id=?;");
+    prep.setInt(1, id);
+    prep.setInt(2, classId);
+    prep.executeUpdate();
+    prep = conn.prepareStatement("DELETE FROM enrollments WHERE person_id=? AND class_id=?;");
+    prep.setInt(1, id);
+    prep.setInt(2, classId);
+    prep.executeUpdate();
+    prep.close();
+    return CLASS_LEAVE_SUCCESS;
   }
+
+  public DBCode deleteClass(int id, int classId) throws SQLException {
+    PreparedStatement prep;
+    ResultSet rs;
+    prep = conn.prepareStatement("SELECT * FROM classes WHERE owner_id=? AND class_id=?;");
+    prep.setInt(1, id);
+    prep.setInt(2, classId);
+    rs = prep.executeQuery();
+    // if owner id and given id don't match, throw an error
+    if (!rs.next()) {
+      return NOT_THE_OWNER;
+    }
+    prep = conn.prepareStatement("DELETE FROM class WHERE class_id=?;");
+    prep.setInt(1, classId);
+    prep.executeUpdate();
+    prep = conn.prepareStatement("DELETE FROM enrollments WHERE class_id=?;");
+    prep.setInt(1, classId);
+    prep.executeUpdate();
+    prep = conn.prepareStatement("DELETE FROM classes WHERE class_id=?;");
+    prep.setInt(1, classId);
+    prep.executeUpdate();
+    prep.close();
+    return CLASS_DELETE_SUCCESS;
+
+  }
+
+  // =============================================================================================
+  // =============================================================================================
+  // CLASS DATABASE INTERACTION
+  // These commands deal with getting and setting person preferences, person info in a particular
+  // class, and generating groups.
+  // =============================================================================================
+  // =============================================================================================
 
   /**
    * Gets all person info of enrollees in a class.
@@ -433,12 +536,13 @@ public class NewGroupsDatabase {
   public List<PersonInfo> getPersonsInClass(int classId) throws SQLException {
     PreparedStatement prep;
     ResultSet rs;
-    // We select the person info of all enrolled students in the class
+    // Select the person info of all enrolled students in the class
     prep = conn.prepareStatement("SELECT * FROM logins WHERE id IN (" +
         "SELECT person_id FROM enrollments WHERE class_id=?);");
     prep.setInt(1, classId);
     rs = prep.executeQuery();
     List<PersonInfo> personInfos = new LinkedList<>();
+    // process each person's information
     while (rs.next()) {
       int personId = rs.getInt("id");
       String firstName = rs.getString("first_name");
@@ -447,6 +551,41 @@ public class NewGroupsDatabase {
       personInfos.add(new PersonInfo(personId, firstName, lastName, email));
     }
     return personInfos;
+  }
+
+  /**
+   * Selects a specific person's preferences in the class.
+   *
+   * @param personId the person's id
+   * @param classId  the class's id
+   * @return the person's preferences in the class
+   * @throws SQLException if an error occurs while connecting to the database
+   */
+  public Pair<DBCode, PersonPreferences> getPersonPrefInClass(int personId, int classId)
+      throws SQLException {
+    // get the preference of the person specified in the class specified
+    PreparedStatement prep = conn.prepareStatement("SELECT * FROM class WHERE class_id=? AND " +
+        "person_id=?;");
+    prep.setInt(1, classId);
+    prep.setInt(2, personId);
+    ResultSet rs = prep.executeQuery();
+    // if we get a result, then return a success code, along with the person's preferences
+    if (rs.next()) {
+      int id = rs.getInt("person_id");
+      String times = rs.getString("times");
+      String dorm = rs.getString("dorm");
+      String pp = rs.getString("preferences");
+      int groupId = rs.getInt("group_id") != 0 ? rs.getInt("group_id") : -1;
+      rs.close();
+      prep.close();
+      return new Pair<>(RETRIEVE_PREFERENCES_SUCCESS, new PersonPreferences(id, times, dorm, pp,
+          groupId));
+      // otherwise, throw an error indicating the person is not in the class
+    } else {
+      rs.close();
+      prep.close();
+      return new Pair<>(PERSON_NOT_IN_CLASS, null);
+    }
   }
 
   /**
@@ -468,16 +607,67 @@ public class NewGroupsDatabase {
       String times = rs.getString("times");
       String dorm = rs.getString("dorm");
       String preferences = rs.getString("preferences");
-      int groupId = rs.getInt("group_id") != 0 ? rs.getInt("group_id") : -1;
+      int rsResult = rs.getInt("group_id");
+      int groupId = rsResult != 0 ? rsResult : -1;
       personPreferences.add(new PersonPreferences(personId, times, dorm, preferences, groupId));
     }
     prep.close();
     rs.close();
+
     return personPreferences;
   }
 
   /**
-   * Processes class information into a ClassInfo object.
+   * Updates the person's preferences.
+   *
+   * @param personId          the person's id
+   * @param classId           the relevant class's id
+   * @param dorm              the person's dorm
+   * @param personPreferences the person's preferences for others
+   * @param timePreferences   the person's time preferences
+   * @return a code indicating the status of the operation
+   * @throws SQLException if an error occurs while connecting to the database
+   */
+  public DBCode setPreferences(int personId, int classId, String dorm, String personPreferences,
+                               String timePreferences) throws SQLException {
+    PreparedStatement prep = conn.prepareStatement("UPDATE class " +
+        "SET dorm=?, preferences=?, times=? WHERE class_id=? AND person_id=?");
+    prep.setString(1, dorm);
+    prep.setString(2, personPreferences);
+    prep.setString(3, timePreferences);
+    prep.setInt(4, classId);
+    prep.setInt(5, personId);
+    // if person is not in class, throw an error
+    try {
+      prep.executeUpdate();
+      return UPDATE_PREFERENCES_SUCCESS;
+    } catch (SQLException e) {
+      return PERSON_NOT_IN_CLASS;
+    }
+  }
+
+  /**
+   * Sets the group of a person in a class.
+   *
+   * @param personId the person's id
+   * @param classId  the class's id
+   * @param groupId  the group's id
+   * @return a code representing the status of the operation
+   * @throws SQLException if an error occurs while connecting to the database
+   */
+  public DBCode setPersonGroupInClass(int personId, int classId, int groupId) throws SQLException {
+    PreparedStatement prep = conn.prepareStatement("UPDATE class " +
+        "SET group_id=? WHERE class_id=? AND person_id=?;");
+    prep.setInt(1, groupId);
+    prep.setInt(2, classId);
+    prep.setInt(3, personId);
+    prep.executeUpdate();
+    prep.close();
+    return UPDATE_PREFERENCES_SUCCESS;
+  }
+
+  /**
+   * Helper function. Processes class information into a ClassInfo object.
    *
    * @param rs the ResultSet of the current entry
    * @return an object representing a class

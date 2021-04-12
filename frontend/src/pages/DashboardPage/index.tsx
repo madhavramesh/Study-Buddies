@@ -27,6 +27,8 @@ const DashboardPage: React.FC = () => {
     { name: 'Enrolled', value: '2' },
   ];
 
+  const username = `${sessionStorage.getItem('first_name')} ${sessionStorage.getItem('last_name')}`;
+
   const getInitialClasses = () => {
     axios
       .get('http://localhost:4567/get_all_classes', CONFIG)
@@ -41,6 +43,7 @@ const DashboardPage: React.FC = () => {
   };
 
   const getEnrolledClasses = () => {
+    console.log(`USER ID: ${sessionStorage.getItem('user_id')}`);
     axios
       .get(`http://localhost:4567/get_enrollments/${sessionStorage.getItem('user_id')}`, CONFIG)
       .then((response) => {
@@ -74,7 +77,7 @@ const DashboardPage: React.FC = () => {
 
   return (
     <div className="dashboard-page">
-      <ModifiedNavBar username="Madhav Ramesh" />
+      <ModifiedNavBar username={username} />
       <div className="search-bar-container">
         <div className="search-bar-inner-container">
           <div className="search-bar">

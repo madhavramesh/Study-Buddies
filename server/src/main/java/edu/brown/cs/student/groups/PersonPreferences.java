@@ -27,8 +27,9 @@ public class PersonPreferences {
                 .toArray(Integer[]::new))
             .toArray(Integer[][]::new);
     this.dorm = dorm;
-    this.preferences =
-        Arrays.stream(preferences.split(",")).map(Integer::valueOf).toArray(Integer[]::new);
+    this.preferences = preferences.length() > 0
+        ? Arrays.stream(preferences.split(",")).map(Integer::valueOf).toArray(Integer[]::new)
+        : new Integer[] {-1};
     this.groupId = groupId;
   }
 
