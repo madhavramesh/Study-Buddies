@@ -78,6 +78,28 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
       });
   };
 
+  const removeStudent = (studentID: string) => {
+    const postParameters = {
+      id: studentID,
+      class_id: classID,
+    };
+
+    axios
+      .post(`http://localhost:4567/leave_class`, postParameters, CONFIG)
+      .then((response: any) => {
+        if (response.status === 0) {
+          const studentsCopy = [...students];
+          setStudents(studentsCopy.filter((studentCopy: any) => studentCopy.id !== studentID));
+          console.log('User successfully removed');
+        } else {
+          console.log('User not allowed to be on this page');
+        }
+      })
+      .catch((err: any) => {
+        console.log(err);
+      });
+  };
+
   const deleteClass = () => {
     const postParameters = {
       id: sessionStorage.getItem('user_id'),
@@ -103,10 +125,6 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
   useEffect(() => {
     getClassInfo();
     getStudents();
-    students.map((student) => {
-      console.log(student);
-      return 0;
-    });
   }, []);
 
   return (
@@ -153,7 +171,8 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
             {students.map((student: any) => (
               <StudentInfo
                 studentName={`${student.firstName} ${student.lastName}`}
-                removeStudent={() => console.log('Removing')}
+                removeStudent={() => removeStudent(student.id)}
+                removeButton
               />
             ))}
           </div>

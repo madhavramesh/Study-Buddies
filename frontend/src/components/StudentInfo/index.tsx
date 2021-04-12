@@ -7,17 +7,21 @@ import { Remove } from '@material-ui/icons';
 type StudentInfoProps = {
   studentName: string;
   removeStudent: any;
+  removeButton: boolean;
 };
 
 const StudentInfo: React.FC<StudentInfoProps> = ({
   studentName,
   removeStudent,
+  removeButton,
 }: StudentInfoProps) => {
   return (
     <div className={`student ${studentName}`}>
-      <Button className="remove" onClick={removeStudent}>
-        X
-      </Button>
+      {removeButton && (
+        <Button className="remove" onClick={removeStudent}>
+          X
+        </Button>
+      )}
       <Button className="name-text" disabled>
         {studentName}
       </Button>
