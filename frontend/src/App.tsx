@@ -11,7 +11,6 @@ import TimesPane from './components/TimesPane';
 import Preferences from './components/Preferences';
 import HomePage from './pages/HomePage';
 import DashboardPage from './pages/DashboardPage';
-import TestDisplayClassesPage from './pages/TestDisplayClassesPage';
 import OwnerDashboardPage from './pages/OwnerDashboardPage';
 
 const App: React.FC = () => {
@@ -28,7 +27,6 @@ const App: React.FC = () => {
           <Route path="/profile" component={Signin} />
           {/* <Route path="/preferences" component={Preferences} />
           <Route path="/carddemo" component={() => <TimesPane slotLength={30} />} /> */}
-          <Route path="/test_display_classes" component={TestDisplayClassesPage} />
         </Switch>
       </Router>
     </div>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button, Col, Fade, Form, Modal, ModalProps } from 'react-bootstrap';
 import './CreateClassStyle.scss';
 import GroupAddTwoToneIcon from '@material-ui/icons/GroupAddTwoTone';
+import { useHistory } from 'react-router-dom';
 
 type CreateClassProps = {
   onHide: any;
@@ -18,14 +19,16 @@ const CreateClass: React.FC<CreateClassProps> = ({ onHide, show }: CreateClassPr
   const [className, setClassName] = useState('');
   const [classNumber, setClassNumber] = useState('');
   const [classDescription, setClassDescription] = useState('');
-  const [classTerm, setClassTerm] = useState('');
-  const [classYear, setClassYear] = useState('');
+  const [classTerm, setClassTerm] = useState('Select a term...');
+  const [classYear, setClassYear] = useState('Select a year...');
 
   const [classNameError, setClassNameError] = useState('');
   const [classNumberError, setClassNumberError] = useState('');
   const [classDescriptionError, setClassDescriptionError] = useState('');
   const [classTermError, setClassTermError] = useState('');
   const [classYearError, setClassYearError] = useState('');
+
+  const history = useHistory();
 
   const createClass = () => {
     let validPost = true;
@@ -41,11 +44,11 @@ const CreateClass: React.FC<CreateClassProps> = ({ onHide, show }: CreateClassPr
       setClassDescriptionError('Please give your class a description');
       validPost = false;
     }
-    if (classTerm === '') {
+    if (classTerm === 'Select a term...') {
       setClassTermError('Please select a class term');
       validPost = false;
     }
-    if (classYear === '') {
+    if (classYear === 'Select a year...') {
       setClassYearError('Please select a class year');
       validPost = false;
     }
@@ -71,6 +74,7 @@ const CreateClass: React.FC<CreateClassProps> = ({ onHide, show }: CreateClassPr
         .then((response: any) => {
           if (response.data.status === 0) {
             console.log('Class created!');
+            history.push('/owner-dashboard');
           } else {
             console.log('Class creation failed!');
           }
@@ -179,7 +183,9 @@ const CreateClass: React.FC<CreateClassProps> = ({ onHide, show }: CreateClassPr
                     as="select"
                     isInvalid={classTermError !== ''}
                     onChange={(e: any) => setClassTerm(e.target.value)}
+                    defaultValue="Select a term..."
                   >
+                    <option>Select a term...</option>
                     <option>Fall</option>
                     <option>Winter</option>
                     <option>Spring</option>
@@ -194,7 +200,9 @@ const CreateClass: React.FC<CreateClassProps> = ({ onHide, show }: CreateClassPr
                     as="select"
                     isInvalid={classYearError !== ''}
                     onChange={(e: any) => setClassYear(e.target.value)}
+                    defaultValue="Select a year..."
                   >
+                    <option>Select a year...</option>
                     <option>{curYear}</option>
                     <option>{curYear + 1}</option>
                     <option>{curYear + 2}</option>
