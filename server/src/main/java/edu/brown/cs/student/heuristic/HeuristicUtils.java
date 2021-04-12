@@ -38,7 +38,7 @@ public class HeuristicUtils {
    * @return
    */
   public List<List<PersonInfo>> getGroups(int classId, int groupSize) throws SQLException, Exception {
-    List<PersonInfo> peopleInDatabase = GROUPS_DATABASE.getPersonsInClass(classId);
+    List<PersonPreferences> peopleInDatabase = GROUPS_DATABASE.getPersonsPrefsInClass(classId);
     Graph graph = createGraph(peopleInDatabase);
     grouper = new Grouper(graph);
     List<Set<IGNode>> results = grouper.makeGroups(graph, groupSize);

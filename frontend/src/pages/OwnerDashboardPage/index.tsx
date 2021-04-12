@@ -15,6 +15,9 @@ const CONFIG = {
   },
 };
 
+// Size of study groups to form
+const GROUP_SIZE = 4;
+
 const OwnerDashboardPage: React.FC = ({ match }: any) => {
   const {
     params: { classID },
@@ -59,6 +62,17 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
       });
   };
 
+  const formStudyGroups = () => {
+    axios
+      .get(`http://localhost:4567/form_groups/${classID}/${4}`, CONFIG)
+      .then((response: any) => {
+        console.log(response.data);
+      })
+      .catch((err: any) => {
+        console.log(err.response.data);
+      });
+  };
+
   const [modalShow, setModalShow] = useState(true);
 
   useEffect(() => {
@@ -100,7 +114,9 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
             classCode={classCode}
           />
           <div className="create-groups-container">
-            <Button className="create-study-groups-button">Create Study Groups</Button>
+            <Button className="create-study-groups-button" onClick={formStudyGroups}>
+              Create Study Groups
+            </Button>
           </div>
         </div>
 
