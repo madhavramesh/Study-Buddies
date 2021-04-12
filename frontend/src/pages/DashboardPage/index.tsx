@@ -18,11 +18,25 @@ const DashboardPage: React.FC = () => {
   const [modalShow, setModalShow] = useState(false);
   const [searchText, setSearchText] = useState('');
   const [allClasses, setAllClasses] = useState([]);
+  const [enrolledClasses, setEnrolledClasses] = useState([]);
   const [classes, setClasses] = useState([]);
 
   const getInitialClasses = () => {
     axios
       .get('http://localhost:4567/get_all_classes', CONFIG)
+      .then((response) => {
+        setAllClasses(response.data.classes);
+        setClasses(response.data.classes);
+        console.log(response.data.classes);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const getEnrolledClasses = () => {
+    axios
+      .get(`/get_enrollments/${sessionStorage.getItem('user_id')}`, CONFIG)
       .then((response) => {
         setAllClasses(response.data.classes);
         setClasses(response.data.classes);
@@ -56,6 +70,14 @@ const DashboardPage: React.FC = () => {
         <div className="search-bar-inner-container">
           <div className="search-bar">
             <SearchBar onChange={(e: any) => setSearchText(e.target.value)} />
+          </div>
+          <div className="buttons">
+            <Button className="button" onClick={() => getInitialClasses()}>
+              All
+            </Button>
+            <Button className="button" onClick={() => getEnrolledClasses()}>
+              Enrolled
+            </Button>
           </div>
           <div className="card-pane-container">
             <ClassCardPane classes={classes} />

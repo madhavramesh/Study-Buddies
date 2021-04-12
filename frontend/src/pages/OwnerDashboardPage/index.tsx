@@ -47,8 +47,8 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
   };
 
   const getStudents = () => {
-    axios.get(`http://localhost:4567/get_class_with/${classID}`, CONFIG))
-  }
+    axios.get(`http://localhost:4567/get_class_with/${classID}`, CONFIG);
+  };
 
   const [modalShow, setModalShow] = useState(true);
 
@@ -94,7 +94,7 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
         <div className="page-section students">
           <div className="students-header">Students</div>
           <div className="students-body">
-            <StudentInfo studentName="Blah Blah Blah Blah Blah" />
+            <StudentInfo studentName="Blah Blah Blah Blah Blah" removeStudent="any" />
           </div>
           {/* <Button className="button" size="sm"> */}
           {/*  Delete Students */}
