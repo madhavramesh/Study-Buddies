@@ -61,17 +61,21 @@ public class PreferenceUtils {
    *
    * @param p1 the first person's preferences
    * @param p2 the second person's preferences
-   * @return the overlap
+   * @return the overlap: if more than 35 hours overlap, return 1; otherwise, return # overlap / 35
    */
-  public static int getTimesOverlap(PersonPreferences p1, PersonPreferences p2) {
+  public static double getTimesOverlap(PersonPreferences p1, PersonPreferences p2) {
     int overlap = 0;
     Integer[][] p1Times = p1.getTimes(), p2Times = p2.getTimes();
     for (int i = 0; i < p1Times.length; ++i) {
       for (int j = 0; j < p1Times[i].length; ++j) {
-        overlap += p1Times[i][j].equals(p2Times[i][j]) ? 1 : 0;
+        overlap += p1Times[i][j].equals(p2Times[i][j]) && p1Times[i][j] == 1 ? 1 : 0;
       }
     }
-    return overlap;
+    if (overlap > 35) {
+      return 1;
+    } else {
+      return (double) overlap / 35;
+    }
   }
 
   /**
@@ -83,10 +87,10 @@ public class PreferenceUtils {
    * @throws IOException if an error occurs in the HTML GET request
    * @throws JSONException if an error occurs while parsing JSON
    */
-  public static double getDistancePreference(PersonPreferences p1, PersonPreferences p2)
+  public static double getDistanceMetric(PersonPreferences p1, PersonPreferences p2)
       throws IOException, JSONException {
     double[] p1Loc = getLatLong(p1.getDorm()), p2Loc = getLatLong(p2.getDorm());
-    return haversineDistance(p1Loc, p2Loc) / maxDistance();
+    return 1 - (haversineDistance(p1Loc, p2Loc) / maxDistance());
   }
 
   /**
