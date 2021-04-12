@@ -5,6 +5,7 @@ import ClassCreatedModal from '../../components/ClassCreatedModal';
 import GeneralInfoClass from '../../components/GeneralInfoClass';
 import './OwnersDashboard.scss';
 import StudentInfo from '../../components/StudentInfo';
+import StudyGroupDisplay from '../../components/StudyGroupDisplay';
 
 const axios = require('axios');
 
@@ -31,6 +32,7 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
   const [classOwnerID, setClassOwnerID] = useState('');
 
   const [students, setStudents] = useState([]);
+  const [studyGroups, setStudyGroups] = useState([]);
 
   const getClassInfo = () => {
     axios
@@ -66,7 +68,7 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
     axios
       .get(`http://localhost:4567/form_groups/${classID}/${4}`, CONFIG)
       .then((response: any) => {
-        console.log(response.data);
+        setStudyGroups(response.data);
       })
       .catch((err: any) => {
         console.log(err.response.data);
@@ -100,9 +102,11 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
       <div className="owner-dashboard-page-sections">
         <div className="page-section study-groups">
           <div className="study-groups-header">Study Groups</div>
-          {/* <Button className="button" size="sm"> */}
-          {/*  Form Groups */}
-          {/* </Button> */}
+          <div className="study-groups-body">
+            {studyGroups.map((studyGroup) => (
+              <StudyGroupDisplay groupID="sample" studentNames={studyGroup} />
+            ))}
+          </div>
         </div>
 
         <div className="page-section general-info">

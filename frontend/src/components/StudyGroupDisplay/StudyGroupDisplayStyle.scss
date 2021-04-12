@@ -1,0 +1,34 @@
+.study-group-card {
+  font-family: "Poppins", sans-serif;
+  color: #ffffff;
+
+  img {
+    filter: brightness(30%);
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+
+  .card-img-overlay {
+    padding: 0px;
+
+    .card-header {
+      background-color: #6A6C6E;
+    }
+
+    .student-cols {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 20px;
+
+      .student {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 140px;
+      }
+    }
+  }
+}
