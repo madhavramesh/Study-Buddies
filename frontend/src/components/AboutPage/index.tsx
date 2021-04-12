@@ -8,7 +8,6 @@ const AboutPage: React.FC = () => {
   return (
     <div style={{ overflow: 'hidden' }}>
       <NavBar />
-      <GeneralInfo classID="1" />
       <div className="aboutpage-container">
         <div id="quote">quote</div>
         <div id="mission">mission</div>

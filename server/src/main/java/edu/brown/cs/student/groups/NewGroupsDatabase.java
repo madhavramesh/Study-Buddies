@@ -213,12 +213,12 @@ public class NewGroupsDatabase {
    * @throws SQLException if an error occurs while connecting to the database
    */
   public ClassInfo getClassByClassId(int classId) throws SQLException {
-    System.out.println(classId);
     ClassInfo res = null;
     PreparedStatement prep = conn.prepareStatement("SELECT * FROM classes WHERE class_id=?");
     prep.setInt(1, classId);
     ResultSet rs = prep.executeQuery();
     if (rs.next()) {
+      System.out.println(rs);
       res = processClassInfo(rs);
     } 
     prep.close();

@@ -4,44 +4,29 @@ import './GeneralInfo.scss';
 import { doc } from 'prettier';
 
 type GeneralInfoProps = {
-  classID: string;
+  className: string;
+  classNumber: string;
+  classDescription: string;
+  classTerm: string;
+  classCode: string;
+  ownerID: number;
 };
 
-const GeneralInfo: React.FC<GeneralInfoProps> = ({ classID }) => {
-  console.log(classID);
-
-  const getClassInfo = () => {
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-      },
-    };
-
-    axios
-      .get(`http://localhost:4567/get_class_with/:${classID}`, config)
-      .then((response) => {
-        console.log(response.data);
-        /*
-        const classId = theClass.class_id;
-        const className = theClass.class_name;
-        const classNumber = theClass.class_number;
-        const classDescription = theClass.class_description;
-        const classTerm = theClass.class_term;
-        const classCode = theClass.class_code;
-        const classOwnerId = theClass.owner_id;
-        */
-        // Note: It is very important that you understand how this is set up and why it works!
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
-
+const GeneralInfo: React.FC<GeneralInfoProps> = ({
+  className,
+  classNumber,
+  classDescription,
+  /*
+  classTerm,
+  classCode,
+  ownerID,
+   */
+}) => {
   return (
     <div>
-      <h1>GENERAL INFO</h1>
-      <div>asdf</div>
+      <h1>{className} </h1>
+      <h1>{classNumber}</h1>
+      <p>{classDescription}</p>
     </div>
   );
 };

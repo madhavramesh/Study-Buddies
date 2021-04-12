@@ -276,8 +276,10 @@ public final class Main {
   private static class GetClassWithClassId implements Route {
     @Override
     public Object handle(Request request, Response response) throws Exception {
+      System.out.println(request.params(":class_id"));
       ClassInfo theClass =
               GROUPS_DATABASE.getClassByClassId(Integer.parseInt(request.params(":class_id")));
+      System.out.println(theClass);
       Map<String, Object> variables = ImmutableMap.of("class", theClass);
       return GSON.toJson(variables);
     }
