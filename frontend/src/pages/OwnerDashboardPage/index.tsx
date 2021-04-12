@@ -4,6 +4,7 @@ import ModifiedNavBar from '../../components/ModifiedNavbar';
 import ClassCreatedModal from '../../components/ClassCreatedModal';
 import GeneralInfoClass from '../../components/GeneralInfoClass';
 import './OwnersDashboard.scss';
+import StudentInfo from '../../components/StudentInfo';
 
 const axios = require('axios');
 
@@ -44,6 +45,10 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
         console.log(err);
       });
   };
+
+  const getStudents = () => {
+    axios.get(`http://localhost:4567/get_class_with/${classID}`, CONFIG))
+  }
 
   const [modalShow, setModalShow] = useState(true);
 
@@ -88,6 +93,9 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
 
         <div className="page-section students">
           <div className="students-header">Students</div>
+          <div className="students-body">
+            <StudentInfo studentName="Blah Blah Blah Blah Blah" />
+          </div>
           {/* <Button className="button" size="sm"> */}
           {/*  Delete Students */}
           {/* </Button> */}

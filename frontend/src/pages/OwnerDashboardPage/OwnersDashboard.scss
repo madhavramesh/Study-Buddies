@@ -45,6 +45,11 @@
 
     .students {
       flex: 1 0 25%;
+      overflow: auto;
+
+      .students-header {
+        margin-bottom: 20px;
+      }
     }
 
     .study-groups-header, .students-header {
