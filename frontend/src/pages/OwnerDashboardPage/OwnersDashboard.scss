@@ -2,6 +2,7 @@
   background-color: #ffffff;
   font-family: "Poppins", sans-serif;
   height: 100%;
+  overflow-y: hidden;
 
   .owner-dashboard-page-sections {
     display: flex;
@@ -45,10 +46,14 @@
 
     .students {
       flex: 1 0 25%;
-      overflow: auto;
+      height: 100%;
 
       .students-header {
         margin-bottom: 20px;
+      }
+
+      .students-body {
+        height: 100%;
       }
     }
 

@@ -15,6 +15,9 @@ const CONFIG = {
   },
 };
 
+// Size of study groups to form
+const GROUP_SIZE = 4;
+
 const OwnerDashboardPage: React.FC = ({ match }: any) => {
   const {
     params: { classID },
@@ -26,6 +29,8 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
   const [classTerm, setClassTerm] = useState('');
   const [classCode, setClassCode] = useState('');
   const [classOwnerID, setClassOwnerID] = useState('');
+
+  const [students, setStudents] = useState([]);
 
   const getClassInfo = () => {
     axios
@@ -47,14 +52,36 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
   };
 
   const getStudents = () => {
-    axios.get(`http://localhost:4567/get_class_with/${classID}`, CONFIG);
+    axios
+      .get(`http://localhost:4567/get_persons_in/${classID}`, CONFIG)
+      .then((response: any) => {
+        setStudents(response.data.persons);
+      })
+      .catch((err: any) => {
+        console.log(err);
+      });
+  };
+
+  const formStudyGroups = () => {
+    axios
+      .get(`http://localhost:4567/form_groups/${classID}/${4}`, CONFIG)
+      .then((response: any) => {
+        console.log(response.data);
+      })
+      .catch((err: any) => {
+        console.log(err.response.data);
+      });
   };
 
   const [modalShow, setModalShow] = useState(true);
 
   useEffect(() => {
     getClassInfo();
-    console.log(className);
+    getStudents();
+    students.map((student) => {
+      console.log(student);
+      return 0;
+    });
   }, []);
 
   return (
@@ -87,14 +114,21 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
             classCode={classCode}
           />
           <div className="create-groups-container">
-            <Button className="create-study-groups-button">Create Study Groups</Button>
+            <Button className="create-study-groups-button" onClick={formStudyGroups}>
+              Create Study Groups
+            </Button>
           </div>
         </div>
 
         <div className="page-section students">
           <div className="students-header">Students</div>
           <div className="students-body">
-            <StudentInfo studentName="Blah Blah Blah Blah Blah" removeStudent="any" />
+            {students.map((student: any) => (
+              <StudentInfo
+                studentName={`${student.firstName} ${student.lastName}`}
+                removeStudent={() => console.log('Removing')}
+              />
+            ))}
           </div>
           {/* <Button className="button" size="sm"> */}
           {/*  Delete Students */}

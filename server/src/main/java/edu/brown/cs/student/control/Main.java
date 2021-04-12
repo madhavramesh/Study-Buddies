@@ -8,6 +8,7 @@ import edu.brown.cs.student.groups.DBCode;
 import edu.brown.cs.student.groups.NewGroupsDatabase;
 import edu.brown.cs.student.groups.PersonInfo;
 import edu.brown.cs.student.groups.PersonPreferences;
+import edu.brown.cs.student.heuristic.HeuristicUtils;
 import edu.brown.cs.student.groups.testcommands.CreateClassCommand;
 import edu.brown.cs.student.groups.testcommands.GetAllClassesCommand;
 import edu.brown.cs.student.groups.testcommands.GetClassesWithOwnerIdCommand;
@@ -63,6 +64,8 @@ public final class Main {
 
   private static NewGroupsDatabase GROUPS_DATABASE;
 
+  private static HeuristicUtils heuristic;
+
   public static NewGroupsDatabase getGroupsDatabase() {
     return GROUPS_DATABASE;
   }
@@ -95,6 +98,7 @@ public final class Main {
     }
 
     GROUPS_DATABASE = new NewGroupsDatabase(PATH_TO_DB);
+    heuristic = new HeuristicUtils();
     REPL repl = new REPL();
 
     // register trigger actions to repl
@@ -141,6 +145,7 @@ public final class Main {
     Spark.get("/get_persons_in/:class_id", new GetPersonsInClass());
     Spark.get("/get_person_pref_in/:class_id/:id", new GetPersonPrefInClass());
     Spark.get("/get_person_prefs_in/:class_id", new GetPersonsPrefsInClass());
+    Spark.get("/form_groups/:class_id/:group_size", new FormGroups());
   }
 
   /**
@@ -288,6 +293,24 @@ public final class Main {
               Map.of("class_name", c.getClassName(), "class_number", c.getClassNumber(),
                       "class_description", c.getClassDescription(), "class_term", c.getClassTerm(),
                       "class_code", c.getClassCode(), "owner_id", c.getOwnerId());
+      return GSON.toJson(variables);
+    }
+  }
+
+  /**
+   * Forms groups
+   * {
+   * class: the ClassInfo
+   * }
+   */
+  private static class FormGroups implements Route {
+    @Override
+    public Object handle(Request request, Response response) throws Exception {
+      List<List<PersonInfo>> theGroups =
+              heuristic.getGroups(
+                      Integer.parseInt(request.params(":class_id")), 
+                      Integer.parseInt(request.params(":group_size")));
+      Map<String, Object> variables = ImmutableMap.of("class", theGroups);
       return GSON.toJson(variables);
     }
   }
