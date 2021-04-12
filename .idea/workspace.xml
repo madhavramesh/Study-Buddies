@@ -2,23 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6f35fa56-7f5b-42f9-814a-3dc404b8ebaf" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/GeneralInfo/GeneralInfo.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/GeneralInfo/index.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-      <change beforePath="$PROJECT_DIR$/frontend/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.tsx" afterDir="false" />
-=======
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/ClassCard/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/ClassCard/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/ClassCardPane/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/ClassCardPane/index.tsx" afterDir="false" />
->>>>>>> 51a996842ecff0b0e3381e10dd1a6120b1d157fc
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/CreateClass/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/CreateClass/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/ModifiedNavbar/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/ModifiedNavbar/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/Signin/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Signin/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/StudentInfo/StudentInfoStyle.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/StudentInfo/StudentInfoStyle.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/OwnerDashboardPage/OwnersDashboard.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/OwnerDashboardPage/OwnersDashboard.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/OwnerDashboardPage/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/OwnerDashboardPage/index.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/data/groups_db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/server/data/groups_db.sqlite3" afterDir="false" />
-=======
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/heuristic/Heuristic.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/heuristic/Heuristic.java" afterDir="false" />
->>>>>>> Stashed changes
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/heuristic/HeuristicUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/heuristic/HeuristicUtils.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,14 +17,11 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-<<<<<<< Updated upstream
-=======
         <option value="Class" />
         <option value="CSS File" />
         <option value="TypeScript File" />
->>>>>>> Stashed changes
-        <option value="TypeScript JSX File" />
         <option value="SCSS File" />
+        <option value="TypeScript JSX File" />
       </list>
     </option>
   </component>
@@ -60,11 +46,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-<<<<<<< Updated upstream
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/server" />
-=======
     <property name="last_opened_file_path" value="$PROJECT_DIR$/frontend" />
->>>>>>> Stashed changes
     <property name="list.type.of.created.stylesheet" value="SCSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.standard" value="true" />
@@ -97,23 +79,26 @@
     </key>
   </component>
   <component name="RunManager">
-<<<<<<< Updated upstream
     <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-=======
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
->>>>>>> Stashed changes
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-<<<<<<< Updated upstream
-      <option name="TEST_OBJECT" value="class" />
-=======
+      <option name="TEST_OBJECT" value="CLASS" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
       <option name="TEST_OBJECT" value="CLASS" />
       <properties />
       <listeners />
->>>>>>> Stashed changes
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -131,14 +116,13 @@
       <workItem from="1617526651438" duration="498000" />
       <workItem from="1617603992161" duration="20000" />
       <workItem from="1617604217886" duration="9000" />
-<<<<<<< Updated upstream
       <workItem from="1618145417176" duration="8941000" />
       <workItem from="1618206868845" duration="870000" />
-=======
       <workItem from="1618137359140" duration="2315000" />
       <workItem from="1618141373045" duration="4252000" />
       <workItem from="1618146058710" duration="3511000" />
->>>>>>> Stashed changes
+      <workItem from="1618233946215" duration="7065000" />
+      <workItem from="1618242480891" duration="1623000" />
     </task>
     <servers />
   </component>

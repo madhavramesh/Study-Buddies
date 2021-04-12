@@ -5,11 +5,9 @@ import org.json.JSONException;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set; 
-import java.util.Map;
+import java.util.Set;
 
 import java.sql.SQLException;
 
@@ -33,35 +31,41 @@ public class HeuristicUtils {
   }
 
   /**
-   * Returns the best groups in a certain class. 
-   * @param classId classId to choose from 
-   * @return
+   * Returns the best groups in a certain class.
+   *
+   * @param classId classId to choose from
+   * @return the list of groups generated
    */
-  public List<List<PersonInfo>> getGroups(int classId, int groupSize) throws SQLException, Exception {
-    List<PersonPreferences> peopleInDatabase = GROUPS_DATABASE.getPersonsInClass(classId);
+  public List<List<Pair<Integer, PersonInfo>>> getGroups(int classId, int groupSize) throws Exception {
+    List<PersonPreferences> peopleInDatabase = GROUPS_DATABASE.getPersonsPrefsInClass(classId);
     Graph graph = createGraph(peopleInDatabase);
+
     grouper = new Grouper(graph);
     List<Set<IGNode>> results = grouper.makeGroups(graph, groupSize);
-    
-    // Convert to groups of personinfos 
-    List<List<PersonInfo>> resultGroups = new ArrayList<>();
-    for (Set<IGNode> group: results) {
-      List<PersonInfo> newGroup = new ArrayList<>();
-      for (IGNode n: group) {
+
+    // Convert to groups of PersonInfos
+    List<List<Pair<Integer, PersonInfo>>> resultGroups = new ArrayList<>();
+    int groupId = 1;
+    for (Set<IGNode> group : results) {
+      List<Pair<Integer, PersonInfo>> newGroup = new ArrayList<>();
+      for (IGNode n : group) {
+        DBCode code = GROUPS_DATABASE.setPersonGroupInClass(n.getValue(), classId, groupId);
         Pair<DBCode, PersonInfo> personInfo = GROUPS_DATABASE.getPersonInfo(n.getValue());
-        newGroup.add(personInfo.getSecond());
+        newGroup.add(new Pair<>(groupId, personInfo.getSecond()));
       }
       resultGroups.add(newGroup);
+      ++groupId;
     }
-    
+
     return resultGroups;
   }
 
   /**
    * Given a list of person preferences, creates the corresponding graph.
+   *
    * @param people list of person preferences
-   * @return
-   * @throws Exception
+   * @return the graph representing the class
+   * @throws Exception if an error occurs somewhere in graph creation
    */
   public Graph createGraph(List<PersonPreferences> people) throws Exception {
     Graph graph = new Graph();
@@ -70,7 +74,7 @@ public class HeuristicUtils {
     List<IGEdge> edges = new ArrayList<>();
 
     // Create new nodes 
-    for (PersonPreferences pp: people) {
+    for (PersonPreferences pp : people) {
       IGNode newNode = new IGNode(pp.getPersonId(), new HashSet<>());
       nodes.add(newNode);
     }
@@ -84,22 +88,23 @@ public class HeuristicUtils {
       for (int j = i + 1; j < max; j++) {
         IGNode otherNode = nodes.get(j);
         PersonPreferences otherPP = people.get(j);
-        
+
         IGEdge newEdge = new IGEdge(thisNode, otherNode, findHeuristic(thisPP, otherPP));
         edges.add(newEdge);
+//        System.out.println(thisNode.getValue() + " " + otherNode.getValue() + " " + newEdge.getWeight());
       }
     }
-    
+
     // Populate graph with nodes
-    for (IGNode n: nodes) {
+    for (IGNode n : nodes) {
       graph.addNode(n);
     }
-    
+
     // Populate graph with edges
-    for (IGEdge e: edges) {
+    for (IGEdge e : edges) {
       graph.addEdge(e);
     }
-    
+
     return graph;
   }
 
@@ -107,6 +112,7 @@ public class HeuristicUtils {
    * Find the heuristic "preference" value between two people, determined by finding the metrics
    * for each of time overlaps (40% weight), their preferences for each other (40% weight), and
    * dorm distance (20% weight).
+   *
    * @param p1 the first person's preferences
    * @param p2 the second person's preferences
    * @return the heuristic value between two people

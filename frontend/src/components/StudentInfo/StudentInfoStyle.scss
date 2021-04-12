@@ -1,0 +1,30 @@
+.student {
+  width: 100%;
+  font-family: Poppins, "sans-serif";
+  color: #ffffff;
+  margin-bottom: 10px;
+
+  .name-text, .name-text:disabled {
+    margin-left: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 80%;
+    background-color: #2386C8;
+    opacity: 1;
+  }
+
+  .remove {
+    padding-right: 10px;
+    padding-left: 10px;
+    width: 13%;
+    height: 100%;
+    font-size: 15px !important;
+    background-color: #d0312d;
+    outline: none !important;
+  }
+
+  .remove:hover, .remove:active, .remove:focus, .remove:visited {
+    background-color: #f9534e !important;
+    box-shadow: none !important;
+  }
+}

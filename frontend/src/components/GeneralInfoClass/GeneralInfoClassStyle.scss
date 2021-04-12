@@ -1,0 +1,30 @@
+.general-info-container {
+  font-family: "Poppins", sans-serif;
+
+  .class-name {
+    font-size: 30px;
+    font-weight: 500;
+  }
+
+  .class-subheader {
+    color: #6A6C6E;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+
+    .class-code {
+      margin-left: auto;
+    }
+  }
+
+  .class-img {
+    width: 100%;
+    margin-bottom: 20px;
+
+    img {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+}

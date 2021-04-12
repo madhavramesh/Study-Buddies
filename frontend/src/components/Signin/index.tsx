@@ -52,7 +52,7 @@ const Signin: React.FC = () => {
         console.log(response.data);
       })
       .catch((err: any) => {
-        console.log(err.response.data);
+        console.log(err);
       });
   };
 

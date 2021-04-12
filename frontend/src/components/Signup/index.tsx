@@ -61,7 +61,7 @@ const Signup: React.FC = () => {
         }
       })
       .catch((err: any) => {
-        console.log(err.response.data);
+        console.log(err);
       });
   };
 
