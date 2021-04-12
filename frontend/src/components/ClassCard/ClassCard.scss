@@ -6,20 +6,46 @@
   float: left;
   margin: 2rem;
   position: relative;
+
+  .card-title, .card-subtitle, .card-text {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  .card-text {
+    margin-bottom: 0.7rem;
+  }
+
+  .class-card-button {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 50%;
+    height: 30%;
+    padding: 0rem;
+    border: none;
+  }
+
+  .class-card-button:hover {
+    background-color: #202020;
+  }
 }
 
 .class-card {
   // margin: 2rem;
-  background-color: #ddd;
+  background-color: #cccccc;
   // border: 0.75px solid black;
   border: none;
   border-radius: 1rem;
+  -webkit-line-clamp: 2;
   // float: left;
   transition: 0.25s;
 }
 
 .class-card:hover {
-  box-shadow: 2px 2px #99999980;
+  background-color: #f2f2f2;
 }
 
 .class-modal-header {
@@ -34,17 +60,14 @@
   font-size: 16px;
 }
 
-.class-card-button {
-  position: absolute;
-  top: 8rem;
-  left: 2.5rem;
-  width: 70%;
-  height: 25%;
-  padding: 0.5rem;
-  border: 1px solid black;
-}
+.class-info-modal-form {
+  width: 100%;
+  .form-control {
+    width: 100%;
+  }
 
-.class-card-button:hover {
-  background-color: invert(#222);
-  color: invert(#fffff0);
+  .btn {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
 }

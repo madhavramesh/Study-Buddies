@@ -30,7 +30,9 @@ const ClassCreatedModal = ({
         <FlareIcon className="flare-icon" />
         <div className="class-header">Welcome to {className}!</div>
         <p>{classDescription}</p>
-        <Button variant="primary">Continue</Button>
+        <Button variant="primary" onClick={onHide}>
+          Continue
+        </Button>
       </Modal.Body>
     </Modal>
   );

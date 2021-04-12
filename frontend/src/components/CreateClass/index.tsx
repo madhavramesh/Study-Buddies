@@ -54,7 +54,7 @@ const CreateClass: React.FC<CreateClassProps> = ({ onHide, show }: CreateClassPr
     }
 
     const postParameters = {
-      id: localStorage.getItem('user_id'),
+      id: sessionStorage.getItem('user_id'),
       class_name: className,
       class_number: classNumber,
       class_description: classDescription,
@@ -73,8 +73,8 @@ const CreateClass: React.FC<CreateClassProps> = ({ onHide, show }: CreateClassPr
         .post('http://localhost:4567/create_class', postParameters, config)
         .then((response: any) => {
           if (response.data.status === 0) {
-            console.log('Class created!');
-            history.push('/owner-dashboard');
+            const classId = response.data.class_id;
+            history.push(`/owner-dashboard/${classId}`);
           } else {
             console.log('Class creation failed!');
           }

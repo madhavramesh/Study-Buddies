@@ -5,12 +5,16 @@
       <change afterPath="$PROJECT_DIR$/frontend/src/components/GeneralInfo/GeneralInfo.scss" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/frontend/src/components/GeneralInfo/index.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+<<<<<<< HEAD
 <<<<<<< Updated upstream
       <change beforePath="$PROJECT_DIR$/frontend/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.tsx" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/ClassCard/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/ClassCard/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/ClassCardPane/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/ClassCardPane/index.tsx" afterDir="false" />
+>>>>>>> 51a996842ecff0b0e3381e10dd1a6120b1d157fc
       <change beforePath="$PROJECT_DIR$/frontend/src/components/CreateClass/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/CreateClass/index.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/ModifiedNavbar/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/ModifiedNavbar/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/DashboardPage/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/DashboardPage/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/TestDisplayClassesPage/index.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Signin/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Signin/index.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/data/groups_db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/server/data/groups_db.sqlite3" afterDir="false" />
 =======
       <change beforePath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/heuristic/Heuristic.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/heuristic/Heuristic.java" afterDir="false" />

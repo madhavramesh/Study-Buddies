@@ -3,7 +3,11 @@ import { Button, Form, FormControl, InputGroup } from 'react-bootstrap';
 import SearchIcon from '@material-ui/icons/Search';
 import './SearchBarStyle.scss';
 
-const SearchBar = () => {
+type SearchBarProps = {
+  onChange: any;
+};
+
+const SearchBar: React.FC<SearchBarProps> = ({ onChange }: SearchBarProps) => {
   return (
     <>
       <div className="search-header">Search</div>
@@ -17,6 +21,7 @@ const SearchBar = () => {
           type="text"
           placeholder="Search for classes"
           className="search-bar-form-control mr-sm-2"
+          onChange={onChange}
         />
       </InputGroup>
       <Form.Text className="text-muted">Search for classes by class name or number</Form.Text>
