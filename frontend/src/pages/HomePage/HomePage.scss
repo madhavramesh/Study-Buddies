@@ -26,14 +26,15 @@
     font-family: 'Poppins', Courier, sans-serif;
     background-color: black;
     width: 50%;
+    height: 3rem;
     left: 25%;
-    transform: translate(0, 450%);
+    transform: translate(0, 400%);
     position: relative;
     transition-duration: 0.2s;
   }
 
   .homepage-signup-button:hover {
-    background-color: #eee;
+    background-color: #aaa;
     color: #333;
   }
 }
@@ -52,15 +53,15 @@
     position: relative;
     color: #348AED;
 
-    -webkit-animation: fadein 4.5s ease;
+    -webkit-animation: fadein 6s ease;
     /* Safari, Chrome and Opera > 12.1 */
-    -moz-animation: fadein 4.5s ease;
+    -moz-animation: fadein 6s ease;
     /* Firefox < 16 */
-    -ms-animation: fadein 4.5s;
+    -ms-animation: fadein 6s;
     /* Internet Explorer */
-    -o-animation: fadein 4.5s ease;
+    -o-animation: fadein 6s ease;
     /* Opera < 12.1 */
-    animation: fadein 4.5s ease;
+    animation: fadein 6s ease;
   }
 
   .homepage-info-image {
@@ -69,15 +70,15 @@
     transform: translate(0%, -35%);
     position: relative;
 
-    -webkit-animation: fadein 4.5s ease;
+    -webkit-animation: fadein 6s ease;
     /* Safari, Chrome and Opera > 12.1 */
-    -moz-animation: fadein 4.5s ease;
+    -moz-animation: fadein 6s ease;
     /* Firefox < 16 */
-    -ms-animation: fadein 4.5s;
+    -ms-animation: fadein 6s;
     /* Internet Explorer */
-    -o-animation: fadein 4.5s ease;
+    -o-animation: fadein 6s ease;
     /* Opera < 12.1 */
-    animation: fadein 4.5s ease
+    animation: fadein 6s ease
   }
 
   .homepage-info-button {
@@ -85,20 +86,20 @@
     color: black;
     background-color: #348AED;
     width: 40%;
+    height: 3rem;
     left: -23%;
-    transform: translate(0, 50%);
     position: relative;
     transition-duration: 0.4s;
 
-    -webkit-animation: fadein 4.5s ease;
+    -webkit-animation: fadein 6s ease;
     /* Safari, Chrome and Opera > 12.1 */
-    -moz-animation: fadein 4.5s ease;
+    -moz-animation: fadein 6s ease;
     /* Firefox < 16 */
-    -ms-animation: fadein 4.5s;
+    -ms-animation: fadein 6s;
     /* Internet Explorer */
-    -o-animation: fadein 4.5s ease;
+    -o-animation: fadein 6s ease;
     /* Opera < 12.1 */
-    animation: fadein 4.5s ease
+    animation: fadein 6s ease
   }
 
   .homepage-info-button:hover {

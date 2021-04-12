@@ -2,6 +2,7 @@ package edu.brown.cs.student.groups;
 
 import edu.brown.cs.student.DataStructures.Pair;
 import edu.brown.cs.student.encryption.PasswordEncryption;
+import edu.brown.cs.student.input.CodeGenerator;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.sqlite.SQLiteConfig;
 
@@ -261,29 +262,26 @@ public class NewGroupsDatabase {
    * @param classNumber      the class's number
    * @param classDescription the class's description
    * @param classTerm        the class's term
-   * @param classCode        the class's code
    * @param ownerId          the class's owner's ID
    * @return a DBCode representing the status of the class creation
    */
-  public DBCode createClass(String className, String classNumber, String classDescription,
-                            String classTerm, String classCode, int ownerId) throws SQLException {
+  public Pair<Pair<Integer, String>, DBCode> createClass(String className, String classNumber,
+                                       String classDescription, String classTerm, int ownerId)
+      throws SQLException {
     PreparedStatement prep;
     ResultSet rs;
-    // select owner's current owned classes
-    prep = conn.prepareStatement("SELECT * FROM classes WHERE owner_id=?;");
-    prep.setInt(1, ownerId);
+    // select current classes and see if one with the class number already exists
+    prep = conn.prepareStatement("SELECT * FROM classes WHERE class_number=?;");
+    prep.setString(1, classNumber);
     rs = prep.executeQuery();
-    // get the owned classes' names and numbers
-    List<String> classNamesAndNumbers = new ArrayList<>();
-    while (rs.next()) {
-      classNamesAndNumbers.add(rs.getString("class_name"));
-      classNamesAndNumbers.add(rs.getString("class_number"));
-    }
-    // if owner already has classes with the same name or number, return an error
-    if (classNamesAndNumbers.contains(className) || classNamesAndNumbers.contains(classNumber)) {
-      return OWNER_CLASS_ALREADY_CREATED;
+    // check if class with number already exists; if so, indicate an error
+    if (rs.next()) {
+      prep.close();
+      rs.close();
+      return new Pair<>(new Pair<>(-1, ""), CLASS_ALREADY_CREATED);
     }
     // create a new class
+    String classCode = CodeGenerator.generateCode(6);
     prep = conn.prepareStatement("INSERT INTO classes(class_name, class_number, " +
         "class_description, class_term, class_code, owner_id) values(?,?,?,?,?,?);");
     prep.setString(1, className);
@@ -296,7 +294,9 @@ public class NewGroupsDatabase {
       prep.executeUpdate();
       // if foreign key owner_id doesn't exist, return an error code
     } catch (SQLException e) {
-      return CLASS_OWNER_DOES_NOT_EXIST;
+      prep.close();
+      rs.close();
+      return new Pair<>(new Pair<>(-1, ""), CLASS_OWNER_DOES_NOT_EXIST);
     }
     // get the class ID, since it's an auto-incrementing primary key
     prep = conn.prepareStatement("SELECT class_id FROM classes WHERE class_name=? AND " +
@@ -320,7 +320,7 @@ public class NewGroupsDatabase {
     prep.executeUpdate();
     prep.close();
     rs.close();
-    return CLASS_CREATION_SUCCESS;
+    return new Pair<>(new Pair<>(classId, classCode), CLASS_CREATION_SUCCESS);
   }
 
   /**

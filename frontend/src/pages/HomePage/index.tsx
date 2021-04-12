@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react';
 import { Button } from 'react-bootstrap';
 import { useHistory } from 'react-router';
-import Footer from '../Footer';
-import NavBar from '../Navbar';
 import './HomePage.scss';
+import NavBar from '../../components/Navbar';
+import Footer from '../../components/Footer';
 
 const HomePage: React.FC = () => {
   const history = useHistory();

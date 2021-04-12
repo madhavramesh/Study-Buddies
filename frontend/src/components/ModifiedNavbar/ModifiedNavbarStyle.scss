@@ -1,9 +1,28 @@
-.navbar {
-  background-color: rgba(0, 0, 0, 1) !important;
+.modified-navbar {
+  background-color: #2386c8 !important;
   padding: 0px 240px !important;
+  height: 70px;
 
-  .nav-brand {
+  .modified-nav-brand {
     color: rgba(255, 255, 255, 1);
+  }
+
+  .btn {
+    background-color: #6A6C6E;
+    border: none;
+    padding-right: 30px;
+    padding-left: 30px;
+  }
+
+  .btn:hover, .btn:active, .btn:focus {
+    background-color: #929496;
+    color: #ffffff;
+    border: none;
+  }
+
+  .dropdown-item:hover, .dropdown-item:active, .dropdown-item:focus {
+    background-color: #D3D3D3;
+    color: #000000;
   }
 
   .nav-link:not(.separator) {
@@ -23,7 +42,7 @@
 
   .nav-link:hover:not(.separator),
   .nav-link--active:not(.separator) {
-    color: #348aed !important;
+    color: #6A6C6E !important;
     transform: scale(1.1);
   }
 }

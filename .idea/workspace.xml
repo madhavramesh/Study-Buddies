@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="6f35fa56-7f5b-42f9-814a-3dc404b8ebaf" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/DataStructures/Graph.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/DataStructures/Graph.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/DataStructures/IGEdge.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/DataStructures/IGEdge.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/DataStructures/IGNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/DataStructures/IGNode.java" afterDir="false" />
@@ -11,6 +12,14 @@
       <change beforePath="$PROJECT_DIR$/server/src/test/java/edu/brown/cs/student/DataStructures/IGEdgeTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/test/java/edu/brown/cs/student/DataStructures/IGEdgeTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/test/java/edu/brown/cs/student/DataStructures/IGNodeTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/test/java/edu/brown/cs/student/DataStructures/IGNodeTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/test/java/edu/brown/cs/student/algorithm/GrouperTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/test/java/edu/brown/cs/student/algorithm/GrouperTest.java" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/CreateClass/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/CreateClass/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Preferences/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Preferences/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/control/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/control/Main.java" afterDir="false" />
+>>>>>>> frontend
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,9 +63,15 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Project" />
+<<<<<<< HEAD
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.0" />
     <property name="settings.editor.selected.configurable" value="settings.javascript.linters.eslint" />
+=======
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="settings.editor.selected.configurable" value="org.infernus.idea.checkstyle.CheckStyleConfigurable" />
+>>>>>>> frontend
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/frontend/node_modules/typescript/lib" />
   </component>
   <component name="RecentsManager">
@@ -67,11 +82,30 @@
       <recent name="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/DataStructures" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/frontend/src/pages" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/frontend/src/images" />
       <recent name="$PROJECT_DIR$/frontend" />
     </key>
   </component>
+<<<<<<< HEAD
+=======
+  <component name="RunManager">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+>>>>>>> frontend
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -84,9 +118,13 @@
       <workItem from="1617526651438" duration="498000" />
       <workItem from="1617603992161" duration="20000" />
       <workItem from="1617604217886" duration="9000" />
+<<<<<<< HEAD
       <workItem from="1618137359140" duration="2315000" />
       <workItem from="1618141373045" duration="4252000" />
       <workItem from="1618146058710" duration="1829000" />
+=======
+      <workItem from="1618145417176" duration="8941000" />
+>>>>>>> frontend
     </task>
     <servers />
   </component>
