@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Card, Form, FormControl, ListGroup, Nav, Table } from 'react-bootstrap';
+import { Table } from 'react-bootstrap';
 import './TimesPane.scss';
 
 // TimeProps consumes a number which is either is a multiple is a factor of 60.
@@ -11,7 +11,6 @@ type TimeProps = {
 };
 
 const TimesPane: React.FC<TimeProps> = ({ slotLength, selectedTimes, setSelectedTimes }) => {
-  console.log(selectedTimes);
   const convertToTime = (time: number): string => {
     const balancedTime: number = time % 2400;
     let am = true;
@@ -112,16 +111,16 @@ const TimesPane: React.FC<TimeProps> = ({ slotLength, selectedTimes, setSelected
     const { rowIndex } = e.target.parentElement;
 
     if (isMouseDown && !(cellIndex === lastToggledCell[0] && rowIndex === lastToggledCell[1])) {
-      console.log(e.target.style);
-      console.log(cellIndex);
-      console.log(rowIndex);
+      // console.log(e.target.style);
+      // console.log(cellIndex);
+      // console.log(rowIndex);
       // There are 7 cell index, they coincide with the first index of the 2d array
       const newSelectedTimes = [...selectedTimes];
       newSelectedTimes[cellIndex][rowIndex - 1] = newSelectedTimes[cellIndex][rowIndex - 1] ? 0 : 1;
       setSelectedTimes(newSelectedTimes);
       setLastToggledCell([cellIndex, rowIndex]);
-      console.log('Selected Times');
-      console.log(selectedTimes);
+      // console.log('Selected Times');
+      // console.log(selectedTimes);
     }
   }
 

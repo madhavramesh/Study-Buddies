@@ -129,17 +129,22 @@ public final class Main {
     Spark.exception(Exception.class, new ExceptionPrinter());
 
     // Setup Spark Routes
+    // account setup
     Spark.post("/register_account", new RegisterUserHandler());
     Spark.post("/validate_account", new LoginUserHandler());
+    // join/create/get all class info handlers
     Spark.get("/get_all_classes", new GetAllClasses());
     Spark.get("/get_classes_with/:owner_id", new GetClassesWithOwnerId());
     Spark.get("/get_enrollments/:id", new GetEnrollments());
     Spark.post("/create_class", new CreateClass());
     Spark.post("/join_class", new JoinClass());
+    // person info
     Spark.get("/person_info/:id", new GetPersonInfo());
+    // specific class handlers
     Spark.get("/get_persons_in/:class_id", new GetPersonsInClass());
     Spark.get("/get_person_pref_in/:class_id/:id", new GetPersonPrefInClass());
     Spark.get("/get_person_prefs_in/:class_id", new GetPersonsPrefsInClass());
+    Spark.post("/set_preferences", new SetPreferences());
   }
 
   /**
@@ -395,7 +400,7 @@ public final class Main {
    * Gets the person info of all enrollees in the class. The returned JSON object will have the
    * form:
    * {
-   *   persons: [a list of PersonInfo objects]
+   * persons: [a list of PersonInfo objects]
    * }
    */
   private static class GetPersonsInClass implements Route {
@@ -413,9 +418,9 @@ public final class Main {
   /**
    * Gets the person's preferences in a class. The returned JSON object will have the form:
    * {
-   *   status: [the status of the preferences fetching operation],
-   *   message: [message explaining preferences fetching status],
-   *   preferences: [person's preferences if successful, or empty string]
+   * status: [the status of the preferences fetching operation],
+   * message: [message explaining preferences fetching status],
+   * preferences: [person's preferences if successful, or empty string]
    * }
    */
   private static class GetPersonPrefInClass implements Route {
@@ -435,10 +440,11 @@ public final class Main {
       return GSON.toJson(variables);
     }
   }
+
   /**
    * Gets all persons in a specified class. The returned JSON object will have the form:
    * {
-   *   persons: {list of persons in a class},
+   * persons: {list of persons in a class},
    * }
    */
   private static class GetPersonsPrefsInClass implements Route {
@@ -449,6 +455,40 @@ public final class Main {
       System.out.println(persons);
       Map<String, Object> variables = ImmutableMap.of(
           "persons", persons
+      );
+      return GSON.toJson(variables);
+    }
+  }
+
+  /**
+   * Sets preferences given information from the frontend. JSON objects must have the form:
+   * {
+   *   person_id: ...,
+   *   class_id: ...,
+   *   dorm: ...,
+   *   person_preferences: ...,
+   *   time_preferences: ...,
+   * }
+   * The returned JSON object will have the form:
+   * {
+   *   status: [status of setting preferences operation]
+   *   message: [message explaining status],
+   * }
+   */
+  private static class SetPreferences implements Route {
+    @Override
+    public Object handle(Request request, Response response) throws Exception {
+      JSONObject data = new JSONObject(request.body());
+      int personId = data.getInt("person_id");
+      int classId = data.getInt("class_id");
+      String dorm = data.getString("dorm");
+      String personPreferences = data.getString("person_preferences");
+      String timePreferences = data.getString("time_preferences");
+      DBCode code =
+          GROUPS_DATABASE.setPreferences(personId, classId, dorm, personPreferences, timePreferences);
+      Map<String, Object> variables = ImmutableMap.of(
+          "status", code.getCode(),
+          "message", code.getMessage()
       );
       return GSON.toJson(variables);
     }

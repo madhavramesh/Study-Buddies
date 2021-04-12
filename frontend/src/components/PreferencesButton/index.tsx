@@ -5,7 +5,6 @@ import MenuBookIcon from '@material-ui/icons/MenuBook';
 import PersonCard from '../PersonCard';
 import TimesPane from '../TimesPane';
 import './PreferencesButton.scss';
-import SearchBar from '../SearchBar/SearchBar';
 
 const dorms = [
   'Andrews Hall',
@@ -23,6 +22,29 @@ const dorms = [
 
 const initialTimes: Array<Array<number>> = new Array(7).fill(0).map(() => new Array(24).fill(0));
 
+function serializePersonPreferences(persons: Array<any>, selected: Array<number>): string {
+  let str = '';
+  for (let i = 0; i < selected.length; i += 1) {
+    if (selected[i] === 1) {
+      str += `${persons[i].id},`;
+    } else if (selected[i] === -1) {
+      str += `-${persons[i].id},`;
+    }
+  }
+  return str.length ? str.substring(0, str.length - 1) : str;
+}
+
+function serializeTimePreferences(selectedTimes: Array<Array<any>>): string {
+  let str = '';
+  for (let i = 0; i < selectedTimes.length; i += 1) {
+    for (let j = 0; j < selectedTimes[i].length; j += 1) {
+      str += selectedTimes[i][j];
+    }
+    str += ':';
+  }
+  return str.substring(0, str.length - 1);
+}
+
 const PreferencesButton: React.FC = () => {
   const className = 'Software Engineering';
   const classTerm = 'Spring 2021 🌺';
@@ -33,10 +55,33 @@ const PreferencesButton: React.FC = () => {
   const [dorm, setDorm] = useState('');
 
   const [persons, setPersons] = useState([]);
-  const [selected, setSelected] = useState([]);
+  const [selected, setSelected] = useState<Array<number>>([]);
 
   const [selectedTimes, setSelectedTimes] = useState(initialTimes);
-  console.log(selectedTimes);
+
+  const submitPreferences = async () => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      },
+    };
+
+    const postParameters = {
+      person_id: sessionStorage.getItem('user_id'),
+      class_id: 1,
+      dorm,
+      person_preferences: serializePersonPreferences(persons, selected),
+      time_preferences: serializeTimePreferences(selectedTimes),
+    };
+
+    const response = await axios.post(
+      'http://localhost:4567/set_preferences',
+      postParameters,
+      config
+    );
+    console.log(response.data);
+  };
 
   const getPeopleInClass = async () => {
     const config = {
@@ -47,7 +92,7 @@ const PreferencesButton: React.FC = () => {
     };
     const response = await axios.get(`http://localhost:4567/get_persons_in/${1}`, config);
     setPersons(response.data.persons);
-    const selectedArray: any = new Array(response.data.persons.length).fill(0);
+    const selectedArray: Array<number> = new Array(response.data.persons.length).fill(0);
     setSelected(selectedArray);
   };
 
@@ -75,7 +120,6 @@ const PreferencesButton: React.FC = () => {
     });
   }
 
-  // eslint-disable-next-line no-nested-ternary
   let displayedPage: any = '';
   switch (page) {
     case 0:
@@ -92,7 +136,9 @@ const PreferencesButton: React.FC = () => {
             </div>
           </Modal.Body>
           <Modal.Footer>
-            <Button onClick={() => setPage(page + 1)}>Dorm ➡</Button>
+            <Button className="modal-button" onClick={() => setPage(page + 1)}>
+              Dorm ➡
+            </Button>
           </Modal.Footer>
         </>
       );
@@ -123,8 +169,11 @@ const PreferencesButton: React.FC = () => {
             </Form>
           </Modal.Body>
           <Modal.Footer>
-            <Button onClick={() => setPage(page - 1)}>⬅ Introduction</Button>
+            <Button className="modal-button" onClick={() => setPage(page - 1)}>
+              ⬅ Introduction
+            </Button>
             <Button
+              className="modal-button"
               disabled={!dorm || dorm === 'Select a dorm...'}
               onClick={() => setPage(page + 1)}
             >
@@ -148,8 +197,12 @@ const PreferencesButton: React.FC = () => {
             {personCards}
           </Modal.Body>
           <Modal.Footer>
-            <Button onClick={() => setPage(page - 1)}>⬅ Dorm</Button>
-            <Button onClick={() => setPage(page + 1)}>Times ➡</Button>
+            <Button className="modal-button" onClick={() => setPage(page - 1)}>
+              ⬅ Dorm
+            </Button>
+            <Button className="modal-button" onClick={() => setPage(page + 1)}>
+              Times ➡
+            </Button>
           </Modal.Footer>
         </>
       );
@@ -174,8 +227,12 @@ const PreferencesButton: React.FC = () => {
             </div>
           </Modal.Body>
           <Modal.Footer>
-            <Button onClick={() => setPage(page - 1)}>⬅ People</Button>
-            <Button onClick={() => console.log('hi')}>Submit!</Button>
+            <Button className="modal-button" onClick={() => setPage(page - 1)}>
+              ⬅ People
+            </Button>
+            <Button className="modal-button" onClick={submitPreferences}>
+              Submit!
+            </Button>
           </Modal.Footer>
         </>
       );
@@ -186,7 +243,7 @@ const PreferencesButton: React.FC = () => {
 
   return (
     <div>
-      <Button type="info" onClick={() => setShowModal(true)}>
+      <Button className="modal-button" type="info" onClick={() => setShowModal(true)}>
         Click me!
       </Button>
       <Modal

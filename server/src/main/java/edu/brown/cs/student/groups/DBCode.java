@@ -20,6 +20,7 @@ public enum DBCode {
   CLASS_CREATION_SUCCESS(0, "Successfully created class!"),
   CLASS_JOIN_SUCCESS(0, "Successfully joined class!"),
   RETRIEVE_PREFERENCES_SUCCESS(0, "Successfully retrieved preferences!"),
+  UPDATE_PREFERENCES_SUCCESS(0, "Successfully updated preferences!"),
   USER_NOT_LOGGED_IN(1, "User not logged in!"),
   USER_NOT_FOUND(1, "User not found!"),
   EMAIL_TAKEN(2, "Email was taken!"),

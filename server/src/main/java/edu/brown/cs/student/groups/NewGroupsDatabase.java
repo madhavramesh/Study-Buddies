@@ -456,6 +456,23 @@ public class NewGroupsDatabase {
     return personPreferences;
   }
 
+  public DBCode setPreferences(int personId, int classId, String dorm, String personPreferences,
+                               String timePreferences) throws SQLException {
+    PreparedStatement prep = conn.prepareStatement("UPDATE class " +
+        "SET dorm=?, preferences=?, times=? WHERE class_id=? AND person_id=?");
+    prep.setString(1, dorm);
+    prep.setString(2, personPreferences);
+    prep.setString(3, timePreferences);
+    prep.setInt(4, classId);
+    prep.setInt(5, personId);
+    try {
+      prep.executeUpdate();
+      return UPDATE_PREFERENCES_SUCCESS;
+    } catch (SQLException e) {
+      return PERSON_NOT_IN_CLASS;
+    }
+  }
+
   /**
    * Processes class information into a ClassInfo object.
    *
