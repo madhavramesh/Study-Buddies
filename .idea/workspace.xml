@@ -3,10 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="6f35fa56-7f5b-42f9-814a-3dc404b8ebaf" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/DashboardPage/DashboardPageStyle.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/DashboardPage/DashboardPageStyle.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/DashboardPage/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/DashboardPage/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/data/groups_db.sqlite3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/StudentDashboardPage/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/StudentDashboardPage/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/data/groups_db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/server/data/groups_db.sqlite3" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

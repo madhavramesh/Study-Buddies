@@ -69,7 +69,7 @@ const StudentDashboardPage: React.FC = ({ match }: any) => {
 
   return (
     <div>
-      <ModifiedNavBar username={sessionStorage.getItem('user_id')} />
+      <ModifiedNavBar username="Madhav Ramesh" />
       <div className="column">
         <div id="top">
           <GeneralInfoClass
