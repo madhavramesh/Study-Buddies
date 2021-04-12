@@ -1,5 +1,6 @@
 import React, { FormEvent, useEffect, useRef, useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
+import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 import ReCAPTCHA from 'react-google-recaptcha';
 import './SignupStyle.scss';
@@ -7,6 +8,8 @@ import './SignupStyle.scss';
 const axios = require('axios');
 
 const Signup: React.FC = () => {
+  const history = useHistory();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [password2, setPassword2] = useState('');
@@ -52,6 +55,7 @@ const Signup: React.FC = () => {
       .then((response: any) => {
         if (response.data.success === 0) {
           setRegistered(true);
+          console.log('success!');
         } else {
           setRegistered(false);
         }
@@ -66,6 +70,9 @@ const Signup: React.FC = () => {
       .catch((_: any) => {
         setRegistered(false);
       });
+    if (registered) {
+      history.push('/signin');
+    }
   };
 
   /*
