@@ -135,7 +135,7 @@ public final class Main {
     Spark.get("/get_enrollments/:id", new GetEnrollments());
     Spark.post("/create_class", new CreateClass());
     Spark.post("/join_class", new JoinClass());
-    Spark.get("/person_info", new GetPersonInfo());
+    Spark.get("/person_info/:id", new GetPersonInfo());
   }
 
   /**
@@ -369,15 +369,7 @@ public final class Main {
   private static class GetPersonInfo implements Route {
     @Override
     public Object handle(Request request, Response response) throws Exception {
-      if (request.session().attribute("user_id") == null) {
-        DBCode code = DBCode.USER_NOT_LOGGED_IN;
-        Map<String, Object> variables = ImmutableMap.of(
-            "status", code.getCode(),
-            "message", code.getMessage()
-        );
-        return GSON.toJson(variables);
-      }
-      int id = request.session().attribute("user_id");
+      int id = Integer.parseInt(request.params(":id"));
       Pair<DBCode, PersonInfo> result = GROUPS_DATABASE.getPersonInfo(id);
       DBCode code = result.getFirst();
       PersonInfo personInfo = result.getSecond();

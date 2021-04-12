@@ -1,4 +1,4 @@
-package edu.brown.cs.student.distance;
+package edu.brown.cs.student.obsoletedistanceutils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
