@@ -11,8 +11,15 @@
 .class-card {
   // margin: 2rem;
   background-color: #ddd;
-  border: 0.75px solid black;
+  // border: 0.75px solid black;
+  border: none;
+  border-radius: 1rem;
   // float: left;
+  transition: 0.25s;
+}
+
+.class-card:hover {
+  box-shadow: 2px 2px #99999980;
 }
 
 .class-modal-header {
@@ -29,7 +36,7 @@
 
 .class-card-button {
   position: absolute;
-  top: 7rem;
+  top: 8rem;
   left: 2.5rem;
   width: 70%;
   height: 25%;

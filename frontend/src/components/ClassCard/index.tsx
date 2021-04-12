@@ -9,6 +9,7 @@ type ClassProps = {
   number: string;
   desc: string;
   term: string;
+  classCode: string;
   owner: any;
 };
 
@@ -26,7 +27,7 @@ function emojifyTerm(term: string): string {
   return `${term} 🍁`;
 }
 
-const ClassCard: React.FC<ClassProps> = ({ cid, name, number, desc, term, owner }) => {
+const ClassCard: React.FC<ClassProps> = ({ cid, name, number, desc, term, classCode, owner }) => {
   const [show, setShow] = useState(false);
   const [code, setCode] = useState('');
 
@@ -85,11 +86,15 @@ const ClassCard: React.FC<ClassProps> = ({ cid, name, number, desc, term, owner 
 
   return (
     <div className="class-card-container">
-      <Card style={{ width: '18rem', height: '11rem' }} className="class-card">
+      <Card style={{ width: '18rem', height: '12rem' }} className="class-card">
         <Card.Body className="class-card-header">
-          <Card.Title>{name}</Card.Title>
+          <Card.Title>
+            [{number}] {name}
+          </Card.Title>
           <Card.Subtitle className="mb-2 text-muted">{emojifyTerm(term)}</Card.Subtitle>
-          <Card.Text style={{ fontSize: '16px' }}>{owner ? '🥶 Owner 🥶' : ''}</Card.Text>
+          <Card.Text style={{ fontSize: '16px' }}>
+            {owner ? `Owner | Class Code: ${classCode}` : ''}
+          </Card.Text>
           <Button
             className="class-card-button"
             variant="outline-info"
@@ -126,18 +131,29 @@ const ClassCard: React.FC<ClassProps> = ({ cid, name, number, desc, term, owner 
                 <Form.Control
                   className="mb-2"
                   id="inlineFormInput"
-                  placeholder="Enter Class Code..."
+                  placeholder={validCode ? 'Already joined class!' : 'Enter Class Code...'}
                   isInvalid={!validCode && validCodeMessage !== ''}
                   onChange={(e: any) => setCode(e.target.value)}
+                  disabled={!!validCode}
                 />
+                {/* validCode ? 'disabled' : '' */}
                 <Form.Control.Feedback type="invalid">{validCodeMessage}</Form.Control.Feedback>
                 <Form.Control.Feedback>{validCodeMessage}</Form.Control.Feedback>
               </Col>
-              <Col xs="auto">
-                <Button variant="primary" className="mb-2" onClick={checkJoinCode}>
-                  JOIN CLASS
-                </Button>
-              </Col>
+              {!validCode ? (
+                <Col xs="auto">
+                  <Button
+                    variant="primary"
+                    className="mb-2"
+                    onClick={checkJoinCode}
+                    disabled={!!validCode}
+                  >
+                    JOIN CLASS
+                  </Button>
+                </Col>
+              ) : (
+                ''
+              )}
             </Form.Row>
           </Form>
         </Modal.Footer>

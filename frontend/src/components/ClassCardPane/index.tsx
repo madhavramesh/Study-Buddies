@@ -32,6 +32,7 @@ const ClassCardPane: React.FC = () => {
           number={c.classNumber}
           desc={c.classDescription}
           term={c.classTerm}
+          classCode={c.classCode}
           // eslint-disable-next-line eqeqeq
           owner={c.ownerId == localStorage.getItem('user_id')}
         />
