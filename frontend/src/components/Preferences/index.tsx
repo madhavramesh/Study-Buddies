@@ -22,6 +22,7 @@ const Preferences: React.FC = () => {
             number={person.LastName}
             term="Spring"
             desc="This is weird"
+            classCode="123123"
             owner="guys"
           />
         ))}
