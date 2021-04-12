@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6f35fa56-7f5b-42f9-814a-3dc404b8ebaf" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/frontend/src/pages/ProfilePage/ProfilePage.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/pages/ProfilePage/index.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/StudentDashboardPage/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/StudentDashboardPage/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/data/groups_db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/server/data/groups_db.sqlite3" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -51,7 +53,7 @@
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.path.for.package.standard" value="project" />
     <property name="node.js.path.for.package.tslint" value="project" />
-    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.eslint" value="" />
     <property name="node.js.selected.package.standard" value="" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />

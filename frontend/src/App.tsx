@@ -11,6 +11,7 @@ import OwnerDashboardPage from './pages/OwnerDashboardPage';
 import PeoplePane from './components/PeoplePane';
 import TimesPane from './components/TimesPane';
 import StudentDashboardPage from './pages/StudentDashboardPage';
+import ProfilePage from './pages/ProfilePage';
 
 const App: React.FC = () => {
   return (
@@ -27,6 +28,7 @@ const App: React.FC = () => {
           <Route path="/student-dashboard" component={StudentDashboardPage} />
           <Route path="/profile" component={Signin} />
           <Route path="/class/:classID" component={OwnerDashboardPage} />
+          <Route path="/profile-page" component={ProfilePage} />
           <Route path="/test_people_pane" component={PeoplePane} />
           {/* <Route path="/preferences" component={Preferences} /> */}
           <Route path="/carddemo" component={() => <TimesPane slotLength={60} />} />
