@@ -1,32 +1,36 @@
 package edu.brown.cs.student.control;
 
+import edu.brown.cs.student.input.RegexParser;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/** Read, Evaluate, Print, Loop: that is what happens when you instantiate
+/**
+ * Read, Evaluate, Print, Loop: that is what happens when you instantiate
  * this object and call run(). That is the purpose of this class.
  */
 public class REPL {
-  private List<TriggerAction> registered = new ArrayList<>();
+  private final List<TriggerAction> registered = new ArrayList<>();
 
   /**
    * Class constructor.
    */
-  public REPL() { }
+  public REPL() {
+  }
 
   /**
    * Method that registers a TriggerAction.
    *
    * @param action A TriggerAction class that represents an action to be performed.
-   * @return A boolean that confirms the action was recorded.
    */
-  public boolean registerAction(TriggerAction action) {
-    return registered.add(action);
+  public void registerAction(TriggerAction action) {
+    registered.add(action);
   }
 
   /**
@@ -56,25 +60,38 @@ public class REPL {
   /**
    * runs the REPL.
    */
-  public void run() {
-    try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
-      String s;
-      while ((s = br.readLine()) != null) {
-        boolean actionFound = false;
-        String[] input = parseLine(s);
+  public void run() throws IOException {
+    BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+    String line;
+    while ((line = in.readLine()) != null) {
+      String[] input = RegexParser.parseCommand(line);
+      if (input.length > 0) {
         String command = input[0];
-        for (TriggerAction action : registered) {
-          if (action.name().equals(command)) {
-            action.action(input);
-            actionFound = true;
+        TriggerAction trigger =
+            registered.stream()
+                .filter(triggerAction -> command.contains(triggerAction.name()))
+                .findAny()
+                .orElse(null);
+        if (trigger != null) {
+          try {
+            trigger.action(input);
+          } catch (Exception e) {
+            int errorStart = e.getMessage().indexOf("ERROR:");
+            System.err.println(errorStart > -1
+                ? e.getMessage().substring(errorStart)
+                : "ERROR: Something went wrong with the command " + command);
           }
+        } else {
+          System.err.println("ERROR: Command not recognized");
         }
-        if (!actionFound && (input.length > 0)) {
-          System.out.println("ERROR: Not a command");
+      } else {
+        System.err.println("Enter a command: ");
+        for (TriggerAction ta : registered) {
+          System.err.println("- " + ta.name());
         }
       }
-    } catch (IOException ioException) {
-      ioException.printStackTrace();
     }
   }
+
+
 }

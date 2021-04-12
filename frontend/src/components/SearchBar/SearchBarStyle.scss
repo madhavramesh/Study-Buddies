@@ -1,0 +1,31 @@
+.search-header {
+  font-weight: 500 !important;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.search-bar-input-group {
+  input[type="text"] {
+    box-shadow: none;
+    border-radius: 100px;
+    padding-left: 10px;
+    padding-right: 32px;
+  }
+
+  .btn {
+    background-color: #ffffff;
+    color: #7E848A;
+    padding: 0px 10px 0px 15px;
+    border: 1px solid #ced4da;
+  }
+
+  .btn:hover {
+    background-color: #2386c8;
+    color: #ffffff;
+  }
+
+  .text-muted {
+    color: #60666C !important;
+    margin-left: 3.82rem !important;
+  }
+}

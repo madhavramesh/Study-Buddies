@@ -1,12 +1,50 @@
-.CardBody {
-  background-color: lightgray;
-  color: #2386c8;
-  border-radius: 0.5rem;
-  border: none;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap');
+
+.class-card-container {
+  height: 12rem;
+  width: 18rem;
+  float: left;
+  margin: 2rem;
+  position: relative;
 }
 
-.CardOutline {
-  border-radius: 0.5rem;
+.class-card {
+  // margin: 2rem;
+  background-color: #ddd;
+  // border: 0.75px solid black;
   border: none;
-  margin: 0.25rem;
+  border-radius: 1rem;
+  // float: left;
+  transition: 0.25s;
+}
+
+.class-card:hover {
+  box-shadow: 2px 2px #99999980;
+}
+
+.class-modal-header {
+  // padding-top: 10rem;
+  font-family: 'poppins', courier, sans-serif;
+  font-size: 32px;
+  // font-weight: bold;
+}
+
+.class-modal-body {
+  font-family: 'poppins', courier, sans-serif;
+  font-size: 16px;
+}
+
+.class-card-button {
+  position: absolute;
+  top: 8rem;
+  left: 2.5rem;
+  width: 70%;
+  height: 25%;
+  padding: 0.5rem;
+  border: 1px solid black;
+}
+
+.class-card-button:hover {
+  background-color: invert(#222);
+  color: invert(#fffff0);
 }

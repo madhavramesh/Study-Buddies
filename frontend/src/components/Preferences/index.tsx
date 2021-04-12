@@ -17,10 +17,12 @@ const Preferences: React.FC = () => {
       <ListGroup>
         {people.map((person) => (
           <ClassCard
+            cid={1}
             name={person.FirstName}
             number={person.LastName}
             term="Spring"
             desc="This is weird"
+            classCode="123123"
             owner="guys"
           />
         ))}

@@ -1,0 +1,39 @@
+.class-created-modal .modal-content {
+  font-family: 'Poppins', sans-serif !important;
+
+  .flare-icon {
+    width: 40%;
+    height: 40%;
+    margin-bottom: 20px;
+    color: #ED9634;
+  }
+
+  .modal-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-left: 50px;
+    padding-right: 50px;
+
+    div {
+      font-weight: 600 !important;
+      font-size: 24px !important;
+      margin-bottom: 15px;
+    }
+
+    p {
+      text-align: center;
+      font-size: 13px;
+      color: rgb(90, 97, 103) !important;
+      margin-bottom: 40px;
+    }
+
+    .btn {
+      align-content: center;
+    }
+  }
+}
+
+
+
