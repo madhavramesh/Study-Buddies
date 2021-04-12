@@ -14,6 +14,7 @@ import java.util.*;
  */
 public class Grouper {
   private final Graph graph;
+  private Graph decrementGraph;
   private static Random r = new Random();
 
   /**
@@ -22,6 +23,7 @@ public class Grouper {
    */
   public Grouper(Graph inputGraph) {
     this.graph = new Graph(inputGraph);
+    this.decrementGraph = new Graph(inputGraph);
     for (IGNode node: graph.getNodes()) {
       node.setWeightMap();
     }
@@ -31,22 +33,15 @@ public class Grouper {
     List<Set<IGNode>> groups = new ArrayList<>();
 
     Graph workingGraph = new Graph(g);
+
     // Make groups while there are still enough people left
     while (groupSize <= workingGraph.getNodes().size()) {
-      System.out.println("Original graph");
-      for (IGNode n: workingGraph.getNodes()) {
-        System.out.println(n.getValue());
-      }
-      for (IGEdge e: workingGraph.getEdges()) {
-        System.out.println(e.getStart().getValue() + " " + e.getEnd().getValue());
-      }
-      System.out.println("----nodes to remove-----");
+
       // Add the newest group to the groups list
       Graph newGroup = findGroup(workingGraph, groupSize);
       groups.add(newGroup.getNodes());
       // Remove the nodes from that group from the working graph
       for (IGNode n: newGroup.getNodes()) {
-        System.out.println(n.getValue());
         workingGraph.removeNode(n);
       }
 
@@ -58,15 +53,7 @@ public class Grouper {
           workingGraph.removeEdge(e);
         }
       }
-
-      System.out.println("----------------------------");
-      //TODO
-      for (IGNode n : workingGraph.getNodes()) {
-        System.out.println(n.getValue());
-      }
-
-      System.out.println("----------------------------");
-      System.out.println("----------------------------");
+      decrementGraph = workingGraph;
     }
 
     // Assign groups to the leftovers
@@ -119,9 +106,14 @@ public class Grouper {
    * @param groupSize Group size to find
    */
   public Graph findGroup(Graph g, int groupSize) throws Exception {
+    System.out.println("--------------------------");
     // make a copy
     Graph workingGraph = new Graph(g);
-
+    System.out.println("Nodes in graph");
+    for (IGNode n: workingGraph.getNodes()) {
+      System.out.print(n.getValue() + " ");
+    }
+    System.out.println("\n");
 
     // 0)
     // Change the value of contributions of each node from "null" to an actual value.
@@ -132,7 +124,11 @@ public class Grouper {
     // Create an initial candidate solution graph by removing the
     // lowest contribution nodes to get a graph of size groupSize.
     Graph candidateSolution = deconstruct(initializedGraph, initializedGraph.getNodes().size() - groupSize);
-
+    System.out.println("candidate solution");
+    for (IGNode n: candidateSolution.getNodes()) {
+      System.out.print(n.getValue() + " ");
+    }
+    System.out.println("\n");
 
     // 2)
     // (Optional)
@@ -150,7 +146,8 @@ public class Grouper {
     // - termination condition for now will be 100 run throughs -
     // TODO: talk about termination condition and decide if it makes sense
     int runCount = 0;
-    int maxRuns  = 100;
+    // TODO:
+    int maxRuns  = 5;
     // Also, initialize the randomDropNum. For each run through, a random number of nodes will be dropped.
     // TODO: Research/test ideal random drop number
     // TODO: Consider if it should be fixed or variable over the run throughs!!
@@ -173,12 +170,20 @@ public class Grouper {
       // 5)
       // Randomly drop n variables from the candidate solution
       Graph incompleteSolution = randomDrop(candidateSolution, randomDropNum);
-
+      System.out.println("incomplete solution " + runCount);
+      for (IGNode n: incompleteSolution.getNodes()) {
+        System.out.print(n.getValue() + " ");
+      }
+      System.out.println("\n");
 
       // 6)
       // Greedily add n variables to the candidate solution
       Graph completeSolution = greedyAdd(incompleteSolution, randomDropNum);
-
+      System.out.println("complete solution " + runCount);
+      for (IGNode n: completeSolution.getNodes()) {
+        System.out.print(n.getValue() + " ");
+      }
+      System.out.println("\n");
 
       // 7)
       // (Optional) Local search
@@ -343,6 +348,7 @@ public class Grouper {
     // TODO: See if you can potentially make this more efficient by not recalculating everytime.
     // For each node not in the graph, calculate its contribution to the given subgraph g
     // and store the result in a map from the node to the contribution.
+    Graph gCopy = new Graph(g);
     Set<IGNode> nodesNotInG = nodesNotInGraph(g);
     Map<IGNode, Double> nodeContributionMap = new HashMap<>();
     for (IGNode n: nodesNotInG) {
@@ -430,7 +436,7 @@ public class Grouper {
    * @return The list of nodes that are not in the subset graph
    */
   protected Set<IGNode> nodesNotInGraph(Graph g) {
-    Set<IGNode> allNodes = new HashSet<IGNode>(graph.getNodes());
+    Set<IGNode> allNodes = new HashSet<IGNode>(decrementGraph.getNodes());
     Set<IGNode> nodesInSubgraph = g.getNodes();
     allNodes.removeAll(nodesInSubgraph);
     return allNodes;
