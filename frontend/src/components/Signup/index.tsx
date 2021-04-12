@@ -56,6 +56,7 @@ const Signup: React.FC = () => {
         if (response.data.success === 0) {
           setRegistered(true);
           console.log('success!');
+          history.push('/signin');
         } else {
           setRegistered(false);
         }
@@ -70,9 +71,6 @@ const Signup: React.FC = () => {
       .catch((_: any) => {
         setRegistered(false);
       });
-    if (registered) {
-      history.push('/signin');
-    }
   };
 
   /*
