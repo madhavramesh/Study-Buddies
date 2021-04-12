@@ -7,6 +7,7 @@ import edu.brown.cs.student.groups.ClassInfo;
 import edu.brown.cs.student.groups.DBCode;
 import edu.brown.cs.student.groups.NewGroupsDatabase;
 import edu.brown.cs.student.groups.PersonInfo;
+import edu.brown.cs.student.groups.PersonPreferences;
 import edu.brown.cs.student.groups.testcommands.CreateClassCommand;
 import edu.brown.cs.student.groups.testcommands.GetAllClassesCommand;
 import edu.brown.cs.student.groups.testcommands.GetClassesWithOwnerIdCommand;
@@ -137,6 +138,9 @@ public final class Main {
     Spark.post("/create_class", new CreateClass());
     Spark.post("/join_class", new JoinClass());
     Spark.get("/person_info/:id", new GetPersonInfo());
+    Spark.get("/get_persons_in/:class_id", new GetPersonsInClass());
+    Spark.get("/get_person_pref_in/:class_id/:id", new GetPersonPrefInClass());
+    Spark.get("/get_person_prefs_in/:class_id", new GetPersonsPrefsInClass());
   }
 
   /**
@@ -402,6 +406,69 @@ public final class Main {
           "last_name", success ? personInfo.getLastName() : "",
           "email", success ? personInfo.getEmail() : "",
           "enrollments", success ? GROUPS_DATABASE.getEnrollments(id) : ""
+      );
+      return GSON.toJson(variables);
+    }
+  }
+
+  /**
+   * Gets the person info of all enrollees in the class. The returned JSON object will have the
+   * form:
+   * {
+   *   persons: [a list of PersonInfo objects]
+   * }
+   */
+  private static class GetPersonsInClass implements Route {
+    @Override
+    public Object handle(Request request, Response response) throws Exception {
+      int classId = Integer.parseInt(request.params(":class_id"));
+      List<PersonInfo> personInfos = GROUPS_DATABASE.getPersonsInClass(classId);
+      Map<String, Object> variables = ImmutableMap.of(
+          "persons", personInfos
+      );
+      return GSON.toJson(variables);
+    }
+  }
+
+  /**
+   * Gets the person's preferences in a class. The returned JSON object will have the form:
+   * {
+   *   status: [the status of the preferences fetching operation],
+   *   message: [message explaining preferences fetching status],
+   *   preferences: [person's preferences if successful, or empty string]
+   * }
+   */
+  private static class GetPersonPrefInClass implements Route {
+    @Override
+    public Object handle(Request request, Response response) throws Exception {
+      int classId = Integer.parseInt(request.params(":class_id"));
+      int personId = Integer.parseInt(request.params(":id"));
+      Pair<DBCode, PersonPreferences> result = GROUPS_DATABASE.getPersonPrefInClass(personId,
+          classId);
+      DBCode code = result.getFirst();
+      boolean success = code.getCode() == 0;
+      Map<String, Object> variables = ImmutableMap.of(
+          "status", code.getCode(),
+          "message", code.getMessage(),
+          "preferences", success ? result.getSecond() : ""
+      );
+      return GSON.toJson(variables);
+    }
+  }
+  /**
+   * Gets all persons in a specified class. The returned JSON object will have the form:
+   * {
+   *   persons: {list of persons in a class},
+   * }
+   */
+  private static class GetPersonsPrefsInClass implements Route {
+    @Override
+    public Object handle(Request request, Response response) throws Exception {
+      int classId = Integer.parseInt(request.params(":class_id"));
+      List<PersonPreferences> persons = GROUPS_DATABASE.getPersonsPrefsInClass(classId);
+      System.out.println(persons);
+      Map<String, Object> variables = ImmutableMap.of(
+          "persons", persons
       );
       return GSON.toJson(variables);
     }
