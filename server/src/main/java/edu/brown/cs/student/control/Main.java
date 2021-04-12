@@ -121,6 +121,7 @@ public final class Main {
     // account setup
     Spark.post("/register_account", new RegisterUserHandler());
     Spark.post("/validate_account", new LoginUserHandler());
+    Spark.post("/delete_account", new DeleteUserHandler());
     // join/create/get all class info handlers
     Spark.get("/get_all_classes", new GetAllClasses());
     Spark.get("/get_classes_with/:owner_id", new GetClassesWithOwnerId());
@@ -128,6 +129,8 @@ public final class Main {
     Spark.get("/get_enrollments/:id", new GetEnrollments());
     Spark.post("/create_class", new CreateClass());
     Spark.post("/join_class", new JoinClass());
+    Spark.post("/leave_class", new LeaveClass());
+    Spark.post("/delete_class", new DeleteClass());
     // person info
     Spark.get("/person_info/:id", new GetPersonInfo());
     // specific class handlers
@@ -237,6 +240,33 @@ public final class Main {
           "id", success ? result.getFirst() : -1,
           "first_name", success ? personInfo.getSecond().getFirstName() : "",
           "last_name", success ? personInfo.getSecond().getLastName() : ""
+      );
+      return GSON.toJson(variables);
+    }
+  }
+
+  /**
+   * Deletes a user from the database.JSON objects must be in the form:
+   * {
+   *   id: ...,
+   *   password: ...,
+   * }.
+   * The returned JSON object will have the form:
+   * {
+   *   status: [status of delete request],
+   *   message: [message explaining delete status],
+   * }
+   */
+  private static class DeleteUserHandler implements Route {
+    @Override
+    public Object handle(Request request, Response response) throws Exception {
+      JSONObject data = new JSONObject(request.body());
+      int id = Integer.parseInt(data.getString("id"));
+      String password = data.getString("password");
+      DBCode code = GROUPS_DATABASE.deleteUser(id, password);
+      Map<String, Object> variables = ImmutableMap.of(
+          "status", code.getCode(),
+          "message", code.getMessage()
       );
       return GSON.toJson(variables);
     }
@@ -396,6 +426,60 @@ public final class Main {
   }
 
   /**
+   * Attempts to leave a class. JSON objects must be in the form:
+   * {
+   *   id: ...,
+   *   class_id: ...,
+   * }.
+   * The returned JSON object will have the form:
+   * {
+   *   status: [status explaining leave class request],
+   *   message: [message explaining leave class status]
+   * }
+   */
+  private static class LeaveClass implements Route {
+    @Override
+    public Object handle(Request request, Response response) throws Exception {
+      JSONObject data = new JSONObject(request.body());
+      int id = Integer.parseInt(data.getString("id"));
+      int classId = data.getInt("class_id");
+      DBCode code = GROUPS_DATABASE.leaveClass(id, classId);
+      Map<String, Object> variables = ImmutableMap.of(
+          "status", code.getCode(),
+          "message", code.getMessage()
+      );
+      return GSON.toJson(variables);
+    }
+  }
+
+  /**
+   * Attempts to delete a class. JSON objects must be in the form:
+   * {
+   *   id: ...,
+   *   class_id: ...,
+   * }.
+   * The returned JSON object will have the form:
+   * {
+   *   status: [status explaining delete class request],
+   *   message: [message explaining delete class status]
+   * }
+   */
+  private static class DeleteClass implements Route {
+    @Override
+    public Object handle(Request request, Response response) throws Exception {
+      JSONObject data = new JSONObject(request.body());
+      int id = Integer.parseInt(data.getString("id"));
+      int classId = data.getInt("class_id");
+      DBCode code = GROUPS_DATABASE.deleteClass(id, classId);
+      Map<String, Object> variables = ImmutableMap.of(
+          "status", code.getCode(),
+          "message", code.getMessage()
+      );
+      return GSON.toJson(variables);
+    }
+  }
+
+  /**
    * Gets the person's info. The returned JSON object will have the form:
    * {
    * status: [the status of the person fetching operation],
@@ -411,7 +495,7 @@ public final class Main {
   private static class GetPersonInfo implements Route {
     @Override
     public Object handle(Request request, Response response) throws Exception {
-      int id = Integer.parseInt(request.params(":id"));
+      int id = Integer.valueOf(request.params(":id"));
       Pair<DBCode, PersonInfo> result = GROUPS_DATABASE.getPersonInfo(id);
       DBCode code = result.getFirst();
       PersonInfo personInfo = result.getSecond();

@@ -206,6 +206,37 @@ public class NewGroupsDatabase {
     return REGISTRATION_SUCCESS;
   }
 
+  public DBCode deleteUser(int id, String password)
+      throws SQLException, InvalidKeySpecException, NoSuchAlgorithmException {
+    // first, see if user is even in the database
+    PreparedStatement prep;
+    ResultSet rs;
+    prep = conn.prepareStatement("SELECT * FROM logins WHERE id=?;");
+    rs = prep.executeQuery();
+    String encryptedPass;
+    // if not in database, return an error code
+    if (rs.next()) {
+      encryptedPass = rs.getString("pass_token");
+    } else {
+      return USER_NOT_FOUND;
+    }
+    // if the password they entered is incorrect, return an error code
+    if (!PasswordEncryption.validatePBKDF2Password(password, encryptedPass)) {
+      return INVALID_PASSWORD;
+    }
+    // now, we DELETE
+    prep = conn.prepareStatement("DELETE FROM class WHERE person_id=?;");
+    prep.setInt(1, id);
+    prep.executeUpdate();
+    prep = conn.prepareStatement("DELETE FROM enrollments WHERE person_id=?;");
+    prep.setInt(1, id);
+    prep.executeUpdate();
+    prep = conn.prepareStatement("DELETE FROM logins WHERE id=?;");
+    prep.setInt(1, id);
+    prep.executeUpdate();
+    return DELETE_SUCCESS;
+  }
+
 
   // =============================================================================================
   // =============================================================================================
@@ -439,6 +470,52 @@ public class NewGroupsDatabase {
     prep.close();
     rs.close();
     return CLASS_JOIN_SUCCESS;
+  }
+
+  /**
+   * Leaves the class.
+   * @param id the person's id
+   * @param classId the class's id
+   * @return a code representing the operation's status
+   * @throws SQLException if an error occurs while connecting to the database
+   */
+  public DBCode leaveClass(int id, int classId) throws SQLException {
+    PreparedStatement prep = conn.prepareStatement("DELETE FROM class WHERE person_id=? AND " +
+        "class_id=?;");
+    prep.setInt(1, id);
+    prep.setInt(2, classId);
+    prep.executeUpdate();
+    prep = conn.prepareStatement("DELETE FROM enrollments WHERE person_id=? AND class_id=?;");
+    prep.setInt(1, id);
+    prep.setInt(2, classId);
+    prep.executeUpdate();
+    prep.close();
+    return CLASS_LEAVE_SUCCESS;
+  }
+
+  public DBCode deleteClass(int id, int classId) throws SQLException {
+    PreparedStatement prep;
+    ResultSet rs;
+    prep = conn.prepareStatement("SELECT * FROM classes WHERE owner_id=? AND class_id=?;");
+    prep.setInt(1, id);
+    prep.setInt(2, classId);
+    rs = prep.executeQuery();
+    // if owner id and given id don't match, throw an error
+    if (!rs.next()) {
+      return NOT_THE_OWNER;
+    }
+    prep = conn.prepareStatement("DELETE FROM class WHERE class_id=?;");
+    prep.setInt(1, classId);
+    prep.executeUpdate();
+    prep = conn.prepareStatement("DELETE FROM enrollments WHERE class_id=?;");
+    prep.setInt(1, classId);
+    prep.executeUpdate();
+    prep = conn.prepareStatement("DELETE FROM classes WHERE class_id=?;");
+    prep.setInt(1, classId);
+    prep.executeUpdate();
+    prep.close();
+    return CLASS_DELETE_SUCCESS;
+
   }
 
   // =============================================================================================
