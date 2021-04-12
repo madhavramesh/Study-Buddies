@@ -1,30 +1,27 @@
 package edu.brown.cs.student.DataStructures;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-/**
- * Directed Graph class with generic extended edge/node parameters.
- * Used to hold MapNodes and MapEdges for AStar/Dijkstra Searches.
- * @param <E> generic for edge type
- * @param <N> generic for node type
- */
-public class Graph<N extends Node, E extends Edge> {
 
-  private final List<N> nodes;
-  private final List<E> edges;
+public class Graph {
+
+  private final Set<IGNode> nodes;
+  private final Set<IGEdge> edges;
 
   /**
    * Constructor for the graph class, initializes the nodes and edges ArrayLists.
    */
   public Graph() {
-    nodes = new ArrayList<>();
-    edges = new ArrayList<>();
+    nodes = new HashSet<>();
+    edges = new HashSet<>();
   }
 
-  public Graph(Graph<N, E> otherGraph) {
-    this.nodes = otherGraph.getNodes();
-    this.edges = otherGraph.getEdges();
+  public Graph(Graph otherGraph) {
+    this.nodes = new HashSet<>(otherGraph.getNodes());
+    this.edges = new HashSet<>(otherGraph.getEdges());
   }
 
 
@@ -32,7 +29,7 @@ public class Graph<N extends Node, E extends Edge> {
    * adds a node.
    * @param n node to be added
    */
-  public void addNode(N n) {
+  public void addNode(IGNode n) {
     nodes.add(n);
   }
 
@@ -40,7 +37,7 @@ public class Graph<N extends Node, E extends Edge> {
    * adds an edge.
    * @param e the edge to be added
    */
-  public void addEdge(E e) {
+  public void addEdge(IGEdge e) {
     edges.add(e);
     e.getStart().addEdge(e);
     e.getEnd().addEdge(e);
@@ -50,7 +47,7 @@ public class Graph<N extends Node, E extends Edge> {
    * removes a node.
    * @param n node to be removed.
    */
-  public void removeNode(N n) {
+  public void removeNode(IGNode n) {
     nodes.remove(n);
   }
 
@@ -58,7 +55,7 @@ public class Graph<N extends Node, E extends Edge> {
    * removes an edge.
    * @param e edge to be removed.
    */
-  public void removeEdge(E e) {
+  public void removeEdge(IGEdge e) {
     edges.remove(e);
     e.getStart().removeEdge(e);
     e.getEnd().removeEdge(e);
@@ -67,22 +64,22 @@ public class Graph<N extends Node, E extends Edge> {
   /**
    * @return list of nodes
    */
-  public List<N> getNodes() {
+  public Set<IGNode> getNodes() {
     return nodes;
   }
 
   /**
    * @return list of edges
    */
-  public List<E> getEdges() {
+  public Set<IGEdge> getEdges() {
     return edges;
   }
 
   /**
    * @return specific node or null if non-existent
    */
-  public N getNode(N node) {
-    for(N n: nodes) {
+  public IGNode getNode(IGNode node) {
+    for(IGNode n: nodes) {
       if (n.equals(node)) {
         return n;
       }

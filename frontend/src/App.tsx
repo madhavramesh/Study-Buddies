@@ -3,6 +3,7 @@ import './App.scss';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Signin from './components/Signin';
 import Signup from './components/Signup';
+import AboutPage from './components/AboutPage';
 import ClassCard from './components/ClassCard';
 import PeopleCard from './PeopleCard';
 import TimeCard from './components/TimeCard';
@@ -22,6 +23,7 @@ const App: React.FC = () => {
           <Route exact path="/" component={HomePage} />
           <Route path="/signin" component={Signin} />
           <Route path="/signup" component={Signup} />
+          <Route path="/about" component={AboutPage} />
           <Route path="/dashboard" component={DashboardPage} />
           <Route path="/owner-dashboard" component={OwnerDashboardPage} />
           <Route path="/profile" component={Signin} />
