@@ -1,8 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6f35fa56-7f5b-42f9-814a-3dc404b8ebaf" name="Default Changelist" comment="">
+    <list default="true" id="1eb396a8-21c6-44a6-8899-f99b5921a863" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/AboutPage/AboutStyle.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/AboutPage/AboutStyle.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/AboutPage/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/AboutPage/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/ClassCard/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/ClassCard/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/ClassCardPane/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/ClassCardPane/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/ClassCreatedModal/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/ClassCreatedModal/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/CreateClass/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/CreateClass/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Footer/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Footer/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/GeneralInfoClass/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/GeneralInfoClass/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/ModifiedNavbar/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/ModifiedNavbar/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Navbar/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Navbar/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/PeoplePane/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/PeoplePane/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/PersonCard/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/PersonCard/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Preferences/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Preferences/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/SearchBar/SearchBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/SearchBar/SearchBar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Signin/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Signin/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Signup/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Signup/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/StudentInfo/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/StudentInfo/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/StudyGroupDisplay/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/StudyGroupDisplay/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/TimesPane/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/TimesPane/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/DashboardPage/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/DashboardPage/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/HomePage/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/HomePage/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/OwnerDashboardPage/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/OwnerDashboardPage/index.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/pages/StudentDashboardPage/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/StudentDashboardPage/index.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/data/groups_db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/server/data/groups_db.sqlite3" afterDir="false" />
     </list>
