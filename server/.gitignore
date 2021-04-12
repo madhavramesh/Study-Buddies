@@ -1,0 +1,7 @@
+target/
+.mvn-classpath
+.classpath
+**.DS_Store**
+% *.sqlite3
+.idea/**
+
