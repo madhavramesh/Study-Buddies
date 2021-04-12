@@ -238,10 +238,15 @@ public final class Main {
       String password = data.getString("password");
       Pair<Integer, DBCode> result = GROUPS_DATABASE.validateUser(email, password);
       DBCode code = result.getSecond();
+      boolean success = code.getCode() == 0;
+      Pair<DBCode, PersonInfo> personInfo = success
+        ?  GROUPS_DATABASE.getPersonInfo(result.getFirst()) : null;
       Map<String, Object> variables = ImmutableMap.of(
           "status", code.getCode(),
           "message", code.getMessage(),
-          "id", code.getCode() == 0 ? result.getFirst() : -1
+          "id", success ? result.getFirst() : -1,
+          "first_name", success ? personInfo.getSecond().getFirstName() : "",
+          "last_name", success ? personInfo.getSecond().getLastName() : ""
       );
       return GSON.toJson(variables);
     }
