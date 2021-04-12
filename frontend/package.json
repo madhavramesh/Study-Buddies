@@ -12,6 +12,7 @@
     "@types/react-dom": "^17.0.3",
     "@types/react-google-recaptcha": "^2.1.0",
     "dotenv": "^8.2.0",
+    "eslint-plugin-prettier": "^3.3.1",
     "node-sass": "^5.0.0",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
@@ -61,14 +62,9 @@
     "@typescript-eslint/parser": "^4.21.0",
     "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
-    "eslint": "^7.23.0",
+    "eslint": "^7.24.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-prettier": "^8.1.0",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-jsx-a11y": "^6.4.1",
-    "eslint-plugin-prettier": "^3.3.1",
-    "eslint-plugin-react": "^7.23.1",
-    "eslint-plugin-react-hooks": "^1.7.0",
-    "prettier": "2.2.1"
+    "prettier": "^2.2.1"
   }
 }

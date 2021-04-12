@@ -2,6 +2,7 @@ import React from 'react';
 import './AboutStyle.scss';
 import NavBar from '../Navbar';
 import Footer from '../Footer';
+import GeneralInfo from '../GeneralInfo';
 
 const AboutPage: React.FC = () => {
   return (
