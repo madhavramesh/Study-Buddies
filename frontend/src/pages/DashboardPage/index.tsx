@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, ButtonGroup, ToggleButton } from 'react-bootstrap';
 import axios from 'axios';
 import CreateClass from '../../components/CreateClass';
 import './DashboardPageStyle.scss';
@@ -17,9 +17,15 @@ const CONFIG = {
 const DashboardPage: React.FC = () => {
   const [modalShow, setModalShow] = useState(false);
   const [searchText, setSearchText] = useState('');
-  const [allClasses, setAllClasses] = useState([]);
-  const [enrolledClasses, setEnrolledClasses] = useState([]);
-  const [classes, setClasses] = useState([]);
+  const [allClasses, setAllClasses] = useState<Array<string>>([]);
+  const [allEnrolledClasses, setAllEnrolledClasses] = useState<Array<string>>([]);
+  const [classes, setClasses] = useState<Array<string>>([]);
+
+  const [radioValue, setRadioValue] = useState('1');
+  const enrolledToggle = [
+    { name: 'All', value: '1' },
+    { name: 'Enrolled', value: '2' },
+  ];
 
   const getInitialClasses = () => {
     axios
@@ -27,7 +33,7 @@ const DashboardPage: React.FC = () => {
       .then((response) => {
         setAllClasses(response.data.classes);
         setClasses(response.data.classes);
-        console.log(response.data.classes);
+        console.log(`All Classes: ${response.data.classes}`);
       })
       .catch((err) => {
         console.log(err);
@@ -36,32 +42,35 @@ const DashboardPage: React.FC = () => {
 
   const getEnrolledClasses = () => {
     axios
-      .get(`/get_enrollments/${sessionStorage.getItem('user_id')}`, CONFIG)
+      .get(`http://localhost:4567/get_enrollments/${sessionStorage.getItem('user_id')}`, CONFIG)
       .then((response) => {
-        setAllClasses(response.data.classes);
-        setClasses(response.data.classes);
-        console.log(response.data.classes);
+        setAllEnrolledClasses(response.data.classes);
+        console.log(`Enrolled Classes: ${response.data.classes}`);
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.response.data);
       });
   };
 
-  const filterClasses = (prefix: string) => {
+  const filterClasses = (words: Array<string>, prefix: string) => {
     const preLowercase = prefix.toLowerCase();
-    return allClasses.filter((c: any) => c.className.toLowerCase().trim().startsWith(preLowercase));
+    return words.filter((c: any) => c.className.toLowerCase().trim().startsWith(preLowercase));
   };
 
   useEffect(() => {
     getInitialClasses();
+    getEnrolledClasses();
   }, []);
 
   useEffect(() => {
-    console.log(searchText);
-    const modifiedClasses = filterClasses(searchText);
-    console.log(modifiedClasses);
+    let modifiedClasses: Array<string> = [];
+    if (radioValue === enrolledToggle[0].value) {
+      modifiedClasses = filterClasses(allClasses, searchText);
+    } else if (radioValue === enrolledToggle[1].value) {
+      modifiedClasses = filterClasses(allEnrolledClasses, searchText);
+    }
     setClasses(modifiedClasses);
-  }, [searchText]);
+  }, [searchText, radioValue]);
 
   return (
     <div className="dashboard-page">
@@ -71,13 +80,21 @@ const DashboardPage: React.FC = () => {
           <div className="search-bar">
             <SearchBar onChange={(e: any) => setSearchText(e.target.value)} />
           </div>
-          <div className="buttons">
-            <Button className="button" onClick={() => getInitialClasses()}>
-              All
-            </Button>
-            <Button className="button" onClick={() => getEnrolledClasses()}>
-              Enrolled
-            </Button>
+          <div className="enrolled-toggle-container">
+            <ButtonGroup toggle className="enrolled-toggle">
+              {enrolledToggle.map((toggle: any, _: number) => (
+                <ToggleButton
+                  type="radio"
+                  variant="secondary"
+                  name="radio"
+                  value={toggle.value}
+                  checked={radioValue === toggle.value}
+                  onChange={(e: any) => setRadioValue(e.currentTarget.value)}
+                >
+                  {toggle.name}
+                </ToggleButton>
+              ))}
+            </ButtonGroup>
           </div>
           <div className="card-pane-container">
             <ClassCardPane classes={classes} />

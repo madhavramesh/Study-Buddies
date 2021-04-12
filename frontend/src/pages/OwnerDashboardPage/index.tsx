@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
 import ModifiedNavBar from '../../components/ModifiedNavbar';
 import ClassCreatedModal from '../../components/ClassCreatedModal';
 import GeneralInfoClass from '../../components/GeneralInfoClass';
-import './OwnersDashboard.scss';
 import StudentInfo from '../../components/StudentInfo';
 import StudyGroupDisplay from '../../components/StudyGroupDisplay';
+import './OwnersDashboard.scss';
 
 const axios = require('axios');
 
@@ -23,6 +24,8 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
   const {
     params: { classID },
   } = match;
+
+  const history = useHistory();
 
   const [className, setClassName] = useState('');
   const [classNumber, setClassNumber] = useState('');
@@ -72,6 +75,26 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
       })
       .catch((err: any) => {
         console.log(err.response.data);
+      });
+  };
+
+  const deleteClass = () => {
+    const postParameters = {
+      id: sessionStorage.getItem('user_id'),
+      class_id: { classID },
+    };
+
+    axios
+      .post(`http://localhost:4567/delete_class`, postParameters, CONFIG)
+      .then((response: any) => {
+        if (response.status === 0) {
+          history.push('/dashboard');
+        } else {
+          console.log('User not allowed to be on this page');
+        }
+      })
+      .catch((err: any) => {
+        console.log(err);
       });
   };
 
@@ -134,9 +157,11 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
               />
             ))}
           </div>
-          {/* <Button className="button" size="sm"> */}
-          {/*  Delete Students */}
-          {/* </Button> */}
+          <div className="leave-class-container">
+            <Button className="leave-class-button" onClick={deleteClass}>
+              Leave Class
+            </Button>
+          </div>
         </div>
       </div>
     </div>

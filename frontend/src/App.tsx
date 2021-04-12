@@ -26,7 +26,7 @@ const App: React.FC = () => {
           <Route path="/owner-dashboard" component={OwnerDashboardPage} />
           <Route path="/student-dashboard" component={StudentDashboardPage} />
           <Route path="/profile" component={Signin} />
-          <Route path="/class/:classID" component={OwnerDashboardPage} />
+          <Route path="/class/owner/:classID" component={OwnerDashboardPage} />
           <Route path="/test_people_pane" component={PeoplePane} />
           {/* <Route path="/preferences" component={Preferences} /> */}
           <Route path="/carddemo" component={() => <TimesPane slotLength={60} />} />
