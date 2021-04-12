@@ -3,12 +3,13 @@ import { Button, Card, Form, FormControl, Nav } from 'react-bootstrap';
 import './PeopleCard.scss';
 
 type PeopleProps = {
+  handleClick: any;
   firstName: string;
   lastName: string;
-  id: string;
+  id: number;
 };
 
-const PeopleCard: React.FC<PeopleProps> = ({ firstName, lastName, id }) => {
+const PeopleCard: React.FC<PeopleProps> = ({ handleClick, firstName, lastName, id }) => {
   return (
     <>
       <Card style={{ width: '18rem' }} className="CardOutline">
