@@ -14,7 +14,7 @@ const ModifiedNavBar: React.FC<ModifiedNavBarProps> = ({ username }) => {
 
   return (
     <Navbar className="modified-navbar" bg="black" variant="dark" sticky="top">
-      <Navbar.Brand className="modified-navbar-brand" href="/">
+      <Navbar.Brand className="modified-navbar-brand" href="/dashboard">
         <img alt="" src={logo} width="60" height="60" />
         Chunky Study Buddies
       </Navbar.Brand>

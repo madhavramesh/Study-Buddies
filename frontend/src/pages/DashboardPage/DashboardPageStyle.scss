@@ -1,13 +1,16 @@
 .dashboard-page {
-  background-color: #202020;
-  height: 100vh;
-
-  .btn {
+  .create-class-button {
+    font-size: 18px !important;
+    padding-left: 50px;
+    padding-right: 50px;
     width: auto;
+    background-color: #ED9634 !important;
+    border: none;
   }
 
   .search-bar-container {
     width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -15,14 +18,21 @@
     margin-top: 15px;
 
     .search-bar-inner-container {
+      height: 100%;
       width: 80%;
 
-      .search-header {
-        color: #ffffff;
+      .search-bar {
+        .search-header {
+          color: #ffffff;
+        }
+
+        .text-muted {
+          color: #ffffff !important;
+        }
       }
 
-      .text-muted {
-        color: #ffffff !important;
+      .card-pane-container {
+        overflow: auto;
       }
     }
   }

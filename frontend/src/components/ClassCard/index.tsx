@@ -122,9 +122,9 @@ const ClassCard: React.FC<ClassProps> = ({ cid, name, number, desc, term, classC
           </p>
         </Modal.Body>
         <Modal.Footer>
-          <Form noValidate validated={validCode}>
+          <Form noValidate validated={validCode} className="class-info-modal-form">
             <Form.Row className="align-items-center">
-              <Col xs="auto">
+              <Col>
                 <Form.Label htmlFor="inlineFormInput" srOnly>
                   Join Class
                 </Form.Label>
