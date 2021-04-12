@@ -11,6 +11,8 @@ import Preferences from './components/Preferences';
 import HomePage from './pages/HomePage';
 import DashboardPage from './pages/DashboardPage';
 import TestDisplayClassesPage from './pages/TestDisplayClassesPage';
+import OwnerDashboard from './components/ClassCreatedModal';
+import OwnerDashboardPage from './pages/OwnerDashboardPage';
 
 const App: React.FC = () => {
   return (
@@ -21,6 +23,7 @@ const App: React.FC = () => {
           <Route path="/signin" component={Signin} />
           <Route path="/signup" component={Signup} />
           <Route path="/dashboard" component={DashboardPage} />
+          <Route path="/owner-dashboard" component={OwnerDashboardPage} />
           <Route path="/profile" component={Signin} />
           {/* <Route path="/preferences" component={Preferences} />
           <Route path="/carddemo" component={() => <TimesPane slotLength={30} />} /> */}

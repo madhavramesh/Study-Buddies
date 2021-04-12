@@ -1,8 +1,9 @@
-import React, { FormEvent, useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import ReCAPTCHA from 'react-google-recaptcha';
 import './SignupStyle.scss';
+import { useHistory } from 'react-router';
 
 const axios = require('axios');
 
@@ -20,12 +21,11 @@ const Signup: React.FC = () => {
   const [lastNameMessage, setLastNameMessage] = useState('');
 
   const recaptchaRef = useRef<ReCAPTCHA>(null);
-  const [recaptchaToken, setRecaptchaToken] = useState('');
   const [recaptchaMessage, setRecaptchaMessage] = useState('');
 
-  const [registered, setRegistered] = useState(true);
+  const history = useHistory();
 
-  const registerPerson = () => {
+  const registerPerson = (recaptchaToken: string) => {
     const postParameters = {
       firstname: firstName,
       lastname: lastName,
@@ -35,6 +35,8 @@ const Signup: React.FC = () => {
       token: recaptchaToken,
     };
 
+    console.log(`Token: ${recaptchaToken}`);
+
     const config = {
       headers: {
         'Content-Type': 'application/json',
@@ -42,29 +44,24 @@ const Signup: React.FC = () => {
       },
     };
 
-    console.log(`First Name: ${firstName}`);
-    console.log(`Last Name: ${lastName}`);
-    console.log(`Email: ${email}`);
-    console.log(`Password: ${password}`);
-
     axios
       .post('http://localhost:4567/register_account', postParameters, config)
       .then((response: any) => {
-        if (response.data.success === 0) {
-          setRegistered(true);
+        if (response.data.status === 0) {
+          console.log(true);
+          history.push('/dashboard');
         } else {
-          setRegistered(false);
+          console.log(response.data);
+          setEmailMessage(response.data.email);
+          setPasswordMessage(response.data.password);
+          setPassword2Message(response.data.password2);
+          setFirstNameMessage(response.data.first_name);
+          setLastNameMessage(response.data.last_name);
+          setRecaptchaMessage(response.data.token);
         }
-        console.log(response.data);
-        setEmailMessage(response.data.email);
-        setPasswordMessage(response.data.password);
-        setPassword2Message(response.data.password2);
-        setFirstNameMessage(response.data.first_name);
-        setLastNameMessage(response.data.last_name);
-        setRecaptchaMessage(response.data.token);
       })
-      .catch((_: any) => {
-        setRegistered(false);
+      .catch((err: any) => {
+        console.log(err.response.data);
       });
   };
 
@@ -100,15 +97,15 @@ const Signup: React.FC = () => {
   };
   */
 
-  const onSignUp = async () => {
+  const onSignUp = () => {
     const recaptchaValue = recaptchaRef.current?.getValue();
     recaptchaRef.current?.reset();
 
     if (recaptchaValue != null) {
-      setRecaptchaToken(recaptchaValue);
+      registerPerson(recaptchaValue);
+    } else {
+      registerPerson('');
     }
-
-    registerPerson();
   };
 
   return (
@@ -186,11 +183,7 @@ const Signup: React.FC = () => {
 
           {process.env.REACT_APP_RECAPTCHA_SITE_KEY && (
             <Form.Group controlId="formRECAPTCHA" className="recaptcha">
-              <ReCAPTCHA
-                ref={recaptchaRef}
-                sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY!}
-                onExpired={() => setRecaptchaToken('')}
-              />
+              <ReCAPTCHA ref={recaptchaRef} sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY!} />
               {recaptchaMessage !== '' && <div className="recaptcha-error">{recaptchaMessage}</div>}
             </Form.Group>
           )}

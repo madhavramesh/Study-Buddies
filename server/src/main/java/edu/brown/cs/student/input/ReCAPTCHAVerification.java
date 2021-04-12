@@ -21,15 +21,13 @@ public class ReCAPTCHAVerification {
    *
    * @param secretKey Secret key (key given for communication between your
    * site and Google)
-   * @param response reCAPTCHA response from client side.
-   * (g-recaptcha-response)
+   * @param token reCAPTCHA token
    * @return true if validation successful, false otherwise.
    */
-  public static boolean isCaptchaValid(String secretKey, String response) {
+  public static boolean isCaptchaValid(String secretKey, String token) {
     try {
       String url = "https://www.google.com/recaptcha/api/siteverify",
-          params = "secret=" + secretKey + "&response=" + response;
-      System.out.println("RESPONSE: " + response);
+          params = "secret=" + secretKey + "&response=" + token;
 
       HttpURLConnection http = (HttpURLConnection) new URL(url).openConnection();
       http.setDoOutput(true);

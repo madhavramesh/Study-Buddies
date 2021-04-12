@@ -40,6 +40,8 @@ import java.util.Map;
 public final class Main {
 
   private static final int DEFAULT_PORT = 4567;
+  private static final String RECAPTCHA_SECRET_KEY = "6LfWUKQaAAAAALzRNvkz7PQtNeVml5WIprs-BzlA";
+
   // list of trigger actions
   private final List<TriggerAction> actionList = List.of(
       new RegisterUserCommand(),
@@ -173,24 +175,24 @@ public final class Main {
       String password2 = data.getString("password2");
       messages
           .put("password", password.length() < 6 ? "Password must be 6 or more characters!" : "");
+      messages.put("password2", password2.isEmpty() ? "Confirm your password!" : "");
       // if passwords don't match, set error message; otherwise, register the user
       DBCode code = password.equals(password2)
           ? GROUPS_DATABASE.registerUser(firstName, lastName, email, password)
           : DBCode.PASSWORD_MISMATCH;
       // if error code is related to password, means password mismatch, so set that message
       if (code.getCode() == 3) {
+        messages.put("password", code.getMessage());
         messages.put("password2", code.getMessage());
         // otherwise, an error occurred with the email
       } else if (code.getCode() == 2) {
         messages.put("email", code.getMessage());
-        messages.put("password2", code.getMessage());
       }
-//      String RECAPTCHA_SECRET_KEY = System.getenv("RECAPTCHA_SECRET_KEY");
-//      String reCAPTCHAToken = data.getString("token");
-//      messages
-//          .put("token", ReCAPTCHAVerification.isCaptchaValid(RECAPTCHA_SECRET_KEY, reCAPTCHAToken)
-//              ? "Confirm that you're not a robot!" : "");
-      messages.put("token", "");
+      String reCAPTCHAToken = data.getString("token");
+      messages
+          .put("token", !ReCAPTCHAVerification.isCaptchaValid(RECAPTCHA_SECRET_KEY, reCAPTCHAToken)
+              ? "Confirm that you're not a robot!" : "");
+
       Map<String, Object> variables = Map.of(
           "status", code.getCode(),
           "first_name", messages.get("first_name"),
