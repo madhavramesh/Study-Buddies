@@ -3,16 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="6f35fa56-7f5b-42f9-814a-3dc404b8ebaf" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/ClassCard/ClassCard.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/ClassCard/ClassCard.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/ClassCard/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/ClassCard/index.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/Signup/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Signup/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/home/HomeScreen.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/home/HomeStyle.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/home/SearchBar.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/home/Sidebar.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/.env.local" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/HomePage/HomePage.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/HomePage/HomePage.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/data/groups_db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/server/data/groups_db.sqlite3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/control/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/control/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/input/ReCAPTCHAVerification.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/input/ReCAPTCHAVerification.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
