@@ -25,6 +25,7 @@ const App: React.FC = () => {
           <Route path="/dashboard" component={DashboardPage} />
           <Route path="/owner-dashboard" component={OwnerDashboardPage} />
           <Route path="/profile" component={Signin} />
+          <Route path="/class/:classID" component={OwnerDashboardPage} />
           {/* TESTING */}
           <Route path="/test_people_pane" component={PeoplePane} />
           <Route path="/test_preferences_modal" component={PreferencesButton} />

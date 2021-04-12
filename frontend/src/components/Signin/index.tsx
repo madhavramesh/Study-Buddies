@@ -5,6 +5,13 @@ import './SigninStyle.scss';
 
 const axios = require('axios');
 
+const CONFIG = {
+  headers: {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+  },
+};
+
 const Signin: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -20,25 +27,29 @@ const Signin: React.FC = () => {
       password,
     };
 
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-      },
-    };
-
     axios
-      .post('http://localhost:4567/validate_account', postParameters, config)
+      .post('http://localhost:4567/validate_account', postParameters, CONFIG)
       .then((response: any) => {
         if (response.data.status === 0) {
           setValidAcct(true);
           history.push('/dashboard');
-          localStorage.setItem('user_id', response.data.id);
+          sessionStorage.setItem('user_id', response.data.id);
         } else {
           setValidAcct(false);
         }
         console.log(response.data);
         setValidAcctMessage(response.data.message);
+      })
+      .catch((err: any) => {
+        console.log(err);
+      });
+  };
+
+  const getName = (id: string) => {
+    axios
+      .get(`http://localhost:4567/person_info/${id}`)
+      .then((response: any) => {
+        console.log(response.data);
       })
       .catch((err: any) => {
         console.log(err);

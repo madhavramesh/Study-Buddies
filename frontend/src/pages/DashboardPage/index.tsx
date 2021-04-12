@@ -29,7 +29,7 @@ const DashboardPage: React.FC = () => {
         console.log(response.data.classes);
       })
       .catch((err) => {
-        console.log(err.response.data);
+        console.log(err);
       });
   };
 

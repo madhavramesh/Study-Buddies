@@ -241,6 +241,18 @@ const PreferencesButton: React.FC = () => {
       break;
   }
 
+  const formGroups = async () => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      },
+    };
+
+    const response = await axios.get(`http://localhost:4567/form_groups/1/4`, config);
+    console.log(response.data);
+  };
+
   return (
     <div>
       <Button className="modal-button" type="info" onClick={() => setShowModal(true)}>
@@ -257,6 +269,9 @@ const PreferencesButton: React.FC = () => {
       >
         {displayedPage}
       </Modal>
+      <Button type="info" onClick={formGroups}>
+        Form groups!
+      </Button>
     </div>
   );
 };

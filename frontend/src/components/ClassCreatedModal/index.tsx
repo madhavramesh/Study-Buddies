@@ -6,16 +6,11 @@ import './ClassCreatedModalStyle.scss';
 type ClassCreatedModalProps = {
   onHide: any;
   show: any;
+  classNumber: string;
   className: string;
-  classDescription: string;
 };
 
-const ClassCreatedModal = ({
-  onHide,
-  show,
-  className,
-  classDescription,
-}: ClassCreatedModalProps) => {
+const ClassCreatedModal = ({ onHide, show, classNumber, className }: ClassCreatedModalProps) => {
   return (
     <Modal
       onHide={onHide}
@@ -28,8 +23,8 @@ const ClassCreatedModal = ({
       <Modal.Header closeButton />
       <Modal.Body>
         <FlareIcon className="flare-icon" />
-        <div className="class-header">Welcome to {className}!</div>
-        <p>{classDescription}</p>
+        <div className="class-header">Welcome to {classNumber}!</div>
+        <p>{className}</p>
         <Button variant="primary" onClick={onHide}>
           Continue
         </Button>

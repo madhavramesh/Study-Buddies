@@ -36,7 +36,7 @@ const ClassCard: React.FC<ClassProps> = ({ cid, name, number, desc, term, classC
 
   const checkJoinCode = async () => {
     const postParameters = {
-      id: localStorage.getItem('user_id'),
+      id: sessionStorage.getItem('user_id'),
       class_id: cid,
       class_code: code,
     };
@@ -58,7 +58,7 @@ const ClassCard: React.FC<ClassProps> = ({ cid, name, number, desc, term, classC
   useEffect(() => {
     const initializeValid = async () => {
       const postParameters = {
-        id: localStorage.getItem('user_id'),
+        id: sessionStorage.getItem('user_id'),
         class_id: cid,
         class_code: code,
       };

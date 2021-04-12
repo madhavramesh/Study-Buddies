@@ -54,7 +54,7 @@ const CreateClass: React.FC<CreateClassProps> = ({ onHide, show }: CreateClassPr
     }
 
     const postParameters = {
-      id: localStorage.getItem('user_id'),
+      id: sessionStorage.getItem('user_id'),
       class_name: className,
       class_number: classNumber,
       class_description: classDescription,
@@ -81,7 +81,7 @@ const CreateClass: React.FC<CreateClassProps> = ({ onHide, show }: CreateClassPr
           console.log(response.data);
         })
         .catch((err: any) => {
-          console.log(err.response.data);
+          console.log(err);
         });
     }
   };

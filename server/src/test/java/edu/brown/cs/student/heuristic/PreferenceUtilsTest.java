@@ -10,8 +10,7 @@ import java.util.Arrays;
 import static org.junit.Assert.*;
 
 public class PreferenceUtilsTest {
-  PersonPreferences
-      p1 = new PersonPreferences(1, "001:110:111", "Andrews Hall", "2,3", -1),
+  PersonPreferences p1 = new PersonPreferences(1, "001:110:111", "Andrews Hall", "2,3", -1),
   p2 = new PersonPreferences(2, "111:010:011", "Caswell Hall", "3", -1),
   p3 = new PersonPreferences(3, "000:001:011", "Slater Hall", "1,2", -1),
   p4 = new PersonPreferences(4, "111:111:111", "Perkins Hall", "-1,-2,-3", -1);

@@ -8,6 +8,7 @@ import edu.brown.cs.student.groups.DBCode;
 import edu.brown.cs.student.groups.NewGroupsDatabase;
 import edu.brown.cs.student.groups.PersonInfo;
 import edu.brown.cs.student.groups.PersonPreferences;
+import edu.brown.cs.student.heuristic.HeuristicUtils;
 import edu.brown.cs.student.groups.testcommands.CreateClassCommand;
 import edu.brown.cs.student.groups.testcommands.GetAllClassesCommand;
 import edu.brown.cs.student.groups.testcommands.GetClassesWithOwnerIdCommand;
@@ -18,8 +19,6 @@ import edu.brown.cs.student.groups.testcommands.JoinClassCommand;
 import edu.brown.cs.student.groups.testcommands.RegisterUserCommand;
 import edu.brown.cs.student.groups.testcommands.ValidateUserCommand;
 import edu.brown.cs.student.input.ReCAPTCHAVerification;
-import joptsimple.OptionParser;
-import joptsimple.OptionSet;
 import org.json.JSONObject;
 import spark.ExceptionHandler;
 import spark.Request;
@@ -41,10 +40,9 @@ import java.util.Map;
 
 public final class Main {
 
-  private static final int DEFAULT_PORT = 4567;
   private static final String RECAPTCHA_SECRET_KEY = "6LfWUKQaAAAAALzRNvkz7PQtNeVml5WIprs-BzlA";
 
-  // list of trigger actions
+  // list of trigger actions for testing
   private final List<TriggerAction> actionList = List.of(
       new RegisterUserCommand(),
       new ValidateUserCommand(),
@@ -63,6 +61,8 @@ public final class Main {
 
   private static NewGroupsDatabase GROUPS_DATABASE;
 
+  private static HeuristicUtils heuristic;
+
   public static NewGroupsDatabase getGroupsDatabase() {
     return GROUPS_DATABASE;
   }
@@ -76,25 +76,14 @@ public final class Main {
     new Main(args).run();
   }
 
-  private final String[] args;
-
   private Main(String[] args) {
-    this.args = args;
   }
 
   private void run() throws SQLException, ClassNotFoundException, IOException {
-    // Parse command line arguments
-    OptionParser parser = new OptionParser();
-    parser.accepts("gui");
-    parser.accepts("port").withRequiredArg().ofType(Integer.class)
-        .defaultsTo(DEFAULT_PORT);
-    OptionSet options = parser.parse(args);
-
-    if (options.has("gui")) {
-      runSparkServer((int) options.valueOf("port"));
-    }
+    runSparkServer();
 
     GROUPS_DATABASE = new NewGroupsDatabase(PATH_TO_DB);
+    heuristic = new HeuristicUtils();
     REPL repl = new REPL();
 
     // register trigger actions to repl
@@ -105,8 +94,8 @@ public final class Main {
     repl.run();
   }
 
-  private void runSparkServer(int port) {
-    Spark.port(port);
+  private void runSparkServer() {
+    Spark.port(4567);
     Spark.externalStaticFileLocation("src/main/resources/static");
 
     Spark.options("/*", (request, response) -> {
@@ -135,6 +124,7 @@ public final class Main {
     // join/create/get all class info handlers
     Spark.get("/get_all_classes", new GetAllClasses());
     Spark.get("/get_classes_with/:owner_id", new GetClassesWithOwnerId());
+    Spark.get("/get_class_with/:class_id", new GetClassWithClassId());
     Spark.get("/get_enrollments/:id", new GetEnrollments());
     Spark.post("/create_class", new CreateClass());
     Spark.post("/join_class", new JoinClass());
@@ -145,6 +135,7 @@ public final class Main {
     Spark.get("/get_person_pref_in/:class_id/:id", new GetPersonPrefInClass());
     Spark.get("/get_person_prefs_in/:class_id", new GetPersonsPrefsInClass());
     Spark.post("/set_preferences", new SetPreferences());
+    Spark.get("/form_groups/:class_id/:group_size", new FormGroups());
   }
 
   /**
@@ -273,6 +264,43 @@ public final class Main {
       List<ClassInfo> classes =
           GROUPS_DATABASE.getClassesByOwnerId(Integer.parseInt(request.params(":owner_id")));
       Map<String, Object> variables = ImmutableMap.of("classes", classes);
+      return GSON.toJson(variables);
+    }
+  }
+
+  /**
+   * Retrieves the class with specified ID. The returned JSON object will have the form:
+   * {
+   * class: the ClassInfo
+   * }
+   */
+  private static class GetClassWithClassId implements Route {
+    @Override
+    public Object handle(Request request, Response response) throws Exception {
+      ClassInfo c =
+          GROUPS_DATABASE.getClassByClassId(Integer.parseInt(request.params(":class_id")));
+      Map<String, Object> variables =
+          Map.of("class_name", c.getClassName(), "class_number", c.getClassNumber(),
+              "class_description", c.getClassDescription(), "class_term", c.getClassTerm(),
+              "class_code", c.getClassCode(), "owner_id", c.getOwnerId());
+      return GSON.toJson(variables);
+    }
+  }
+
+  /**
+   * Forms groups.
+   * {
+   * class: the ClassInfo
+   * }
+   */
+  private static class FormGroups implements Route {
+    @Override
+    public Object handle(Request request, Response response) throws Exception {
+      List<List<Pair<Integer, PersonInfo>>> theGroups =
+          heuristic.getGroups(
+              Integer.parseInt(request.params(":class_id")),
+              Integer.parseInt(request.params(":group_size")));
+      Map<String, Object> variables = ImmutableMap.of("class", theGroups);
       return GSON.toJson(variables);
     }
   }
@@ -463,16 +491,16 @@ public final class Main {
   /**
    * Sets preferences given information from the frontend. JSON objects must have the form:
    * {
-   *   person_id: ...,
-   *   class_id: ...,
-   *   dorm: ...,
-   *   person_preferences: ...,
-   *   time_preferences: ...,
+   * person_id: ...,
+   * class_id: ...,
+   * dorm: ...,
+   * person_preferences: ...,
+   * time_preferences: ...,
    * }
    * The returned JSON object will have the form:
    * {
-   *   status: [status of setting preferences operation]
-   *   message: [message explaining status],
+   * status: [status of setting preferences operation]
+   * message: [message explaining status],
    * }
    */
   private static class SetPreferences implements Route {
@@ -485,7 +513,8 @@ public final class Main {
       String personPreferences = data.getString("person_preferences");
       String timePreferences = data.getString("time_preferences");
       DBCode code =
-          GROUPS_DATABASE.setPreferences(personId, classId, dorm, personPreferences, timePreferences);
+          GROUPS_DATABASE
+              .setPreferences(personId, classId, dorm, personPreferences, timePreferences);
       Map<String, Object> variables = ImmutableMap.of(
           "status", code.getCode(),
           "message", code.getMessage()

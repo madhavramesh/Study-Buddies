@@ -1,0 +1,65 @@
+.owner-dashboard-page {
+  background-color: #ffffff;
+  font-family: "Poppins", sans-serif;
+  height: 100%;
+  overflow-y: hidden;
+
+  .owner-dashboard-page-sections {
+    display: flex;
+    flex-direction: row;
+    align-contents: center;
+    height: 100%;
+
+    .page-section {
+      padding: 1.5em 3%;
+    }
+
+    .study-groups {
+      flex: 1 0 25%;
+    }
+
+    .general-info {
+      border-left: 1px solid #cccccc;
+      border-right: 1px solid #cccccc;
+      flex: 1 0 50%;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .create-groups-container {
+        width: 100%;
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        .create-study-groups-button {
+          width: 30% !important;
+          padding-left: 20px;
+          padding-right: 20px;
+          margin-top: 30px !important;
+        }
+      }
+    }
+
+    .students {
+      flex: 1 0 25%;
+      height: 100%;
+
+      .students-header {
+        margin-bottom: 20px;
+      }
+
+      .students-body {
+        height: 100%;
+      }
+    }
+
+    .study-groups-header, .students-header {
+      font-size: 20px;
+      font-weight: 500;
+    }
+  }
+}
