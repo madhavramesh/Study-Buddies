@@ -1,10 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap');
 
-.class-card {
-  margin: 2rem;
-  background-color: #ddd;
-  border: none;
+.class-card-container {
+  height: 12rem;
+  width: 18rem;
   float: left;
+  margin: 2rem;
+  position: relative;
+}
+
+.class-card {
+  // margin: 2rem;
+  background-color: #ddd;
+  border: 0.75px solid black;
+  // float: left;
 }
 
 .class-modal-header {
@@ -17,4 +25,19 @@
 .class-modal-body {
   font-family: 'poppins', courier, sans-serif;
   font-size: 16px;
+}
+
+.class-card-button {
+  position: absolute;
+  top: 7rem;
+  left: 2.5rem;
+  width: 70%;
+  height: 25%;
+  padding: 0.5rem;
+  border: 1px solid black;
+}
+
+.class-card-button:hover {
+  background-color: invert(#222);
+  color: invert(#fffff0);
 }

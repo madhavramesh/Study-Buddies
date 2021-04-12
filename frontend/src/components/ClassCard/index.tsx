@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Card, Col, Form, Modal } from 'react-bootstrap';
 import './ClassCard.scss';
 import axios from 'axios';
@@ -11,6 +11,20 @@ type ClassProps = {
   term: string;
   owner: any;
 };
+
+function emojifyTerm(term: string): string {
+  const lcTerm = term.toLowerCase();
+  if (lcTerm.includes('winter')) {
+    return `${term} ☃️️`;
+  }
+  if (lcTerm.includes('spring')) {
+    return `${term} 🌺`;
+  }
+  if (lcTerm.includes('summer')) {
+    return `${term} ☀️`;
+  }
+  return `${term} 🍁`;
+}
 
 const ClassCard: React.FC<ClassProps> = ({ cid, name, number, desc, term, owner }) => {
   const [show, setShow] = useState(false);
@@ -36,19 +50,51 @@ const ClassCard: React.FC<ClassProps> = ({ cid, name, number, desc, term, owner 
     console.log(response.data);
     if (response.data.status === 0) {
       setValidCode(true);
-    } else {
-      setValidCodeMessage(response.data.message);
     }
+    setValidCodeMessage(response.data.message);
   };
 
+  useEffect(() => {
+    const initializeValid = async () => {
+      const postParameters = {
+        id: localStorage.getItem('user_id'),
+        class_id: cid,
+        class_code: code,
+      };
+
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+        },
+      };
+      const response = await axios.post('http://localhost:4567/join_class', postParameters, config);
+      if (response.data.message === 'Already joined class!') {
+        setValidCode(true);
+        setValidCodeMessage(response.data.message);
+      }
+    };
+    initializeValid();
+  }, []);
+
+  useEffect(() => {
+    if (show === false && validCodeMessage !== 'Already joined class!') {
+      setValidCodeMessage('');
+    }
+  }, [show]);
+
   return (
-    <div className="ml-auto">
-      <Card style={{ width: '18rem' }} className="class-card">
+    <div className="class-card-container">
+      <Card style={{ width: '18rem', height: '11rem' }} className="class-card">
         <Card.Body className="class-card-header">
           <Card.Title>{name}</Card.Title>
-          <Card.Subtitle className="mb-2 text-muted">{term}</Card.Subtitle>
+          <Card.Subtitle className="mb-2 text-muted">{emojifyTerm(term)}</Card.Subtitle>
           <Card.Text style={{ fontSize: '16px' }}>{owner ? '🥶 Owner 🥶' : ''}</Card.Text>
-          <Button variant="info" onClick={() => setShow(true)}>
+          <Button
+            className="class-card-button"
+            variant="outline-info"
+            onClick={() => setShow(true)}
+          >
             More Info
           </Button>
         </Card.Body>
@@ -71,7 +117,7 @@ const ClassCard: React.FC<ClassProps> = ({ cid, name, number, desc, term, owner 
           </p>
         </Modal.Body>
         <Modal.Footer>
-          <Form>
+          <Form noValidate validated={validCode}>
             <Form.Row className="align-items-center">
               <Col xs="auto">
                 <Form.Label htmlFor="inlineFormInput" srOnly>
@@ -85,6 +131,7 @@ const ClassCard: React.FC<ClassProps> = ({ cid, name, number, desc, term, owner 
                   onChange={(e: any) => setCode(e.target.value)}
                 />
                 <Form.Control.Feedback type="invalid">{validCodeMessage}</Form.Control.Feedback>
+                <Form.Control.Feedback>{validCodeMessage}</Form.Control.Feedback>
               </Col>
               <Col xs="auto">
                 <Button variant="primary" className="mb-2" onClick={checkJoinCode}>
