@@ -5,9 +5,9 @@
       <change afterPath="$PROJECT_DIR$/frontend/src/components/GeneralInfo/GeneralInfo.scss" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/frontend/src/components/GeneralInfo/index.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/ClassCard/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/ClassCard/index.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/ClassCardPane/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/ClassCardPane/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/heuristic/Heuristic.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/heuristic/Heuristic.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -81,20 +81,13 @@
     </key>
   </component>
   <component name="RunManager">
-<<<<<<< Updated upstream
     <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-=======
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
->>>>>>> Stashed changes
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="class" />
       <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
