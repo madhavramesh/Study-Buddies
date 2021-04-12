@@ -27,6 +27,8 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
   const [classCode, setClassCode] = useState('');
   const [classOwnerID, setClassOwnerID] = useState('');
 
+  const [students, setStudents] = useState([]);
+
   const getClassInfo = () => {
     axios
       .get(`http://localhost:4567/get_class_with/${classID}`, CONFIG)
@@ -47,14 +49,25 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
   };
 
   const getStudents = () => {
-    axios.get(`http://localhost:4567/get_class_with/${classID}`, CONFIG))
-  }
+    axios
+      .get(`http://localhost:4567/get_persons_in/${classID}`, CONFIG)
+      .then((response: any) => {
+        setStudents(response.data.persons);
+      })
+      .catch((err: any) => {
+        console.log(err);
+      });
+  };
 
   const [modalShow, setModalShow] = useState(true);
 
   useEffect(() => {
     getClassInfo();
-    console.log(className);
+    getStudents();
+    students.map((student) => {
+      console.log(student);
+      return 0;
+    });
   }, []);
 
   return (
@@ -94,7 +107,12 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
         <div className="page-section students">
           <div className="students-header">Students</div>
           <div className="students-body">
-            <StudentInfo studentName="Blah Blah Blah Blah Blah" />
+            {students.map((student: any) => (
+              <StudentInfo
+                studentName={`${student.firstName} ${student.lastName}`}
+                removeStudent={() => console.log('Removing')}
+              />
+            ))}
           </div>
           {/* <Button className="button" size="sm"> */}
           {/*  Delete Students */}
