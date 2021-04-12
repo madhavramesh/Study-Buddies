@@ -1,0 +1,72 @@
+b {
+  font-size: 30px !important;
+}
+
+.btn {
+  width: 25% !important;
+  padding: 10px !important;
+  border-radius: 15px !important;
+  text-align: center !important;
+}
+
+.btn:hover:enabled {
+  background-color: #236296 !important;
+}
+
+.modal-body-intro {
+  font-family: 'Poppins', sans-serif !important;
+
+  // flex-direction: column;
+  // padding-left: 50px;
+  // padding-right: 50px;
+  text-align: center;
+  margin: auto;
+
+  .menu-book-icon {
+    width: 40% !important;
+    height: 40% !important;
+    margin-bottom: 20px;
+    color: #ED9634;
+  }
+}
+
+.modal-body-dorm {
+  font-family: 'Poppins', sans-serif !important;
+  margin: auto;
+
+  .modal-body-dorm-text {
+    font-size: 16px;
+    padding: 20px;
+  }
+
+  padding-bottom: 40px;
+}
+
+.modal-body-people {
+  display: flex;
+  flex-direction: row;
+  flex: 0 0 25%;
+  flex-wrap: wrap;
+
+  .modal-body-people-text {
+    font-size: 16px;
+    padding: 20px;
+  }
+}
+
+.modal-body-times {
+  // height: 80%;
+  // overflow: scroll;
+
+  .modal-body-times-text {
+    font-size: 16px;
+    padding: 20px;
+    padding-bottom: 30px;
+  }
+
+  .modal-body-times-calendar {
+    height: 100%;
+    width: 100%;
+    // overflow: scroll;
+  }
+}

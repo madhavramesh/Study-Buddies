@@ -10,6 +10,7 @@ import DashboardPage from './pages/DashboardPage';
 import OwnerDashboardPage from './pages/OwnerDashboardPage';
 import PeoplePane from './components/PeoplePane';
 import TimesPane from './components/TimesPane';
+import PreferencesButton from './components/PreferencesButton';
 
 const App: React.FC = () => {
   return (
@@ -24,9 +25,11 @@ const App: React.FC = () => {
           <Route path="/dashboard" component={DashboardPage} />
           <Route path="/owner-dashboard" component={OwnerDashboardPage} />
           <Route path="/profile" component={Signin} />
+          {/* TESTING */}
           <Route path="/test_people_pane" component={PeoplePane} />
+          <Route path="/test_preferences_modal" component={PreferencesButton} />
           {/* <Route path="/preferences" component={Preferences} /> */}
-          <Route path="/carddemo" component={() => <TimesPane slotLength={60} />} />
+          {/* <Route path="/carddemo" component={() => <TimesPane slotLength={60} />} /> */}
         </Switch>
       </Router>
     </div>

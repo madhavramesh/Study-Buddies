@@ -6,9 +6,12 @@ import './TimesPane.scss';
 // this indicates the length of
 type TimeProps = {
   slotLength: number;
+  selectedTimes: Array<Array<number>>;
+  setSelectedTimes: any;
 };
 
-const TimesPane: React.FC<TimeProps> = ({ slotLength }) => {
+const TimesPane: React.FC<TimeProps> = ({ slotLength, selectedTimes, setSelectedTimes }) => {
+  console.log(selectedTimes);
   const convertToTime = (time: number): string => {
     const balancedTime: number = time % 2400;
     let am = true;
@@ -80,7 +83,6 @@ const TimesPane: React.FC<TimeProps> = ({ slotLength }) => {
 
   const singleDayBooleans: Array<boolean> = times.map(() => false);
   const initialSelections: Array<Array<boolean>> = days.map(() => [...singleDayBooleans]);
-  const [selectedTimes, setSelectedTimes] = useState(initialSelections);
   const [lastToggledCell, setLastToggledCell] = useState([-1, -1]);
 
   const [isMouseDown, setIsMouseDown] = useState(false);
@@ -92,7 +94,7 @@ const TimesPane: React.FC<TimeProps> = ({ slotLength }) => {
     setIsMouseDown(true);
     // There are 7 cell index, they coincide with the first index of the 2d array
     const newSelectedTimes = [...selectedTimes];
-    newSelectedTimes[cellIndex][rowIndex - 1] = !newSelectedTimes[cellIndex][rowIndex - 1];
+    newSelectedTimes[cellIndex][rowIndex - 1] = newSelectedTimes[cellIndex][rowIndex - 1] ? 0 : 1;
     setSelectedTimes(newSelectedTimes);
     setLastToggledCell([cellIndex, rowIndex]);
   }
@@ -115,7 +117,7 @@ const TimesPane: React.FC<TimeProps> = ({ slotLength }) => {
       console.log(rowIndex);
       // There are 7 cell index, they coincide with the first index of the 2d array
       const newSelectedTimes = [...selectedTimes];
-      newSelectedTimes[cellIndex][rowIndex - 1] = !newSelectedTimes[cellIndex][rowIndex - 1];
+      newSelectedTimes[cellIndex][rowIndex - 1] = newSelectedTimes[cellIndex][rowIndex - 1] ? 0 : 1;
       setSelectedTimes(newSelectedTimes);
       setLastToggledCell([cellIndex, rowIndex]);
       console.log('Selected Times');
@@ -125,7 +127,7 @@ const TimesPane: React.FC<TimeProps> = ({ slotLength }) => {
 
   return (
     <div>
-      <Table striped bordered hover>
+      <Table responsive striped bordered hover>
         <thead>
           <tr>
             {days.map((day) => (
