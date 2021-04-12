@@ -4,19 +4,20 @@
   height: 70px;
 
   .modified-nav-brand {
-    color: rgba(255, 255, 255, 1);
+    color: #ffffff !important;
   }
 
   .btn {
-    background-color: #6A6C6E;
+    background-color: #cccccc;
     border: none;
     padding-right: 30px;
     padding-left: 30px;
+    color: #000000;
   }
 
   .btn:hover, .btn:active, .btn:focus {
-    background-color: #929496;
-    color: #ffffff;
+    background-color: #f2f2f2;
+    color: #000000;
     border: none;
   }
 

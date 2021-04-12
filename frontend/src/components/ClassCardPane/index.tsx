@@ -1,30 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import ClassCard from '../ClassCard';
 
-const CONFIG = {
-  headers: {
-    'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*',
-  },
+type ClassCardPaneProps = {
+  classes: Array<any>;
 };
 
-const ClassCardPane: React.FC = () => {
-  const [classes, setClasses] = useState([]);
-
-  useEffect(() => {
-    const getAllClasses = async () => {
-      const response = await axios.get('http://localhost:4567/get_all_classes', CONFIG);
-      setClasses(response.data.classes);
-    };
-    getAllClasses();
-  }, []);
-
+const ClassCardPane: React.FC<ClassCardPaneProps> = ({ classes }: ClassCardPaneProps) => {
   let classCards: JSX.Element[] = [];
   if (classes.length) {
     classCards = classes.map((c: any) => {
-      console.log(c);
-      console.log(c.classId);
       return (
         <ClassCard
           cid={c.classId}
