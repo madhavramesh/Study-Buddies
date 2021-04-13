@@ -74,7 +74,7 @@ const CreateClass: React.FC<CreateClassProps> = ({ onHide, show }: CreateClassPr
         .then((response: any) => {
           if (response.data.status === 0) {
             const classId = response.data.class_id;
-            history.push(`/owner-dashboard/${classId}`);
+            history.push(`/class/owner/${classId}`);
           } else {
             console.log('Class creation failed!');
           }

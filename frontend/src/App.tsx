@@ -9,7 +9,6 @@ import HomePage from './pages/HomePage';
 import DashboardPage from './pages/DashboardPage';
 import OwnerDashboardPage from './pages/OwnerDashboardPage';
 import PeoplePane from './components/PeoplePane';
-import TimesPane from './components/TimesPane';
 import StudentDashboardPage from './pages/StudentDashboardPage';
 import ProfilePage from './pages/ProfilePage';
 import PreferencesButton from './components/PreferencesButton';
