@@ -26,6 +26,9 @@ const StudentDashboardPage: React.FC = ({ match }: any) => {
 
   const username = `${sessionStorage.getItem('first_name')} ${sessionStorage.getItem('last_name')}`;
 
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+
   const [className, setClassName] = useState('');
   const [classNumber, setClassNumber] = useState('');
   const [classDescription, setClassDescription] = useState('');
@@ -34,6 +37,19 @@ const StudentDashboardPage: React.FC = ({ match }: any) => {
   const [classOwnerID, setClassOwnerID] = useState('');
 
   const [students, setStudents] = useState([]);
+  const getPersonInfo = (id: string | null) => {
+    axios
+      .get(`http://localhost:4567/person_info/${id}`, CONFIG)
+      .then((response: any) => {
+        const { data } = response;
+        setFirstName(data.first_name);
+        setLastName(data.last_name);
+        console.log(response.data);
+      })
+      .catch((err: any) => {
+        console.log(err);
+      });
+  };
 
   const getClassInfo = () => {
     axios
@@ -89,6 +105,8 @@ const StudentDashboardPage: React.FC = ({ match }: any) => {
   };
 
   useEffect(() => {
+    const id = sessionStorage.getItem('user_id');
+    getPersonInfo(id);
     getClassInfo();
     getStudents();
     students.map((student) => {

@@ -9,8 +9,8 @@ import HomePage from './pages/HomePage';
 import DashboardPage from './pages/DashboardPage';
 import OwnerDashboardPage from './pages/OwnerDashboardPage';
 import PeoplePane from './components/PeoplePane';
-import TimesPane from './components/TimesPane';
 import StudentDashboardPage from './pages/StudentDashboardPage';
+import ProfilePage from './pages/ProfilePage';
 import PreferencesButton from './components/PreferencesButton';
 
 const App: React.FC = () => {
@@ -25,9 +25,9 @@ const App: React.FC = () => {
           <Route path="/about" component={AboutPage} />
           <Route path="/dashboard" component={DashboardPage} />
           <Route path="/profile" component={Signin} />
+          <Route path="/profile-page" component={ProfilePage} />
           <Route path="/class/owner/:classID" component={OwnerDashboardPage} />
           <Route path="/class/student/:classID" component={StudentDashboardPage} />
-          {/* TESTING */}
           <Route path="/test_people_pane" component={PeoplePane} />
           <Route path="/test_preferences_modal" component={PreferencesButton} />
           {/* <Route path="/preferences" component={Preferences} /> */}
