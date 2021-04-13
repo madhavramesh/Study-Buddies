@@ -1,0 +1,42 @@
+.aboutpage-container {
+  background-color: black;
+}
+
+#title {
+  height: 40vh;
+  background-color: #348AED;
+  font-family: 'poppins', courier, sans-serif;
+  text-align: center;
+  //vertical-align: middle;
+  //margin: auto;
+  //transform: translate(25%, 0);
+  padding: 2rem;
+}
+
+#title-text {
+  font-size: 8vh;
+  font-weight: bold;
+  margin-top: 2rem;
+}
+
+#explanation {
+  height: 60vh;
+  color: #348aed;
+  padding: 5rem;
+}
+
+#heuristic {
+  height: 110vh;
+  background-color: #348AED;
+  padding: 5rem;
+}
+
+#usage {
+  height: 100vh;
+  color: #348aed;
+  padding: 5rem;
+}
+
+.usage-text {
+  margin-top: 2rem;
+}
