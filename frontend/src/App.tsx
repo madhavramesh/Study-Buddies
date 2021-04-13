@@ -3,7 +3,7 @@ import './App.scss';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Signin from './components/Signin';
 import Signup from './components/Signup';
-import AboutPage from './components/AboutPage';
+import AboutPage from './pages/AboutPage';
 import Preferences from './components/Preferences';
 import HomePage from './pages/HomePage';
 import DashboardPage from './pages/DashboardPage';

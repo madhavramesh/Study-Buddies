@@ -1,11 +1,101 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="6f35fa56-7f5b-42f9-814a-3dc404b8ebaf" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/data/groups_db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/server/data/groups_db.sqlite3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/DataStructures/Graph.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/DataStructures/Graph.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/algorithm/Grouper.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/algorithm/Grouper.java" afterDir="false" />
+=======
+    <list default="true" id="1eb396a8-21c6-44a6-8899-f99b5921a863" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/frontend/src/pages/AboutPage/AboutStyle.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/pages/AboutPage/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/.bin/loose-envify" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/.bin/loose-envify.cmd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/.bin/loose-envify.ps1" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/hoist-non-react-statics/CHANGELOG.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/hoist-non-react-statics/LICENSE.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/hoist-non-react-statics/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/hoist-non-react-statics/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/hoist-non-react-statics/src/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/js-tokens/CHANGELOG.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/js-tokens/LICENSE" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/js-tokens/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/js-tokens/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/js-tokens/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/loose-envify/LICENSE" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/loose-envify/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/loose-envify/cli.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/loose-envify/custom.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/loose-envify/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/loose-envify/loose-envify.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/loose-envify/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/loose-envify/replace.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/object-assign/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/object-assign/license" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/object-assign/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/object-assign/readme.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/prop-types/CHANGELOG.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/prop-types/LICENSE" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/prop-types/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/prop-types/checkPropTypes.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/prop-types/factory.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/prop-types/factoryWithThrowingShims.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/prop-types/factoryWithTypeCheckers.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/prop-types/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/prop-types/lib/ReactPropTypesSecret.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/prop-types/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/prop-types/prop-types.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/prop-types/prop-types.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/react-async-script/.eslintignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/react-async-script/.eslintrc.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/react-async-script/CHANGELOG.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/react-async-script/LICENSE" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/react-async-script/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/react-async-script/jest.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/react-async-script/lib/async-script-loader.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/react-async-script/lib/esm/async-script-loader.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/react-async-script/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/react-async-script/src/async-script-loader.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/react-google-recaptcha/.editorconfig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/react-google-recaptcha/.eslintignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/react-google-recaptcha/.eslintrc.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/react-google-recaptcha/.github/ISSUE_TEMPLATE/issue-template.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/react-google-recaptcha/.prettierrc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/react-google-recaptcha/CHANGELOG.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/react-google-recaptcha/LICENSE" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/react-google-recaptcha/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/react-google-recaptcha/jest.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/react-google-recaptcha/lib/esm/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/react-google-recaptcha/lib/esm/recaptcha-wrapper.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/react-google-recaptcha/lib/esm/recaptcha.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/react-google-recaptcha/lib/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/react-google-recaptcha/lib/recaptcha-wrapper.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/react-google-recaptcha/lib/recaptcha.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/react-google-recaptcha/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/react-google-recaptcha/src/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/react-google-recaptcha/src/recaptcha-wrapper.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/react-google-recaptcha/src/recaptcha.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/react-is/LICENSE" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/react-is/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/react-is/build-info.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/react-is/cjs/react-is.development.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/react-is/cjs/react-is.production.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/react-is/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/react-is/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/react-is/umd/react-is.development.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/node_modules/react-is/umd/react-is.production.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/AboutPage/AboutStyle.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/AboutPage/index.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/data/groups_db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/server/data/groups_db.sqlite3" afterDir="false" />
+>>>>>>> about-page
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,8 +108,13 @@
         <option value="Class" />
         <option value="CSS File" />
         <option value="TypeScript File" />
+<<<<<<< HEAD
         <option value="SCSS File" />
         <option value="TypeScript JSX File" />
+=======
+        <option value="TypeScript JSX File" />
+        <option value="SCSS File" />
+>>>>>>> about-page
       </list>
     </option>
   </component>
