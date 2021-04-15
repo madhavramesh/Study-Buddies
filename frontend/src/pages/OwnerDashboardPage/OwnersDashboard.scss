@@ -1,8 +1,6 @@
 .owner-dashboard-page {
-  background-color: #ffffff;
   font-family: "Poppins", sans-serif;
   height: 100%;
-  overflow-y: hidden;
 
   .owner-dashboard-page-sections {
     display: flex;
@@ -11,17 +9,21 @@
     height: 100%;
 
     .page-section {
-      padding: 1.5em 3%;
+      padding: 1.5em 3% 0 3%;
     }
 
     .study-groups {
       flex: 1 0 25%;
+
+      .study-groups-header {
+        margin-bottom: 20px;
+      }
     }
 
     .general-info {
       border-left: 1px solid #cccccc;
       border-right: 1px solid #cccccc;
-      flex: 1 0 50%;
+      flex: 1 0 55%;
       height: 100vh;
       display: flex;
       flex-direction: column;
@@ -45,7 +47,7 @@
     }
 
     .students {
-      flex: 1 0 25%;
+      flex: 1 0 20%;
       height: 100%;
 
       .students-header {
@@ -54,6 +56,26 @@
 
       .students-body {
         height: 100%;
+
+        .leave-class-container {
+          margin-top: 30px;
+          margin-bottom: 20px;
+          position: fixed;
+          bottom: 0;
+
+          .leave-class-button {
+            padding-right: 30px;
+            padding-left: 30px;
+            font-size: 15px !important;
+            background-color: var(--chunky-red);
+            outline: none !important;
+          }
+
+          .leave-class-button:hover, .leave-class-button:active, .leave-class-button:focus, .leave-class-button:visited {
+            background-color: var(--slim-red) !important;
+            box-shadow: none !important;
+          }
+        }
       }
     }
 

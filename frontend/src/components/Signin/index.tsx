@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Form } from 'react-bootstrap';
+import { Button, Card, Form } from 'react-bootstrap';
 import { Link, useHistory } from 'react-router-dom';
 import './SigninStyle.scss';
 
@@ -32,8 +32,10 @@ const Signin: React.FC = () => {
       .then((response: any) => {
         if (response.data.status === 0) {
           setValidAcct(true);
-          history.push('/dashboard');
           sessionStorage.setItem('user_id', response.data.id);
+          sessionStorage.setItem('first_name', response.data.first_name);
+          sessionStorage.setItem('last_name', response.data.last_name);
+          history.push('/dashboard');
         } else {
           setValidAcct(false);
         }

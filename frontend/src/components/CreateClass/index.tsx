@@ -74,7 +74,7 @@ const CreateClass: React.FC<CreateClassProps> = ({ onHide, show }: CreateClassPr
         .then((response: any) => {
           if (response.data.status === 0) {
             const classId = response.data.class_id;
-            history.push(`/owner-dashboard/${classId}`);
+            history.push(`/class/owner/${classId}`);
           } else {
             console.log('Class creation failed!');
           }
@@ -96,8 +96,8 @@ const CreateClass: React.FC<CreateClassProps> = ({ onHide, show }: CreateClassPr
         setClassDescriptionError('');
         setClassTermError('');
         setClassYearError('');
-        setScreen1(!screen1);
-        setScreen2(!screen2);
+        setScreen1(true);
+        setScreen2(false);
       }}
       aria-labelledby="contained-modal-title-vcenter"
       scrollable
@@ -117,8 +117,8 @@ const CreateClass: React.FC<CreateClassProps> = ({ onHide, show }: CreateClassPr
             <Button
               variant="primary"
               onClick={() => {
-                setScreen1(!screen1);
-                setScreen2(!screen2);
+                setScreen1(false);
+                setScreen2(true);
               }}
             >
               Create a new class

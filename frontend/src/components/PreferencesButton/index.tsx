@@ -269,9 +269,6 @@ const PreferencesButton: React.FC = () => {
       >
         {displayedPage}
       </Modal>
-      <Button type="info" onClick={formGroups}>
-        Form groups!
-      </Button>
     </div>
   );
 };

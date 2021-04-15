@@ -3,6 +3,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import { Button, DropdownButton, Dropdown, Form, Nav } from 'react-bootstrap';
 import './ModifiedNavbarStyle.scss';
 import { useHistory } from 'react-router-dom';
+import { Avatar } from '@material-ui/core';
 import logo from '../../images/logo.svg';
 
 type ModifiedNavBarProps = {
@@ -23,12 +24,17 @@ const ModifiedNavBar: React.FC<ModifiedNavBarProps> = ({ username }) => {
           id="edit-profile-dropdown"
           menuAlign="right"
           variant="none"
-          title={username}
+          title={
+            <div className="avatar-and-name">
+              <Avatar src="/broken-image.jpg" className="avatar" />
+              {username}
+            </div>
+          }
         >
           <Dropdown.Item
             as="button"
             onClick={() => {
-              history.push('/profile');
+              history.push('/profile-page');
             }}
           >
             Profile
