@@ -2,6 +2,7 @@
   font-weight: 500 !important;
   font-size: 20px;
   margin-bottom: 10px;
+  color: #000000 !important;
 }
 
 .search-bar-input-group {
@@ -16,7 +17,7 @@
     background-color: #ffffff;
     color: #7E848A;
     padding: 0px 10px 0px 15px;
-    border: 1px solid #ced4da;
+    border: 1px solid #ced4da !important;
   }
 
   .btn:hover {
@@ -24,8 +25,8 @@
     color: #ffffff;
   }
 
-  .text-muted {
-    color: #60666C !important;
+  .search-instructions {
+    color: #000000;
     margin-left: 3.82rem !important;
   }
 }

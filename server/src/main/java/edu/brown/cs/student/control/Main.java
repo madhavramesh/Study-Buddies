@@ -469,7 +469,7 @@ public final class Main {
     public Object handle(Request request, Response response) throws Exception {
       JSONObject data = new JSONObject(request.body());
       int id = Integer.parseInt(data.getString("id"));
-      int classId = data.getInt("class_id");
+      int classId = Integer.parseInt(data.getString("class_id"));
       DBCode code = GROUPS_DATABASE.deleteClass(id, classId);
       Map<String, Object> variables = ImmutableMap.of(
           "status", code.getCode(),

@@ -1,0 +1,64 @@
+.student-dashboard-page {
+  background-color: #ffffff;
+  font-family: "Poppins", sans-serif;
+  height: 100%;
+
+  .student-dashboard-page-sections {
+    display: flex;
+    flex-direction: row;
+    align-contents: center;
+    height: 100%;
+
+    .page-section {
+      padding: 1.5em 3% 0 3%;
+    }
+
+    .general-info {
+      border-left: 1px solid #cccccc;
+      border-right: 1px solid #cccccc;
+      flex: 1 0 50%;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .btn {
+        width: 100% !important;
+      }
+    }
+
+    .students {
+      flex: 1 0 25%;
+      height: 100%;
+
+      .students-header {
+        margin-bottom: 20px;
+      }
+
+      .students-body {
+        height: 100%;
+      }
+
+      .leave-class-container {
+        margin-top: 30px;
+        margin-bottom: 20px;
+
+        .leave-class-button {
+          padding-right: 10px;
+          padding-left: 10px;
+          margin-left: 10px;
+          width: 80%;
+          height: 100%;
+          font-size: 15px !important;
+          background-color: #d0312d;
+          outline: none !important;
+        }
+
+        .leave-class-button:hover, .leave-class-button:active, .leave-class-button:focus, .leave-class-button:visited {
+          background-color: #f9534e !important;
+          box-shadow: none !important;
+        }
+      }
+    }
+  }
+}

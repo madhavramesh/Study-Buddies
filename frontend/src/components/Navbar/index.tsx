@@ -2,7 +2,7 @@ import React from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import { Nav } from 'react-bootstrap';
 import logo from '../../images/logo.svg';
-import './NavbarElements.scss';
+import './NavbarStyle.scss';
 
 const NavBar: React.FC = () => {
   return (
