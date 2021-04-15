@@ -12,7 +12,7 @@ type GeneralInfoClassProps = {
   classCode: string;
 };
 
-const IMG_WIDTH = 430;
+const IMG_WIDTH = 600;
 const IMG_HEIGHT = 400;
 const RANDOM_IMAGE_URL = `https://source.unsplash.com/featured/${IMG_WIDTH}x${IMG_HEIGHT}/?nature,water`;
 

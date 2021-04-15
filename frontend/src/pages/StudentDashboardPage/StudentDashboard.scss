@@ -1,6 +1,6 @@
 .student-dashboard-page {
   background-color: #ffffff;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   height: 100%;
 
   .student-dashboard-page-sections {
@@ -13,10 +13,36 @@
       padding: 1.5em 3% 0 3%;
     }
 
+    .study-groups-and-preferences {
+      flex: 1 0 25%;
+      display: flex;
+      flex-direction: column;
+      align-contents: center;
+      height: 100%;
+
+      .study-group,
+      .current-preferences {
+        flex: 1 0 50%;
+      }
+
+      .current-preferences {
+        border-top: 1px solid #cccccc;
+      }
+
+      .study-groups-header,
+      .current-preferences-header {
+        margin-bottom: 20px;
+      }
+
+      .current-preferences-header {
+        margin-top: 20px;
+      }
+    }
+
     .general-info {
       border-left: 1px solid #cccccc;
       border-right: 1px solid #cccccc;
-      flex: 1 0 50%;
+      flex: 1 0 55%;
       height: 100vh;
       display: flex;
       flex-direction: column;
@@ -28,7 +54,7 @@
     }
 
     .students {
-      flex: 1 0 25%;
+      flex: 1 0 20%;
       height: 100%;
 
       .students-header {
@@ -42,23 +68,31 @@
       .leave-class-container {
         margin-top: 30px;
         margin-bottom: 20px;
+        position: fixed;
+        bottom: 0;
 
         .leave-class-button {
-          padding-right: 10px;
-          padding-left: 10px;
-          margin-left: 10px;
-          width: 80%;
-          height: 100%;
+          width: 100% !important;
           font-size: 15px !important;
-          background-color: #d0312d;
+          background-color: var(--chunky-red);
           outline: none !important;
         }
 
-        .leave-class-button:hover, .leave-class-button:active, .leave-class-button:focus, .leave-class-button:visited {
-          background-color: #f9534e !important;
+        .leave-class-button:hover,
+        .leave-class-button:active,
+        .leave-class-button:focus,
+        .leave-class-button:visited {
+          background-color: var(--slim-red) !important;
           box-shadow: none !important;
         }
       }
+    }
+
+    .study-groups-header,
+    .students-header,
+    .current-preferences-header {
+      font-size: 20px;
+      font-weight: 500;
     }
   }
 }

@@ -7,6 +7,7 @@ import GeneralInfoClass from '../../components/GeneralInfoClass';
 import './StudentDashboard.scss';
 import StudentInfo from '../../components/StudentInfo';
 import PreferencesButton from '../../components/PreferencesButton';
+import StudyGroupDisplay from '../../components/StudyGroupDisplay';
 
 const axios = require('axios');
 
@@ -37,6 +38,11 @@ const StudentDashboardPage: React.FC = ({ match }: any) => {
   const [classOwnerID, setClassOwnerID] = useState('');
 
   const [students, setStudents] = useState([]);
+
+  const [dormPreference, setDormPreference] = useState('');
+  const [selectedPeoplePreference, setSelectedPeoplePreference] = useState('');
+  const [selectedTimesPreference, setSelectedTimesPreference] = useState('');
+
   const getPersonInfo = (id: string | null) => {
     axios
       .get(`http://localhost:4567/person_info/${id}`, CONFIG)
@@ -65,8 +71,8 @@ const StudentDashboardPage: React.FC = ({ match }: any) => {
         console.log(`Class ID: ${classID}`);
         console.log(response.data);
       })
-      .catch((err: any) => {
-        console.log(err);
+      .catch((_: any) => {
+        history.push('/error');
       });
   };
 
@@ -104,15 +110,22 @@ const StudentDashboardPage: React.FC = ({ match }: any) => {
       });
   };
 
+  const getPreferences = async () => {
+    const response = await axios.get(
+      `http://localhost:4567/get_person_pref_in/${classID}/${sessionStorage.getItem('user_id')!}`,
+      CONFIG
+    );
+    setDormPreference(response.data.preferences.dorm);
+    setSelectedPeoplePreference(response.data.preferences.preferences);
+    setSelectedTimesPreference(response.data.preferences.times);
+  };
+
   useEffect(() => {
     const id = sessionStorage.getItem('user_id');
     getPersonInfo(id);
     getClassInfo();
     getStudents();
-    students.map((student) => {
-      console.log(student);
-      return 0;
-    });
+    getPreferences();
   }, []);
 
   const [modalShow, setModalShow] = useState(true);
@@ -131,6 +144,19 @@ const StudentDashboardPage: React.FC = ({ match }: any) => {
       </div>
 
       <div className="student-dashboard-page-sections">
+        <div className="page-section study-groups-and-preferences">
+          <div className="study-groups">
+            <div className="study-groups-header">Study Group</div>
+            <div className="study-groups-body" />
+          </div>
+          <div className="current-preferences">
+            <div className="current-preferences-header">Current Preferences</div>
+            <div className="current-preferences-body">
+              <div className="dorm">{dormPreference}</div>
+            </div>
+          </div>
+        </div>
+
         <div className="page-section general-info">
           <GeneralInfoClass
             className={className}
@@ -140,7 +166,12 @@ const StudentDashboardPage: React.FC = ({ match }: any) => {
             classCode={classCode}
           />
           <div className="page-section select-preferences">
-            <PreferencesButton />
+            <PreferencesButton
+              className={className}
+              classNumber={classNumber}
+              classID={classID}
+              classTerm={classTerm}
+            />
           </div>
         </div>
 
@@ -152,6 +183,7 @@ const StudentDashboardPage: React.FC = ({ match }: any) => {
                 studentName={`${student.firstName} ${student.lastName}`}
                 removeStudent={() => console.log('No remove student')}
                 removeButton={false}
+                studentDashboard
               />
             ))}
           </div>
@@ -172,23 +204,9 @@ const StudentDashboardPage: React.FC = ({ match }: any) => {
 export default StudentDashboardPage;
 
 /*
-const leaveClass = () => {
-    const postParameters = {
-      id: sessionStorage.get('user_id'),
-      class_id: { classID },
-    };
-
-    axios
-      .post(`http://localhost:4567/leave_class`, postParameters, CONFIG)
-      .then((response: any) => {
-        if (response.status === 0) {
-          history.push('/dashboard');
-        } else {
-          console.log('User not allowed to be on this page');
-        }
-      })
-      .catch((err: any) => {
-        console.log(err);
-      });
-  };
+<StudyGroupDisplay
+  groupID={studyGroup[0].first}
+  studentNames={studyGroupNames}
+  imageURL={RANDOM_IMAGE_URL}
+/>
  */

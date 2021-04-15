@@ -35,7 +35,7 @@ const DashboardPage: React.FC = () => {
       .then((response) => {
         setAllClasses(response.data.classes);
         setClasses(response.data.classes);
-        console.log(`All Classes: ${response.data.classes}`);
+        console.log(response.data.classes);
       })
       .catch((err) => {
         console.log(err);

@@ -23,7 +23,7 @@
     .general-info {
       border-left: 1px solid #cccccc;
       border-right: 1px solid #cccccc;
-      flex: 1 0 50%;
+      flex: 1 0 55%;
       height: 100vh;
       display: flex;
       flex-direction: column;
@@ -47,7 +47,7 @@
     }
 
     .students {
-      flex: 1 0 25%;
+      flex: 1 0 20%;
       height: 100%;
 
       .students-header {
@@ -64,8 +64,7 @@
           bottom: 0;
 
           .leave-class-button {
-            padding-right: 30px;
-            padding-left: 30px;
+            width: 100% !important;
             font-size: 15px !important;
             background-color: var(--chunky-red);
             outline: none !important;

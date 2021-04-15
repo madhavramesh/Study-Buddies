@@ -3,18 +3,13 @@
 }
 
 .modal-button {
-  width: 25% !important;
-  padding: 10px !important;
-  border-radius: 15px !important;
+  width: auto !important;
   text-align: center !important;
-}
-
-.modal-button:hover:enabled {
-  background-color: #236296 !important;
 }
 
 .modal-body-intro {
   font-family: 'Poppins', sans-serif !important;
+  font-size: 20px;
 
   // flex-direction: column;
   // padding-left: 50px;
@@ -60,8 +55,7 @@
 
   .modal-body-times-text {
     font-size: 16px;
-    padding: 20px;
-    padding-bottom: 30px;
+    padding: 20px 20px 30px;
   }
 
   .modal-body-times-calendar {
