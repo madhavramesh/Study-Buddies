@@ -126,7 +126,7 @@ const PreferencesButton: React.FC = () => {
       displayedPage = (
         <>
           <Modal.Header closeButton>
-            <b>Select your preferences</b>
+            <b className="bold-style">Select your preferences</b>
           </Modal.Header>
           <Modal.Body className="modal-body-intro">
             <MenuBookIcon className="menu-book-icon" />
@@ -147,7 +147,7 @@ const PreferencesButton: React.FC = () => {
       displayedPage = (
         <>
           <Modal.Header closeButton>
-            <b>Choose your dorm</b>
+            <b className="bold-style">Choose your dorm</b>
           </Modal.Header>
           <Modal.Body className="modal-body-dorm">
             <div className="modal-body-dorm-text">
@@ -187,7 +187,7 @@ const PreferencesButton: React.FC = () => {
       displayedPage = (
         <>
           <Modal.Header closeButton>
-            <b>Select preferences for other people</b>
+            <b className="bold-style">Select preferences for other people</b>
           </Modal.Header>
           <Modal.Body className="modal-body-people">
             <div className="modal-body-people-text">
@@ -211,7 +211,7 @@ const PreferencesButton: React.FC = () => {
       displayedPage = (
         <>
           <Modal.Header closeButton>
-            <b>Select preferred working times</b>
+            <b className="bold-style">Select preferred working times</b>
           </Modal.Header>
           <Modal.Body className="modal-body-times">
             <div className="modal-body-times-text">
