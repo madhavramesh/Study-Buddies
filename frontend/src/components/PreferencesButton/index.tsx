@@ -35,13 +35,15 @@ function serializePersonPreferences(persons: Array<any>, selected: Array<number>
 }
 
 function deserializePersonPreferences(persons: any, selected: Array<number>): Array<number> {
+  console.log(persons);
   const newSelected = new Array(persons.length).fill(0);
   // eslint-disable-next-line array-callback-return
-  persons.map((person: any, index: number) => {
+  persons?.map((person: any, index: number) => {
     if (selected.includes(person.id)) {
       newSelected[index] = 1;
     } else if (selected.includes(-person.id)) {
       newSelected[index] = -1;
+      console.log(newSelected);
     }
   });
   return newSelected;
@@ -107,21 +109,17 @@ const PreferencesButton: React.FC<PreferencesButtonProps> = ({
     console.log(response.data);
   };
 
-  const getPeopleInClass = async () => {
-    const response = await axios.get(`http://localhost:4567/get_persons_in/${classID}`, CONFIG);
-    setPersons(response.data.persons);
-    const selectedArray: Array<number> = new Array(response.data.persons.length).fill(0);
-    setSelected(selectedArray);
-  };
-
-  const getPreferences = async () => {
-    const response = await axios.get(
+  const getInitialPrefPplInfo = async () => {
+    let response = await axios.get(`http://localhost:4567/get_persons_in/${classID}`, CONFIG);
+    const { persons: currentPersons } = response.data;
+    setPersons(currentPersons);
+    response = await axios.get(
       `http://localhost:4567/get_person_pref_in/${classID}/${sessionStorage.getItem('user_id')!}`,
       CONFIG
     );
     setDorm(response.data.preferences.dorm);
     const newSelected = deserializePersonPreferences(
-      persons,
+      currentPersons,
       response.data.preferences.preferences
     );
     setSelected(newSelected);
@@ -130,8 +128,7 @@ const PreferencesButton: React.FC<PreferencesButtonProps> = ({
   };
 
   useEffect(() => {
-    getPeopleInClass();
-    getPreferences();
+    getInitialPrefPplInfo();
   }, []);
 
   let personCards: JSX.Element[] = [];
