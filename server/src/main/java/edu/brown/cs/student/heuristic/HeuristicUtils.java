@@ -60,6 +60,10 @@ public class HeuristicUtils {
     return resultGroups;
   }
 
+  public void testGetGroupWithEdgeDisplay(Graph g, int groupSize) throws Exception {
+
+  }
+
   /**
    * Given a list of person preferences, creates the corresponding graph.
    *

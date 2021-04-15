@@ -2,10 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6f35fa56-7f5b-42f9-814a-3dc404b8ebaf" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/term-project-asingir1-jcheng46-mramesh5-rtang26.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/term-project-asingir1-jcheng46-mramesh5-rtang26.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/data/groups_db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/server/data/groups_db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/DataStructures/Graph.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/DataStructures/Graph.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/algorithm/Grouper.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/algorithm/Grouper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/test/java/edu/brown/cs/student/algorithm/GrouperTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/test/java/edu/brown/cs/student/algorithm/GrouperTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,7 +45,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/frontend" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/server/pom.xml" />
     <property name="list.type.of.created.stylesheet" value="SCSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.standard" value="true" />
@@ -121,6 +122,9 @@
       <workItem from="1618146058710" duration="3511000" />
       <workItem from="1618233946215" duration="7065000" />
       <workItem from="1618242480891" duration="1623000" />
+      <workItem from="1618470965949" duration="672000" />
+      <workItem from="1618471659889" duration="120000" />
+      <workItem from="1618471800072" duration="599000" />
     </task>
     <servers />
   </component>
