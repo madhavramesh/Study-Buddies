@@ -331,11 +331,12 @@ public final class Main {
   private static class FormGroups implements Route {
     @Override
     public Object handle(Request request, Response response) throws Exception {
-      List<List<Pair<Integer, PersonInfo>>> theGroups =
+      Pair<List<List<Pair<Integer, PersonInfo>>>,
+              Map<Integer, Map<Integer, Double>>> res =
           heuristic.getGroups(
               Integer.parseInt(request.params(":class_id")),
               Integer.parseInt(request.params(":group_size")));
-      Map<String, Object> variables = ImmutableMap.of("class", theGroups);
+      Map<String, Object> variables = ImmutableMap.of("class", res);
       return GSON.toJson(variables);
     }
   }

@@ -40,6 +40,7 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
 
   const [students, setStudents] = useState([]);
   const [studyGroups, setStudyGroups] = useState([]);
+  const [studyGroupWeights, setStudyGroupWeights] = useState([]);
 
   const username = `${sessionStorage.getItem('first_name')} ${sessionStorage.getItem('last_name')}`;
 
@@ -78,7 +79,7 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
       .get(`http://localhost:4567/form_groups/${classID}/${GROUP_SIZE}`, CONFIG)
       .then((response: any) => {
         console.log(response.data);
-        setStudyGroups(response.data.class);
+        setStudyGroups(response.data.class.first);
       })
       .catch((err: any) => {
         console.log(err.response.data);

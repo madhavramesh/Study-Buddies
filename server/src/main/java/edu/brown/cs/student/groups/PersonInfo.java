@@ -1,6 +1,13 @@
 package edu.brown.cs.student.groups;
 
+import edu.brown.cs.student.DataStructures.IGNode;
+
 import java.util.Objects;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Represent a person's information.
@@ -10,6 +17,8 @@ public class PersonInfo {
   private final String firstName;
   private final String lastName;
   private final String email;
+  
+  private Set<Map<IGNode, Double>> groupMemberWeights;
 
   /**
    * Creates a person with the specified information.
@@ -101,4 +110,20 @@ public class PersonInfo {
     return String.format("[id: %d, firstName: %s, lastName: %s, email: %s]",
         id, firstName, lastName, email);
   }
+
+  /**
+   * Re-initializes the person's group member weights
+   */
+  public void clearGroupMemberWeights() {
+    groupMemberWeights = new HashSet<>();
+  }
+
+  /**
+   * Adds a new groupmember -> weight mapping to the set of these mappings.
+   * @param newGroupMemberWeight new mapping to be added
+   */
+  public void addGroupMemberWeight(Map<IGNode, Double> newGroupMemberWeight) {
+    groupMemberWeights.add(newGroupMemberWeight);
+  }
+
 }
