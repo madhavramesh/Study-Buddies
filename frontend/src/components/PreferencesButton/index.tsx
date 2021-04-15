@@ -34,6 +34,19 @@ function serializePersonPreferences(persons: Array<any>, selected: Array<number>
   return str.length ? str.substring(0, str.length - 1) : str;
 }
 
+function deserializePersonPreferences(persons: any, selected: Array<number>): Array<number> {
+  const newSelected = new Array(persons.length).fill(0);
+  // eslint-disable-next-line array-callback-return
+  persons.map((person: any, index: number) => {
+    if (selected.includes(person.id)) {
+      newSelected[index] = 1;
+    } else if (selected.includes(-person.id)) {
+      newSelected[index] = -1;
+    }
+  });
+  return newSelected;
+}
+
 function serializeTimePreferences(selectedTimes: Array<Array<any>>): string {
   let str = '';
   for (let i = 0; i < selectedTimes.length; i += 1) {
@@ -45,14 +58,30 @@ function serializeTimePreferences(selectedTimes: Array<Array<any>>): string {
   return str.substring(0, str.length - 1);
 }
 
-const PreferencesButton: React.FC = () => {
-  const className = 'Software Engineering';
-  const classTerm = 'Spring 2021 🌺';
+const CONFIG = {
+  headers: {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+  },
+};
 
+type PreferencesButtonProps = {
+  className: string;
+  classNumber: string;
+  classID: string;
+  classTerm: string;
+};
+
+const PreferencesButton: React.FC<PreferencesButtonProps> = ({
+  className,
+  classNumber,
+  classID,
+  classTerm,
+}: PreferencesButtonProps) => {
   const [showModal, setShowModal] = useState(false);
   const [page, setPage] = useState(0);
 
-  const [dorm, setDorm] = useState('');
+  const [dorm, setDorm] = useState('Select a dorm...');
 
   const [persons, setPersons] = useState([]);
   const [selected, setSelected] = useState<Array<number>>([]);
@@ -60,13 +89,6 @@ const PreferencesButton: React.FC = () => {
   const [selectedTimes, setSelectedTimes] = useState(initialTimes);
 
   const submitPreferences = async () => {
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-      },
-    };
-
     const postParameters = {
       person_id: sessionStorage.getItem('user_id'),
       class_id: 1,
@@ -78,26 +100,38 @@ const PreferencesButton: React.FC = () => {
     const response = await axios.post(
       'http://localhost:4567/set_preferences',
       postParameters,
-      config
+      CONFIG
     );
+    setShowModal(false);
+    setPage(0);
     console.log(response.data);
   };
 
   const getPeopleInClass = async () => {
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-      },
-    };
-    const response = await axios.get(`http://localhost:4567/get_persons_in/${1}`, config);
+    const response = await axios.get(`http://localhost:4567/get_persons_in/${classID}`, CONFIG);
     setPersons(response.data.persons);
     const selectedArray: Array<number> = new Array(response.data.persons.length).fill(0);
     setSelected(selectedArray);
   };
 
+  const getPreferences = async () => {
+    const response = await axios.get(
+      `http://localhost:4567/get_person_pref_in/${classID}/${sessionStorage.getItem('user_id')!}`,
+      CONFIG
+    );
+    setDorm(response.data.preferences.dorm);
+    const newSelected = deserializePersonPreferences(
+      persons,
+      response.data.preferences.preferences
+    );
+    setSelected(newSelected);
+    setSelectedTimes(response.data.preferences.times);
+    console.log(response.data);
+  };
+
   useEffect(() => {
     getPeopleInClass();
+    getPreferences();
   }, []);
 
   let personCards: JSX.Element[] = [];
@@ -131,8 +165,11 @@ const PreferencesButton: React.FC = () => {
           <Modal.Body className="modal-body-intro">
             <MenuBookIcon className="menu-book-icon" />
             <div>
-              Welcome to &quot;{className}&quot; in {classTerm}! Choose your preferences, then wait
-              to be put into a group.
+              Welcome to{' '}
+              <b>
+                [{classNumber}] {className}
+              </b>{' '}
+              in {classTerm}! Choose your preferences, then wait to be put into a group.
             </div>
           </Modal.Body>
           <Modal.Footer>
@@ -158,7 +195,7 @@ const PreferencesButton: React.FC = () => {
                 as="select"
                 onChange={(e: any) => setDorm(e.target.value)}
                 isInvalid={dorm === 'Select a dorm...'}
-                defaultValue="Select a dorm..."
+                value={dorm}
               >
                 <option>Select a dorm...</option>
                 {dorms.map((d) => (
@@ -256,12 +293,15 @@ const PreferencesButton: React.FC = () => {
   return (
     <div>
       <Button className="modal-button" type="info" onClick={() => setShowModal(true)}>
-        Click me!
+        Select Preferences
       </Button>
       <Modal
         size="lg"
         show={showModal}
-        onHide={() => setShowModal(false)}
+        onHide={() => {
+          setShowModal(false);
+          setPage(0);
+        }}
         style={{ height: '80vh' }}
         dialogClassName="modal-80h"
         centered

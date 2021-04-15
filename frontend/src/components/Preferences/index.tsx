@@ -30,19 +30,6 @@ const Preferences: React.FC = () => {
       </ListGroup>
     </>
   );
-
-  /*
-    <>
-      <ListGroup>
-        {people.map((person) => (
-          <ListGroup.Item>
-            {person.FirstName} {person.LastName}
-          </ListGroup.Item>
-        ))}
-      </ListGroup>
-    </>
-  );
-   */
 };
 
 export default Preferences;

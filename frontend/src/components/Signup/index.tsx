@@ -65,38 +65,6 @@ const Signup: React.FC = () => {
       });
   };
 
-  /*
-  const validateHuman = async (): Promise<boolean> => {
-    const secretKey = process.env.REACT_APP_RECAPTCHA_SECRET_KEY;
-
-    const postParameters = {
-      secret: `secret=${secretKey}&response=${recaptchaToken}`,
-    };
-
-    const config = {
-      headers: {
-        Accept: 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
-      },
-    };
-
-    const isHuman = await axios
-      .post('https://www.google.com/recaptcha/api/siteverify', postParameters, config)
-      .then((response: any) => console.log(response))
-      .catch((_: any) => {
-        setRecaptchaMessage("Confirm that you're not a robot");
-        return false;
-      });
-
-    if (recaptchaToken === '' || !isHuman) {
-      setRecaptchaMessage("Confirm that you're not a robot");
-      return false;
-    }
-    return true;
-  };
-  */
-
   const onSignUp = () => {
     const recaptchaValue = recaptchaRef.current?.getValue();
     recaptchaRef.current?.reset();

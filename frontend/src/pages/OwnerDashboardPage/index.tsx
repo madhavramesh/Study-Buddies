@@ -192,11 +192,12 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
                 studentName={`${student.firstName} ${student.lastName}`}
                 removeStudent={() => removeStudent(student.id)}
                 removeButton={student.id !== classOwnerID}
+                studentDashboard={false}
               />
             ))}
             <div className="leave-class-container">
               <Button className="leave-class-button" onClick={deleteClass}>
-                Leave Class
+                Delete Class
               </Button>
             </div>
           </div>

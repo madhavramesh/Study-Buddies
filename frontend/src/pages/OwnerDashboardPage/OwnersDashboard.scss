@@ -64,8 +64,7 @@
           bottom: 0;
 
           .leave-class-button {
-            padding-right: 30px;
-            padding-left: 30px;
+            width: 100% !important;
             font-size: 15px !important;
             background-color: var(--chunky-red);
             outline: none !important;
