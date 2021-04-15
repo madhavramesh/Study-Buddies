@@ -17,11 +17,14 @@ const StudentInfo: React.FC<StudentInfoProps> = ({
 }: StudentInfoProps) => {
   return (
     <div className={`student ${studentName}`}>
-      {removeButton && (
-        <Button className="remove" onClick={removeStudent}>
-          X
-        </Button>
-      )}
+      <Button
+        className="remove"
+        onClick={removeStudent}
+        disabled={!removeButton}
+        style={{ visibility: removeButton ? 'visible' : 'hidden' }}
+      >
+        X
+      </Button>
       <Button className="name-text" disabled>
         {studentName}
       </Button>

@@ -21,7 +21,7 @@ const CONFIG = {
 const GROUP_SIZE = 4;
 
 const IMG_WIDTH = 600;
-const IMG_HEIGHT = 200;
+const IMG_HEIGHT = 250;
 const RANDOM_IMAGE_URL = `https://source.unsplash.com/featured/${IMG_WIDTH}x${IMG_HEIGHT}/?dark, study`;
 
 const OwnerDashboardPage: React.FC = ({ match }: any) => {
@@ -191,7 +191,7 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
               <StudentInfo
                 studentName={`${student.firstName} ${student.lastName}`}
                 removeStudent={() => removeStudent(student.id)}
-                removeButton
+                removeButton={student.id !== classOwnerID}
               />
             ))}
             <div className="leave-class-container">
