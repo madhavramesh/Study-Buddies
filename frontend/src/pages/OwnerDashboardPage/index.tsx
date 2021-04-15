@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import ModifiedNavBar from '../../components/ModifiedNavbar';
 import ClassCreatedModal from '../../components/ClassCreatedModal';
@@ -43,6 +43,16 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
   const [studyGroupWeights, setStudyGroupWeights] = useState([]);
 
   const username = `${sessionStorage.getItem('first_name')} ${sessionStorage.getItem('last_name')}`;
+
+  // Modal code
+  const [isOpen, setIsOpen] = React.useState(false);
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
 
   const getClassInfo = () => {
     axios
@@ -143,15 +153,6 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
     <div className="owner-dashboard-page">
       <ModifiedNavBar username={username} />
 
-      <div className="class-created-modal-container">
-        <ClassCreatedModal
-          onHide={() => setModalShow(false)}
-          show={modalShow}
-          classNumber={classNumber}
-          className={className}
-        />
-      </div>
-
       <div className="owner-dashboard-page-sections">
         <div className="page-section study-groups">
           <div className="study-groups-header">Study Groups</div>
@@ -168,6 +169,9 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
               );
             })}
           </div>
+          <Button className="view-algorithm-button" onClick={() => openModal()}>
+            View Algorithm
+          </Button>
         </div>
 
         <div className="page-section general-info">
@@ -203,6 +207,9 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
           </div>
         </div>
       </div>
+      <Modal>
+        <Button onClick={() => closeModal()} />
+      </Modal>
     </div>
   );
 };
