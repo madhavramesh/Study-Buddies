@@ -3,9 +3,25 @@
   <component name="ChangeListManager">
     <list default="true" id="6f35fa56-7f5b-42f9-814a-3dc404b8ebaf" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/App.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/ClassCard/ClassCard.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/ClassCard/ClassCard.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/ClassCardPane/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/ClassCardPane/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/CreateClass/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/CreateClass/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/ModifiedNavbar/ModifiedNavbarStyle.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/ModifiedNavbar/ModifiedNavbarStyle.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/ModifiedNavbar/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/ModifiedNavbar/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Navbar/NavbarElements.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Navbar/NavbarStyle.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Navbar/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Navbar/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/SearchBar/SearchBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/SearchBar/SearchBar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/SearchBar/SearchBarStyle.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/SearchBar/SearchBarStyle.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Signin/SigninStyle.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Signin/SigninStyle.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Signin/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Signin/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Signup/SignupStyle.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Signup/SignupStyle.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/StudentInfo/StudentInfoStyle.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/StudentInfo/StudentInfoStyle.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/DashboardPage/DashboardPageStyle.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/DashboardPage/DashboardPageStyle.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/OwnerDashboardPage/OwnersDashboard.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/OwnerDashboardPage/OwnersDashboard.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/OwnerDashboardPage/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/OwnerDashboardPage/index.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/data/groups_db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/server/data/groups_db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/DataStructures/Graph.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/DataStructures/Graph.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/algorithm/Grouper.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/algorithm/Grouper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/control/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/edu/brown/cs/student/control/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,8 +34,8 @@
         <option value="Class" />
         <option value="CSS File" />
         <option value="TypeScript File" />
-        <option value="SCSS File" />
         <option value="TypeScript JSX File" />
+        <option value="SCSS File" />
       </list>
     </option>
   </component>
@@ -121,6 +137,7 @@
       <workItem from="1618146058710" duration="3511000" />
       <workItem from="1618233946215" duration="7065000" />
       <workItem from="1618242480891" duration="1623000" />
+      <workItem from="1618388567259" duration="5338000" />
     </task>
     <servers />
   </component>

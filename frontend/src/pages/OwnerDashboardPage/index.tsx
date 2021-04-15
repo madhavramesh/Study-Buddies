@@ -20,7 +20,7 @@ const CONFIG = {
 // Size of study groups to form
 const GROUP_SIZE = 4;
 
-const IMG_WIDTH = 430;
+const IMG_WIDTH = 600;
 const IMG_HEIGHT = 200;
 const RANDOM_IMAGE_URL = `https://source.unsplash.com/featured/${IMG_WIDTH}x${IMG_HEIGHT}/?dark, study`;
 
@@ -75,7 +75,7 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
 
   const formStudyGroups = () => {
     axios
-      .get(`http://localhost:4567/form_groups/${classID}/${4}`, CONFIG)
+      .get(`http://localhost:4567/form_groups/${classID}/${GROUP_SIZE}`, CONFIG)
       .then((response: any) => {
         console.log(response.data);
         setStudyGroups(response.data.class);
@@ -114,20 +114,20 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
   const deleteClass = () => {
     const postParameters = {
       id: sessionStorage.getItem('user_id'),
-      class_id: { classID },
+      class_id: classID,
     };
 
     axios
       .post(`http://localhost:4567/delete_class`, postParameters, CONFIG)
       .then((response: any) => {
-        if (response.status === 0) {
+        if (response.data.status === 0) {
           history.push('/dashboard');
         } else {
           console.log('User not allowed to be on this page');
         }
       })
       .catch((err: any) => {
-        console.log(err);
+        console.log(err.response.data);
       });
   };
 
@@ -194,11 +194,11 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
                 removeButton
               />
             ))}
-          </div>
-          <div className="leave-class-container">
-            <Button className="leave-class-button" onClick={deleteClass}>
-              Leave Class
-            </Button>
+            <div className="leave-class-container">
+              <Button className="leave-class-button" onClick={deleteClass}>
+                Leave Class
+              </Button>
+            </div>
           </div>
         </div>
       </div>

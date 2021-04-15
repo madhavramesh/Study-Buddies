@@ -24,7 +24,9 @@ const SearchBar: React.FC<SearchBarProps> = ({ onChange }: SearchBarProps) => {
           onChange={onChange}
         />
       </InputGroup>
-      <Form.Text className="text-muted">Search for classes by class name or number</Form.Text>
+      <Form.Text className="search-instructions">
+        Search for classes by class name or number
+      </Form.Text>
     </>
   );
 };

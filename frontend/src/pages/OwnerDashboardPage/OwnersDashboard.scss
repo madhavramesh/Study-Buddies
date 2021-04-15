@@ -1,5 +1,4 @@
 .owner-dashboard-page {
-  background-color: #ffffff;
   font-family: "Poppins", sans-serif;
   height: 100%;
 
@@ -57,26 +56,25 @@
 
       .students-body {
         height: 100%;
-      }
 
-      .leave-class-container {
-        margin-top: 30px;
-        margin-bottom: 20px;
+        .leave-class-container {
+          margin-top: 30px;
+          margin-bottom: 20px;
+          position: fixed;
+          bottom: 0;
 
-        .leave-class-button {
-          padding-right: 10px;
-          padding-left: 10px;
-          margin-left: 55px;
-          width: 80%;
-          height: 100%;
-          font-size: 15px !important;
-          background-color: #d0312d;
-          outline: none !important;
-        }
+          .leave-class-button {
+            padding-right: 30px;
+            padding-left: 30px;
+            font-size: 15px !important;
+            background-color: var(--chunky-red);
+            outline: none !important;
+          }
 
-        .leave-class-button:hover, .leave-class-button:active, .leave-class-button:focus, .leave-class-button:visited {
-          background-color: #f9534e !important;
-          box-shadow: none !important;
+          .leave-class-button:hover, .leave-class-button:active, .leave-class-button:focus, .leave-class-button:visited {
+            background-color: var(--slim-red) !important;
+            box-shadow: none !important;
+          }
         }
       }
     }

@@ -1,3 +1,11 @@
+:root {
+  --chunky-blue: #31708E;
+  --slim-blue: #8FC1E3;
+  --chunky-red: #bf351f;
+  --slim-red: #F76C6C;
+  --one-shade-of-grey: #f0f2f5;
+}
+
 html, body, .App {
   width: 100%;
   height: 100%;
@@ -6,7 +14,7 @@ html, body, .App {
 body {
   margin: 0;
   padding: 0;
-  background-color: #202020;
+  background-color: var(--one-shade-of-grey);
 }
 
 .btn {
@@ -14,7 +22,7 @@ body {
   letter-spacing: 2px;
   font-weight: bold !important;
   font-size: 14px !important;
-  background-color: #2386c8;
+  background-color: var(--chunky-blue);
   padding: 12px 80px;
   border: none !important;
   border-radius: 500px;
@@ -22,7 +30,7 @@ body {
 }
 
 .btn:hover {
-  background-color: #2588da;
+  background-color: var(--slim-blue);
 }
 
 .form-label {
@@ -34,3 +42,9 @@ body {
 .form-control {
   font-family: 'Poppins', sans-serif !important;
 }
+
+// #8FC1E3 - light blue
+// #5085A5 - medium blue
+// #31708E - dark blue
+// #687864 - olive green
+// #F76C6C - pinkish-red
