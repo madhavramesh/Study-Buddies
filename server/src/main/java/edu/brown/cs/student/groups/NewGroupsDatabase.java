@@ -122,12 +122,16 @@ public class NewGroupsDatabase {
     rs = prep.executeQuery();
     // if not found, return an error code
     if (!rs.next()) {
+      rs.close();
+      prep.close();
       return new Pair<>(USER_NOT_FOUND, null);
     }
     int personId = rs.getInt("id");
     String firstName = rs.getString("first_name");
     String lastName = rs.getString("last_name");
     String email = rs.getString("email");
+    rs.close();
+    prep.close();
     return new Pair<>(RETRIEVE_USER_SUCCESS, new PersonInfo(personId, firstName, lastName, email));
   }
 
@@ -155,6 +159,8 @@ public class NewGroupsDatabase {
       id = rs.getInt("id");
       // if user with the given email is not found, return an error
     } else {
+      rs.close();
+      prep.close();
       return new Pair<>(-1, USER_NOT_FOUND);
     }
     String encryptedPass = rs.getString("pass_token");
@@ -191,6 +197,7 @@ public class NewGroupsDatabase {
     ResultSet rs = prep.executeQuery();
     // if an account with the email already exists, throw an error
     if (rs.next()) {
+      prep.close();
       rs.close();
       return EMAIL_TAKEN;
     }
@@ -207,14 +214,14 @@ public class NewGroupsDatabase {
   }
 
   /**
-   * Deletes a user.
+   * Deletes a user from the database.
    *
-   * @param id the user's id
-   * @param password the user's password, to verify
-   * @return a code representing the status of the operation
-   * @throws SQLException if an error occurs while connecting to the database
-   * @throws InvalidKeySpecException if the algorithm is not loaded
-   * @throws NoSuchAlgorithmException if the algorithm is not loaded
+   * @param id       user's id
+   * @param password user's password
+   * @return code indicating status of delete operation
+   * @throws SQLException             if an error occurs while connecting to the database
+   * @throws InvalidKeySpecException  if key is not loaded
+   * @throws NoSuchAlgorithmException if algorithm is not loaded
    */
   public DBCode deleteUser(int id, String password)
       throws SQLException, InvalidKeySpecException, NoSuchAlgorithmException {
@@ -228,10 +235,14 @@ public class NewGroupsDatabase {
     if (rs.next()) {
       encryptedPass = rs.getString("pass_token");
     } else {
+      rs.close();
+      prep.close();
       return USER_NOT_FOUND;
     }
     // if the password they entered is incorrect, return an error code
     if (!PasswordEncryption.validatePBKDF2Password(password, encryptedPass)) {
+      rs.close();
+      prep.close();
       return INVALID_PASSWORD;
     }
     // now, we DELETE
@@ -244,6 +255,8 @@ public class NewGroupsDatabase {
     prep = conn.prepareStatement("DELETE FROM logins WHERE id=?;");
     prep.setInt(1, id);
     prep.executeUpdate();
+    prep.close();
+    rs.close();
     return DELETE_SUCCESS;
   }
 
@@ -337,6 +350,8 @@ public class NewGroupsDatabase {
     int classIdsSize = classIds.size();
     // if no enrollments, return nothing
     if (classIdsSize == 0) {
+      rs.close();
+      prep.close();
       return new LinkedList<>();
     }
     // create a PreparedStatement insert depending on number of enrollments
@@ -427,6 +442,16 @@ public class NewGroupsDatabase {
     prep = conn.prepareStatement("INSERT INTO enrollments values(?,?);");
     prep.setInt(1, ownerId);
     prep.setInt(2, classId);
+    // set default preferences
+    prep =
+        conn.prepareStatement("INSERT INTO class(class_id, person_id, times, dorm, preferences)" +
+            "values(?, ?, ?, ?, ?)");
+    prep.setInt(1, classId);
+    prep.setInt(2, ownerId);
+    prep.setString(3, ("0".repeat(24) + ":").repeat(7).substring(0, 174));
+    prep.setString(4, "");
+    prep.setString(5, "");
+    prep.executeUpdate();
     prep.executeUpdate();
     prep.close();
     rs.close();
@@ -451,6 +476,8 @@ public class NewGroupsDatabase {
     rs = prep.executeQuery();
     // if already in the class, return an error
     if (rs.next()) {
+      rs.close();
+      prep.close();
       return ALREADY_JOINED_CLASS;
     }
     // select class with specified ID
@@ -460,6 +487,8 @@ public class NewGroupsDatabase {
     rs = prep.executeQuery();
     // if the class ID and class code do not match (e.g. class code is incorrect), return error code
     if (!rs.next()) {
+      rs.close();
+      prep.close();
       return INVALID_CLASS_CODE;
     }
     // enroll the person into the class
@@ -484,7 +513,8 @@ public class NewGroupsDatabase {
 
   /**
    * Leaves the class.
-   * @param id the person's id
+   *
+   * @param id      the person's id
    * @param classId the class's id
    * @return a code representing the operation's status
    * @throws SQLException if an error occurs while connecting to the database
@@ -503,6 +533,14 @@ public class NewGroupsDatabase {
     return CLASS_LEAVE_SUCCESS;
   }
 
+  /**
+   * Deletes a class.
+   *
+   * @param id the owner's id
+   * @param classId the class's ID
+   * @return code representing the operation's status
+   * @throws SQLException if an error occurs while connecting to the database
+   */
   public DBCode deleteClass(int id, int classId) throws SQLException {
     PreparedStatement prep;
     ResultSet rs;
@@ -512,6 +550,7 @@ public class NewGroupsDatabase {
     rs = prep.executeQuery();
     // if owner id and given id don't match, throw an error
     if (!rs.next()) {
+      rs.close();
       return NOT_THE_OWNER;
     }
     prep = conn.prepareStatement("DELETE FROM class WHERE class_id=?;");
@@ -524,6 +563,7 @@ public class NewGroupsDatabase {
     prep.setInt(1, classId);
     prep.executeUpdate();
     prep.close();
+    rs.close();
     return CLASS_DELETE_SUCCESS;
 
   }
@@ -560,6 +600,8 @@ public class NewGroupsDatabase {
       String email = rs.getString("email");
       personInfos.add(new PersonInfo(personId, firstName, lastName, email));
     }
+    rs.close();
+    prep.close();
     return personInfos;
   }
 
@@ -650,6 +692,7 @@ public class NewGroupsDatabase {
     // if person is not in class, throw an error
     try {
       prep.executeUpdate();
+      prep.close();
       return UPDATE_PREFERENCES_SUCCESS;
     } catch (SQLException e) {
       return PERSON_NOT_IN_CLASS;
