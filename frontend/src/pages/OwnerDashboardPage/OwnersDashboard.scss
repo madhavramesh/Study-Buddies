@@ -20,19 +20,6 @@
         margin-bottom: 20px;
       }
 
-      .create-groups-container {
-        margin-top: 20px;
-        margin-bottom: 20px;
-        display: flex;
-        justify-content: center;
-
-        .create-study-groups-button {
-          width: auto;
-          padding-left: 20px !important;
-          padding-right: 20px !important;
-        }
-      }
-
       .study-group,
       .current-preferences {
         flex: 1 0 50%;
@@ -46,6 +33,24 @@
       .study-groups-body {
         max-height: 35vh;
         overflow: auto;
+      }
+
+      .create-groups-container,
+      .visualize-groups-container {
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
+
+        .create-study-groups-button,
+        .visualize-groups-button {
+          width: auto;
+          padding-left: 20px !important;
+          padding-right: 20px !important;
+        }
+      }
+
+      .visualize-groups-container {
+        margin-bottom: 10px;
       }
 
       .current-preferences {
@@ -70,11 +75,6 @@
           margin-top: 10px;
           margin-bottom: 10px;
         }
-      .view-algorithm-button {
-        width: 30% !important;
-        padding-left: 20px;
-        padding-right: 20px;
-        margin-top: 30px !important;
       }
     }
 
@@ -87,22 +87,6 @@
       flex-direction: column;
       align-items: center;
       width: 100%;
-
-      .create-groups-container {
-        width: 100%;
-        flex: 1 1 auto;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-
-        .create-study-groups-button {
-          width: 30% !important;
-          padding-left: 20px;
-          padding-right: 20px;
-          margin-top: 30px !important;
-        }
-      }
     }
 
     .students {

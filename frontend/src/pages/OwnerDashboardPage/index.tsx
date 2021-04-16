@@ -8,6 +8,7 @@ import StudentInfo from '../../components/StudentInfo';
 import StudyGroupDisplay from '../../components/StudyGroupDisplay';
 import './OwnersDashboard.scss';
 import PreferencesButton from '../../components/PreferencesButton';
+import AlgorithmVisualizer from '../../components/AlgorithmVisualizer';
 
 const axios = require('axios');
 
@@ -51,12 +52,7 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
 
   const [classCreatedShowModal, setClassCreatedShowModal] = useState(true);
   const [preferencesShowModal, setPreferencesShowModal] = useState(false);
-
-  // Modal code
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const [algorithmShowModal, setAlgorithmShowModal] = useState(false);
 
   const getClassInfo = () => {
     axios
@@ -94,7 +90,7 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
     axios
       .get(`http://localhost:4567/form_groups/${classID}/${GROUP_SIZE}`, CONFIG)
       .then((response: any) => {
-        console.log(response.data.class);
+        console.log(response.data);
         setStudyGroups(response.data.class.first);
         setStudyGroupWeights(response.data.class.second);
       })
@@ -170,75 +166,6 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
   useEffect(() => {
     getPreferences();
   }, [preferencesShowModal]);
-  // Renders a single group
-  const renderGroup = (g: any, index: number) => {
-    // map ids to persons
-    const idToPerson: any = {};
-    // eslint-disable-next-line array-callback-return
-    g.map((person: any) => {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      idToPerson[person.second.id] = person;
-    });
-
-    console.log(idToPerson);
-
-    const graphArray = [];
-
-    const studyGroupWeight = studyGroupWeights[index];
-    // eslint-disable-next-line guard-for-in,no-restricted-syntax
-    for (const key in studyGroupWeight) {
-      const row = [];
-      // eslint-disable-next-line guard-for-in,no-restricted-syntax
-      for (const key2 in studyGroupWeight[key]) {
-        const newArray = [key, key2, studyGroupWeight[key][key2]];
-        row.push(newArray);
-      }
-      row.sort((a: any, b: any) => a[1] - b[1]);
-      graphArray.push(row);
-    }
-
-    graphArray.sort((a: any, b: any) => a[0] - b[0]);
-
-    // eslint-disable-next-line no-plusplus
-    for (let i = 0; i < graphArray.length; i++) {
-      graphArray[i].splice(i, 0, []);
-    }
-
-    console.log(graphArray);
-
-    const people = g.map((person: any) => idToPerson[person.second.id]);
-    console.log(people);
-
-    return (
-      <Table striped bordered hover>
-        <thead>
-          <th> </th>
-          {people.map((person: any) => {
-            return (
-              <th id={person.second.id}>
-                {person.second.firstName} {person.second.lastName}
-              </th>
-            );
-          })}
-        </thead>
-        {graphArray.map((row, rowIndex) => {
-          console.log(row, rowIndex);
-          return (
-            <tr>
-              <td>
-                {people[rowIndex].second.firstName} {people[rowIndex].second.lastName}
-              </td>
-              {row.map((column, columnIndex) => {
-                console.log(column, columnIndex);
-                return <td>{column[2]}</td>;
-              })}
-            </tr>
-          );
-        })}
-      </Table>
-    );
-  };
 
   return (
     <div className="owner-dashboard-page">
@@ -272,6 +199,14 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
             <Button className="create-study-groups-button" onClick={formStudyGroups}>
               Generate Study Groups
             </Button>
+          </div>
+          <div className="visualize-groups-container">
+            <AlgorithmVisualizer
+              studyGroups={studyGroups}
+              studyGroupWeights={studyGroupWeights}
+              showModal={algorithmShowModal}
+              setShowModal={setAlgorithmShowModal}
+            />
           </div>
           <div className="current-preferences">
             <div className="current-preferences-header">Current Preferences</div>
@@ -324,9 +259,6 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
               </div>
             </div>
           </div>
-          <Button className="view-algorithm-button" onClick={() => handleShow()}>
-            View Algorithm
-          </Button>
         </div>
 
         <div className="page-section general-info">
@@ -366,24 +298,6 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
           </div>
         </div>
       </div>
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Algorithm Visualization</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div>Algorithm results</div>
-          <div>
-            {studyGroups.map((group, index) => {
-              return renderGroup(group, index);
-            })}
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal>
     </div>
   );
 };

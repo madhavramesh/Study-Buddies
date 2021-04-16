@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Table } from 'react-bootstrap';
+import { Table } from 'react-bootstrap';
 import './TimesPane.scss';
 
 // TimeProps consumes a number which is either is a multiple is a factor of 60.
