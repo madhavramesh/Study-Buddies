@@ -7,6 +7,7 @@ import GeneralInfoClass from '../../components/GeneralInfoClass';
 import StudentInfo from '../../components/StudentInfo';
 import StudyGroupDisplay from '../../components/StudyGroupDisplay';
 import './OwnersDashboard.scss';
+import PreferencesButton from '../../components/PreferencesButton';
 
 const axios = require('axios');
 
@@ -166,6 +167,11 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
                 />
               );
             })}
+            <div className="create-groups-container">
+              <Button className="create-study-groups-button" onClick={formStudyGroups}>
+                Create Study Groups
+              </Button>
+            </div>
           </div>
         </div>
 
@@ -177,11 +183,12 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
             classTerm={classTerm}
             classCode={classCode}
           />
-          <div className="create-groups-container">
-            <Button className="create-study-groups-button" onClick={formStudyGroups}>
-              Create Study Groups
-            </Button>
-          </div>
+          <PreferencesButton
+            className={className}
+            classNumber={classNumber}
+            classID={classID}
+            classTerm={classTerm}
+          />
         </div>
 
         <div className="page-section students">

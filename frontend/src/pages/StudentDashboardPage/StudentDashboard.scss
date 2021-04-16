@@ -25,17 +25,39 @@
         flex: 1 0 50%;
       }
 
-      .current-preferences {
-        border-top: 1px solid #cccccc;
-      }
-
       .study-groups-header,
       .current-preferences-header {
         margin-bottom: 20px;
       }
 
-      .current-preferences-header {
-        margin-top: 20px;
+      .current-preferences {
+        border-top: 1px solid #cccccc;
+
+        .current-preferences-header {
+          margin-top: 20px;
+          margin-bottom: 10px;
+        }
+
+        .current-preferences-body {
+          max-height: 400px;
+          overflow: auto;
+        }
+
+        .dorm-header,
+        .preferred-people-header,
+        .not-preferred-people-header,
+        .times-header {
+          font-size: 18px;
+          font-weight: 500;
+          margin-top: 10px;
+          margin-bottom: 10px;
+        }
+
+        .view-times-button {
+          width: auto;
+          padding-right: 20px;
+          padding-left: 20px;
+        }
       }
     }
 

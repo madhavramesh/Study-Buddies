@@ -21,13 +21,17 @@ const PersonCard: React.FC<PersonProps> = ({
     // eslint-disable-next-line no-nested-ternary
     selectedValue === -1 ? 'not-preferred' : selectedValue === 1 ? 'preferred' : '';
   return (
-    <Card className={`person-card ${background}`} onClick={handleClick}>
-      {/* <Card.Title className="person-title"> */}
-      <div className="person-title">
-        {firstName} {lastName}
-      </div>
-      {/* </Card.Title> */}
-      <div className="bottom-right-id">{id}</div>
+    <Card
+      className={`person-card ${background}`}
+      style={{ width: '18rem', height: '7rem' }}
+      onClick={handleClick}
+    >
+      <Card.Body>
+        <Card.Title>
+          {firstName} {lastName}
+        </Card.Title>
+        <Card.Text>{id}</Card.Text>
+      </Card.Body>
     </Card>
   );
 };

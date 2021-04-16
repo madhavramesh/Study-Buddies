@@ -2,9 +2,11 @@
   font-size: 30px !important;
 }
 
-.modal-button {
+.page-navigate-button {
   width: auto !important;
   text-align: center !important;
+  padding-right: 30px !important;
+  padding-left: 30px !important;
 }
 
 .modal-body-intro {
@@ -40,7 +42,6 @@
 .modal-body-people {
   display: flex;
   flex-direction: row;
-  flex: 0 0 25%;
   flex-wrap: wrap;
 
   .modal-body-people-text {
@@ -62,5 +63,24 @@
     height: 100%;
     width: 100%;
     // overflow: scroll;
+  }
+}
+
+.modal-footer {
+  position: relative;
+  .clear-preferences-button {
+    font-size: 15px !important;
+    padding-left: 30px;
+    padding-right: 30px;
+    width: auto;
+    background-color: var(--chunky-red) !important;
+    border: none;
+    position: absolute;
+    left: 1rem;
+  }
+
+  .clear-preferences-button:hover {
+    background-color: var(--slim-red) !important;
+    outline: none;
   }
 }

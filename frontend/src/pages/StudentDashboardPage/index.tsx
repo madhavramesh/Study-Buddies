@@ -40,8 +40,8 @@ const StudentDashboardPage: React.FC = ({ match }: any) => {
   const [students, setStudents] = useState([]);
 
   const [dormPreference, setDormPreference] = useState('');
-  const [selectedPeoplePreference, setSelectedPeoplePreference] = useState('');
-  const [selectedTimesPreference, setSelectedTimesPreference] = useState('');
+  const [selectedPeoplePreference, setSelectedPeoplePreference] = useState<Array<number>>([]);
+  const [selectedTimesPreference, setSelectedTimesPreference] = useState<Array<number>>([]);
 
   const getPersonInfo = (id: string | null) => {
     axios
@@ -116,6 +116,7 @@ const StudentDashboardPage: React.FC = ({ match }: any) => {
       CONFIG
     );
     setDormPreference(response.data.preferences.dorm);
+    console.log(typeof response.data.preferences.preferences);
     setSelectedPeoplePreference(response.data.preferences.preferences);
     setSelectedTimesPreference(response.data.preferences.times);
   };
@@ -152,7 +153,50 @@ const StudentDashboardPage: React.FC = ({ match }: any) => {
           <div className="current-preferences">
             <div className="current-preferences-header">Current Preferences</div>
             <div className="current-preferences-body">
-              <div className="dorm">{dormPreference}</div>
+              <div className="dorm">
+                <div className="dorm-header">Dorm</div>
+                <div className="dorm-body">&nbsp;&nbsp;&nbsp;&nbsp;{dormPreference}</div>
+              </div>
+              <div className="preferred-people">
+                <div className="preferred-people-header">Preferred People</div>
+                <div className="preferred-people-body">
+                  {selectedPeoplePreference.reduce((acc: Array<any>, elt: number) => {
+                    const matchingStudent: any = students.find(
+                      (student: any) => student?.id === elt
+                    );
+                    return elt > 0
+                      ? acc.concat([
+                          <div className="preferred-person">
+                            &nbsp;&nbsp;&nbsp;&nbsp;{matchingStudent?.firstName}{' '}
+                            {matchingStudent?.lastName}
+                          </div>,
+                        ])
+                      : acc;
+                  }, [])}
+                </div>
+              </div>
+              <div className="not-preferred-people">
+                <div className="not-preferred-people-header">Not Preferred People</div>
+                <div className="not-preferred-people-body">
+                  {selectedPeoplePreference.reduce((acc: Array<any>, elt: number) => {
+                    const matchingStudent: any = students.find(
+                      (student: any) => student?.id === Math.abs(elt)
+                    );
+                    return elt < 0
+                      ? acc.concat([
+                          <div className="not-preferred-person">
+                            &nbsp;&nbsp;&nbsp;&nbsp;{matchingStudent?.firstName}{' '}
+                            {matchingStudent?.lastName}
+                          </div>,
+                        ])
+                      : acc;
+                  }, [])}
+                </div>
+              </div>
+              <div className="times">
+                <div className="times-header">Preferred Times</div>
+                &nbsp;&nbsp;&nbsp;&nbsp;Please view modal
+              </div>
             </div>
           </div>
         </div>

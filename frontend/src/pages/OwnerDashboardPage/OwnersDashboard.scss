@@ -1,5 +1,5 @@
 .owner-dashboard-page {
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   height: 100%;
 
   .owner-dashboard-page-sections {
@@ -16,6 +16,12 @@
       flex: 1 0 25%;
 
       .study-groups-header {
+        margin-bottom: 20px;
+      }
+
+      .create-groups-container {
+        position: fixed;
+        bottom: 0;
         margin-bottom: 20px;
       }
     }
@@ -70,7 +76,10 @@
             outline: none !important;
           }
 
-          .leave-class-button:hover, .leave-class-button:active, .leave-class-button:focus, .leave-class-button:visited {
+          .leave-class-button:hover,
+          .leave-class-button:active,
+          .leave-class-button:focus,
+          .leave-class-button:visited {
             background-color: var(--slim-red) !important;
             box-shadow: none !important;
           }
@@ -78,7 +87,8 @@
       }
     }
 
-    .study-groups-header, .students-header {
+    .study-groups-header,
+    .students-header {
       font-size: 20px;
       font-weight: 500;
     }
