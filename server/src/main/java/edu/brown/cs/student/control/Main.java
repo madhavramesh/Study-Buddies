@@ -141,6 +141,7 @@ public final class Main {
     Spark.post("/set_preferences", new SetPreferences());
     Spark.get("/form_groups/:class_id/:group_size", new FormGroups());
     Spark.get("/get_groups_in/:class_id", new GetGroups());
+    Spark.get("/get_persons_in/:group_id/:class_id", new GetPersonsInGroup());
   }
 
   /**
@@ -670,7 +671,25 @@ public final class Main {
     @Override
     public Object handle(Request request, Response response) throws Exception {
       int classId = Integer.parseInt(request.params(":class_id"));
-      return GROUPS_DATABASE.getGroupsInClass(classId);
+      Map<String, Object> variables = ImmutableMap.of(
+          "persons", GROUPS_DATABASE.getGroupsInClass(classId)
+      );
+      return GSON.toJson(variables);
+    }
+  }
+
+  /**
+   * Gets people in a group in a specific class.
+   */
+  private static class GetPersonsInGroup implements Route {
+    @Override
+    public Object handle(Request request, Response response) throws Exception {
+      int classId = Integer.parseInt(request.params(":class_id"));
+      int groupId = Integer.parseInt(request.params(":group_id"));
+      Map<String, Object> variables = ImmutableMap.of(
+          "persons", GROUPS_DATABASE.getPeopleInGroup(classId, groupId)
+      );
+      return GSON.toJson(variables);
     }
   }
 
