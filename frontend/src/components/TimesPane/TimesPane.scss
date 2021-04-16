@@ -1,3 +1,19 @@
+.times-pane-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  th {
+    text-align: center;
+  }
+
+  .time-label {
+    font-size: 14px;
+    white-space: nowrap;
+  }
+}
+
 .selected-time {
   background-color: lightblue;
 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Table } from 'react-bootstrap';
+import { Button, Table } from 'react-bootstrap';
 import './TimesPane.scss';
 
 // TimeProps consumes a number which is either is a multiple is a factor of 60.
@@ -10,7 +10,11 @@ type TimeProps = {
   setSelectedTimes: any;
 };
 
-const TimesPane: React.FC<TimeProps> = ({ slotLength, selectedTimes, setSelectedTimes }) => {
+const TimesPane: React.FC<TimeProps> = ({
+  slotLength,
+  selectedTimes,
+  setSelectedTimes,
+}: TimeProps) => {
   const convertToTime = (time: number): string => {
     const balancedTime: number = time % 2400;
     let am = true;
@@ -20,26 +24,26 @@ const TimesPane: React.FC<TimeProps> = ({ slotLength, selectedTimes, setSelected
     let hoursBase: string;
     if (am) {
       if (Math.floor(balancedTime / 100) === 0) {
-        hoursBase = '0012';
+        hoursBase = '12';
       } else {
-        hoursBase = `00${Math.floor(balancedTime / 100).toString()}`;
+        hoursBase = `${Math.floor(balancedTime / 100).toString()}`;
       }
     } else {
-      hoursBase = `00${(Math.floor(balancedTime / 100) - 12).toString()}`;
+      hoursBase = `${(Math.floor(balancedTime / 100) - 12).toString()}`;
       if (hoursBase === '000') {
-        hoursBase = '0012';
+        hoursBase = '12';
       }
     }
 
     const minutesBase = `00${(time % 100).toString()}`;
 
-    const hours: string = hoursBase.substr(hoursBase.length - 2, hoursBase.length - 1);
+    const hours: string = hoursBase; // hoursBase.substr(hoursBase.length - 2, hoursBase.length - 1);
     const minutes: string = minutesBase.substr(minutesBase.length - 2, minutesBase.length - 1);
 
     if (am) {
-      return `${hours}:${minutes}AM`;
+      return `${hours} AM`; // :${minutes}
     }
-    return `${hours}:${minutes}PM`;
+    return `${hours} PM`; // :${minutes}
   };
   const times: Array<string> = [];
   let curTime = 0;
@@ -87,12 +91,14 @@ const TimesPane: React.FC<TimeProps> = ({ slotLength, selectedTimes, setSelected
   const [isMouseDown, setIsMouseDown] = useState(false);
   function detectMouseDown(e: any) {
     e.preventDefault();
-    const { cellIndex } = e.target;
+    e.stopPropagation();
+    let { cellIndex } = e.target;
     const { rowIndex } = e.target.parentElement;
 
     setIsMouseDown(true);
     // There are 7 cell index, they coincide with the first index of the 2d array
     const newSelectedTimes = [...selectedTimes];
+    cellIndex = cellIndex === 0 ? 0 : cellIndex - 1;
     newSelectedTimes[cellIndex][rowIndex - 1] = newSelectedTimes[cellIndex][rowIndex - 1] ? 0 : 1;
     setSelectedTimes(newSelectedTimes);
     setLastToggledCell([cellIndex, rowIndex]);
@@ -100,35 +106,38 @@ const TimesPane: React.FC<TimeProps> = ({ slotLength, selectedTimes, setSelected
 
   function detectMouseUp(e: any) {
     e.preventDefault();
+    e.stopPropagation();
     setIsMouseDown(false);
     setLastToggledCell([-1, -1]);
   }
 
   function selectTimes(e: any) {
     e.preventDefault();
+    e.stopPropagation();
 
-    const { cellIndex } = e.target;
+    let { cellIndex } = e.target;
     const { rowIndex } = e.target.parentElement;
 
+    cellIndex = cellIndex === 0 ? 0 : cellIndex - 1;
+
     if (isMouseDown && !(cellIndex === lastToggledCell[0] && rowIndex === lastToggledCell[1])) {
-      // console.log(e.target.style);
-      // console.log(cellIndex);
-      // console.log(rowIndex);
       // There are 7 cell index, they coincide with the first index of the 2d array
       const newSelectedTimes = [...selectedTimes];
       newSelectedTimes[cellIndex][rowIndex - 1] = newSelectedTimes[cellIndex][rowIndex - 1] ? 0 : 1;
       setSelectedTimes(newSelectedTimes);
       setLastToggledCell([cellIndex, rowIndex]);
-      // console.log('Selected Times');
-      // console.log(selectedTimes);
     }
   }
 
+  console.log('Selected Times');
+  console.log(selectedTimes);
+
   return (
-    <div>
+    <div className="times-pane-container">
       <Table responsive striped bordered hover>
         <thead>
-          <tr>
+          <tr className="table-header">
+            <th> </th>
             {days.map((day) => (
               <th>{day}</th>
             ))}
@@ -137,6 +146,7 @@ const TimesPane: React.FC<TimeProps> = ({ slotLength, selectedTimes, setSelected
         <tbody className="times-pane-table-body">
           {times.map((timeText, rowIndex) => (
             <tr>
+              <td className="time-label">{timeText}</td>
               {days.map((_day, cellIndex) => (
                 <td
                   role="presentation"
@@ -147,10 +157,7 @@ const TimesPane: React.FC<TimeProps> = ({ slotLength, selectedTimes, setSelected
                   onMouseUp={detectMouseUp}
                   onMouseMove={selectTimes}
                   onKeyDown={selectTimes}
-                >
-                  {' '}
-                  {timeText}
-                </td>
+                />
               ))}
             </tr>
           ))}

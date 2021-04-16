@@ -1,5 +1,5 @@
 .owner-dashboard-page {
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   height: 100%;
 
   .owner-dashboard-page-sections {
@@ -17,6 +17,52 @@
 
       .study-groups-header {
         margin-bottom: 20px;
+      }
+
+      .create-groups-container {
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: center;
+
+        .create-study-groups-button {
+          width: auto;
+          padding-left: 20px !important;
+          padding-right: 20px !important;
+        }
+      }
+
+      .study-group,
+      .current-preferences {
+        flex: 1 0 50%;
+      }
+
+      .study-groups-header,
+      .current-preferences-header {
+        margin-bottom: 20px;
+      }
+
+      .current-preferences {
+        border-top: 1px solid #cccccc;
+
+        .current-preferences-header {
+          margin-top: 20px;
+          margin-bottom: 10px;
+        }
+
+        .current-preferences-body {
+          max-height: 400px;
+          overflow: auto;
+        }
+
+        .dorm-header,
+        .preferred-people-header,
+        .not-preferred-people-header,
+        .times-header {
+          font-size: 18px;
+          font-weight: 500;
+          margin-top: 10px;
+          margin-bottom: 10px;
+        }
       }
     }
 
@@ -64,14 +110,16 @@
           bottom: 0;
 
           .leave-class-button {
-            padding-right: 30px;
-            padding-left: 30px;
+            width: 100% !important;
             font-size: 15px !important;
             background-color: var(--chunky-red);
             outline: none !important;
           }
 
-          .leave-class-button:hover, .leave-class-button:active, .leave-class-button:focus, .leave-class-button:visited {
+          .leave-class-button:hover,
+          .leave-class-button:active,
+          .leave-class-button:focus,
+          .leave-class-button:visited {
             background-color: var(--slim-red) !important;
             box-shadow: none !important;
           }
@@ -79,7 +127,9 @@
       }
     }
 
-    .study-groups-header, .students-header {
+    .study-groups-header,
+    .students-header,
+    .current-preferences-header {
       font-size: 20px;
       font-weight: 500;
     }

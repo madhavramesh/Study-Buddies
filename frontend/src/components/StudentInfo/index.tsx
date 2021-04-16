@@ -8,23 +8,27 @@ type StudentInfoProps = {
   studentName: string;
   removeStudent: any;
   removeButton: boolean;
+  studentDashboard: boolean;
 };
 
 const StudentInfo: React.FC<StudentInfoProps> = ({
   studentName,
   removeStudent,
   removeButton,
+  studentDashboard,
 }: StudentInfoProps) => {
   return (
     <div className={`student ${studentName}`}>
-      <Button
-        className="remove"
-        onClick={removeStudent}
-        disabled={!removeButton}
-        style={{ visibility: removeButton ? 'visible' : 'hidden' }}
-      >
-        X
-      </Button>
+      {!studentDashboard && (
+        <Button
+          className="remove"
+          onClick={removeStudent}
+          disabled={!removeButton}
+          style={{ visibility: removeButton ? 'visible' : 'hidden' }}
+        >
+          X
+        </Button>
+      )}
       <Button className="name-text" disabled>
         {studentName}
       </Button>
