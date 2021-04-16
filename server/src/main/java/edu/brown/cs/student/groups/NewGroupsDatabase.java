@@ -442,6 +442,16 @@ public class NewGroupsDatabase {
     prep = conn.prepareStatement("INSERT INTO enrollments values(?,?);");
     prep.setInt(1, ownerId);
     prep.setInt(2, classId);
+    // set default preferences
+    prep =
+        conn.prepareStatement("INSERT INTO class(class_id, person_id, times, dorm, preferences)" +
+            "values(?, ?, ?, ?, ?)");
+    prep.setInt(1, classId);
+    prep.setInt(2, ownerId);
+    prep.setString(3, ("0".repeat(24) + ":").repeat(7).substring(0, 174));
+    prep.setString(4, "");
+    prep.setString(5, "");
+    prep.executeUpdate();
     prep.executeUpdate();
     prep.close();
     rs.close();
