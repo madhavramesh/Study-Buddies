@@ -23,12 +23,13 @@
   .avatar-icon {
     width: 50% !important;
     height: 17.5% !important;
-    background-color: var(--chunky-blue);
+    background-color: lightgrey;
     color: var(--slim-red);
     font-weight: bolder;
     font-size: 60px;
     letter-spacing: -0.4rem !important;
-    // margin-bottom: 2rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
   }
 
   .change-info {
@@ -51,6 +52,7 @@
   }
 
   .change-info-submit {
+    margin-top: 2rem;
     padding: 0.5rem 0;
     height: auto;
   }

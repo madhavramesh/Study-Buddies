@@ -125,9 +125,7 @@ const ProfilePopup: React.FC<ClassProps> = ({ showPopup, setShowPopup }) => {
         <div className="container-header">
           {firstName} {lastName} [{sessionStorage.getItem('user_id')}]
         </div>
-        <Avatar src="/broken-image.jpg" className="avatar-icon">
-          {firstName?.charAt(0)} {lastName?.charAt(0)}
-        </Avatar>
+        <Avatar src="/broken-image.jpg" className="avatar-icon" />
         <Form className="change-info" noValidate validated={validated}>
           <Form.Group>
             <Form.Label>First Name</Form.Label>

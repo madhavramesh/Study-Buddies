@@ -9,7 +9,6 @@ import HomePage from './pages/HomePage';
 import DashboardPage from './pages/DashboardPage';
 import OwnerDashboardPage from './pages/OwnerDashboardPage';
 import StudentDashboardPage from './pages/StudentDashboardPage';
-import ProfilePage from './pages/ProfilePage';
 import ErrorPage from './pages/ErrorPage';
 import PrivateRoute from './pages/PrivateRoute';
 
@@ -23,8 +22,6 @@ const App: React.FC = () => {
           <Route path="/signup" component={Signup} />
           <Route path="/about" component={AboutPage} />
           <PrivateRoute path="/dashboard" component={DashboardPage} />
-          <PrivateRoute path="/profile" component={Signin} />
-          <PrivateRoute path="/profile-page" component={ProfilePage} />
           <PrivateRoute path="/class/owner/:classID" component={OwnerDashboardPage} />
           <PrivateRoute path="/class/student/:classID" component={StudentDashboardPage} />
           <PrivateRoute path="/preferences" component={Preferences} />
