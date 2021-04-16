@@ -11,25 +11,13 @@ const CONFIG = {
 };
 
 const ProfilePage: React.FC = () => {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
-  const [enrollments, setEnrollments] = useState('');
 
-  const getPersonInfo = (id: string | null) => {
-    axios
-      .get(`http://localhost:4567/person_info/${id}`, CONFIG)
-      .then((response: any) => {
-        const { data } = response;
-        setFirstName(data.first_name);
-        setLastName(data.last_name);
-        setEmail(data.email);
-        setEnrollments(data.enrollments);
-        console.log(response.data);
-      })
-      .catch((err: any) => {
-        console.log(err);
-      });
+  const getPersonInfo = async (id: string | null) => {
+    const response = await axios.get(`http://localhost:4567/person_info/${id}`, CONFIG);
+    const { data } = response;
+    console.log(data);
+    setEmail(data.email);
   };
 
   useEffect(() => {
@@ -38,16 +26,17 @@ const ProfilePage: React.FC = () => {
     getPersonInfo(id);
   }, []);
 
+  const firstName = sessionStorage.getItem('first_name');
+  const lastName = sessionStorage.getItem('last_name');
   return (
-    <div id="container">
-      <ModifiedNavBar username="temp name" />
+    <div style={{ overflow: 'hidden' }}>
+      <ModifiedNavBar username={`${firstName} ${lastName}`} />
       <div id="profile-content">
         <div id="info">
           <h1>
             {firstName} {lastName}
           </h1>
           <p>Email: {email}</p>
-          <p>Enrollments: {enrollments}</p>
         </div>
       </div>
     </div>

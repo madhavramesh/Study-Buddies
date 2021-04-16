@@ -1,0 +1,118 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap');
+
+.profile-container {
+  font-family: 'poppins', courier, sans-serif;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20%;
+  height: 100%;
+  overflow: hidden;
+  background: darken(rgba(240, 242, 245, 0.97), 30%);
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.4);
+  z-index: 1200;
+  transform: translateX(100%);
+  -webkit-transform: translateX(100%);
+
+  .container-header {
+    font-size: 32px;
+    font-weight: bold;
+    word-wrap: normal;
+  }
+
+  .avatar-icon {
+    width: 50% !important;
+    height: 17.5% !important;
+    background-color: var(--chunky-blue);
+    color: var(--slim-red);
+    font-weight: bolder;
+    font-size: 60px;
+    letter-spacing: -0.4rem !important;
+    // margin-bottom: 2rem;
+  }
+
+  .change-info {
+    // color: var(--one-shade-of-grey);
+    width: 80%;
+  }
+
+  .change-info-control {
+    height: 5%;
+    // color: var(--one-shade-of-grey);
+    background-color: darken(rgba(240, 242, 245, 0.9), 0%);
+
+    // color: lighten(rgba(240, 242, 245, 0.9), 10%);
+  }
+
+  .change-info-control-off {
+    background-color: darken(rgba(240, 242, 245, 0.9), 10%);
+    color: darken(rgba(240, 242, 245, 0.9), 80%);
+    margin: -5px 0 -8px 0 !important;
+  }
+
+  .change-info-submit {
+    padding: 0.5rem 0;
+    height: auto;
+  }
+
+  .change-info-delete {
+    padding: 0.5rem 0;
+    background-color: var(--chunky-red);
+    height: auto;
+  }
+
+  .bring-to-front {
+    z-index: 99999;
+  }
+}
+
+.selected {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  animation: slide-in 0.5s forwards;
+  -webkit-animation: slide-in 0.5s forwards;
+}
+
+.dismiss {
+  display: none;
+  animation: slide-out 0.5s forwards;
+  -webkit-animation: slide-out 0.5s forwards;
+}
+
+@keyframes slide-in {
+  0% {
+    -webkit-transform: translateX(100%);
+  }
+  100% {
+    -webkit-transform: translateX(0%);
+  }
+}
+
+@-webkit-keyframes slide-in {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes slide-out {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@-webkit-keyframes slide-out {
+  0% {
+    -webkit-transform: translateX(0%);
+  }
+  100% {
+    -webkit-transform: translateX(100%);
+  }
+}

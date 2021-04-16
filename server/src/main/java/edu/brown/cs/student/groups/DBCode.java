@@ -15,6 +15,7 @@ package edu.brown.cs.student.groups;
 public enum DBCode {
   REGISTRATION_SUCCESS(0, "User successfully registered!"),
   LOGIN_SUCCESS(0, "User successfully logged in!"),
+  CHANGE_PASSWORD_SUCCESS(0, "Successfully changed password!"),
   RETRIEVE_USER_SUCCESS(0, "Successfully retrieved user info!"),
   CLASS_LEAVE_SUCCESS(0, "Successfully left class!"),
   DELETE_SUCCESS(0, "User info successfully deleted!"),
@@ -23,6 +24,7 @@ public enum DBCode {
   CLASS_DELETE_SUCCESS(0, "Successfully deleted class!"),
   RETRIEVE_PREFERENCES_SUCCESS(0, "Successfully retrieved preferences!"),
   UPDATE_PREFERENCES_SUCCESS(0, "Successfully updated preferences!"),
+  FILLER_BAD(1, ""),
   USER_NOT_LOGGED_IN(1, "User not logged in!"),
   USER_NOT_FOUND(1, "User not found!"),
   EMAIL_TAKEN(2, "Email was taken!"),
