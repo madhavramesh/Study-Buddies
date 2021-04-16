@@ -37,11 +37,14 @@ const StudentDashboardPage: React.FC = ({ match }: any) => {
   const [classCode, setClassCode] = useState('');
   const [classOwnerID, setClassOwnerID] = useState('');
 
-  const [students, setStudents] = useState([]);
+  const [students, setStudents] = useState<any>([]);
 
   const [dormPreference, setDormPreference] = useState('');
   const [selectedPeoplePreference, setSelectedPeoplePreference] = useState<Array<number>>([]);
   const [selectedTimesPreference, setSelectedTimesPreference] = useState<Array<number>>([]);
+
+  const [classCreatedShowModal, setClassCreatedShowModal] = useState(true);
+  const [preferencesShowModal, setPreferencesShowModal] = useState(false);
 
   const getPersonInfo = (id: string | null) => {
     axios
@@ -81,6 +84,11 @@ const StudentDashboardPage: React.FC = ({ match }: any) => {
       .get(`http://localhost:4567/get_persons_in/${classID}`, CONFIG)
       .then((response: any) => {
         setStudents(response.data.persons);
+
+        const studentIDs = response.data.persons.map((person: any) => person.id.toString());
+        if (!studentIDs?.includes(sessionStorage.getItem('user_id'))) {
+          history.push('/error');
+        }
       })
       .catch((err: any) => {
         console.log(err);
@@ -115,10 +123,9 @@ const StudentDashboardPage: React.FC = ({ match }: any) => {
       `http://localhost:4567/get_person_pref_in/${classID}/${sessionStorage.getItem('user_id')!}`,
       CONFIG
     );
-    setDormPreference(response.data.preferences.dorm);
-    console.log(typeof response.data.preferences.preferences);
-    setSelectedPeoplePreference(response.data.preferences.preferences);
-    setSelectedTimesPreference(response.data.preferences.times);
+    setDormPreference(response.data.preferences.dorm ?? '');
+    setSelectedPeoplePreference(response.data.preferences.preferences ?? []);
+    setSelectedTimesPreference(response.data.preferences.times ?? []);
   };
 
   useEffect(() => {
@@ -129,7 +136,9 @@ const StudentDashboardPage: React.FC = ({ match }: any) => {
     getPreferences();
   }, []);
 
-  const [modalShow, setModalShow] = useState(true);
+  useEffect(() => {
+    getPreferences();
+  }, [preferencesShowModal]);
 
   return (
     <div className="student-dashboard-page">
@@ -137,8 +146,8 @@ const StudentDashboardPage: React.FC = ({ match }: any) => {
 
       <div className="class-joined-modal-container">
         <ClassCreatedModal
-          onHide={() => setModalShow(false)}
-          show={modalShow}
+          onHide={() => setClassCreatedShowModal(false)}
+          show={classCreatedShowModal}
           classNumber={classNumber}
           className={className}
         />
@@ -155,7 +164,9 @@ const StudentDashboardPage: React.FC = ({ match }: any) => {
             <div className="current-preferences-body">
               <div className="dorm">
                 <div className="dorm-header">Dorm</div>
-                <div className="dorm-body">&nbsp;&nbsp;&nbsp;&nbsp;{dormPreference}</div>
+                {dormPreference && (
+                  <div className="dorm-body">&nbsp;&nbsp;&nbsp;&nbsp;{dormPreference}</div>
+                )}
               </div>
               <div className="preferred-people">
                 <div className="preferred-people-header">Preferred People</div>
@@ -215,6 +226,8 @@ const StudentDashboardPage: React.FC = ({ match }: any) => {
               classNumber={classNumber}
               classID={classID}
               classTerm={classTerm}
+              showModal={preferencesShowModal}
+              setShowModal={setPreferencesShowModal}
             />
           </div>
         </div>
@@ -246,11 +259,3 @@ const StudentDashboardPage: React.FC = ({ match }: any) => {
 };
 
 export default StudentDashboardPage;
-
-/*
-<StudyGroupDisplay
-  groupID={studyGroup[0].first}
-  studentNames={studyGroupNames}
-  imageURL={RANDOM_IMAGE_URL}
-/>
- */

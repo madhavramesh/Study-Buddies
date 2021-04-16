@@ -20,9 +20,49 @@
       }
 
       .create-groups-container {
-        position: fixed;
-        bottom: 0;
         margin-bottom: 20px;
+        display: flex;
+        justify-content: center;
+
+        .create-study-groups-button {
+          width: auto;
+          padding-left: 20px !important;
+          padding-right: 20px !important;
+        }
+      }
+
+      .study-group,
+      .current-preferences {
+        flex: 1 0 50%;
+      }
+
+      .study-groups-header,
+      .current-preferences-header {
+        margin-bottom: 20px;
+      }
+
+      .current-preferences {
+        border-top: 1px solid #cccccc;
+
+        .current-preferences-header {
+          margin-top: 20px;
+          margin-bottom: 10px;
+        }
+
+        .current-preferences-body {
+          max-height: 400px;
+          overflow: auto;
+        }
+
+        .dorm-header,
+        .preferred-people-header,
+        .not-preferred-people-header,
+        .times-header {
+          font-size: 18px;
+          font-weight: 500;
+          margin-top: 10px;
+          margin-bottom: 10px;
+        }
       }
     }
 
@@ -88,7 +128,8 @@
     }
 
     .study-groups-header,
-    .students-header {
+    .students-header,
+    .current-preferences-header {
       font-size: 20px;
       font-weight: 500;
     }

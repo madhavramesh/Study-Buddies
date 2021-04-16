@@ -10,7 +10,11 @@ type TimeProps = {
   setSelectedTimes: any;
 };
 
-const TimesPane: React.FC<TimeProps> = ({ slotLength, selectedTimes, setSelectedTimes }) => {
+const TimesPane: React.FC<TimeProps> = ({
+  slotLength,
+  selectedTimes,
+  setSelectedTimes,
+}: TimeProps) => {
   const convertToTime = (time: number): string => {
     const balancedTime: number = time % 2400;
     let am = true;
@@ -117,18 +121,16 @@ const TimesPane: React.FC<TimeProps> = ({ slotLength, selectedTimes, setSelected
     cellIndex = cellIndex === 0 ? 0 : cellIndex - 1;
 
     if (isMouseDown && !(cellIndex === lastToggledCell[0] && rowIndex === lastToggledCell[1])) {
-      // console.log(e.target.style);
-      // console.log(cellIndex);
-      // console.log(rowIndex);
       // There are 7 cell index, they coincide with the first index of the 2d array
       const newSelectedTimes = [...selectedTimes];
       newSelectedTimes[cellIndex][rowIndex - 1] = newSelectedTimes[cellIndex][rowIndex - 1] ? 0 : 1;
       setSelectedTimes(newSelectedTimes);
       setLastToggledCell([cellIndex, rowIndex]);
-      // console.log('Selected Times');
-      // console.log(selectedTimes);
     }
   }
+
+  console.log('Selected Times');
+  console.log(selectedTimes);
 
   return (
     <div className="times-pane-container">

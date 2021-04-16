@@ -23,7 +23,7 @@ const GROUP_SIZE = 4;
 
 const IMG_WIDTH = 600;
 const IMG_HEIGHT = 250;
-const RANDOM_IMAGE_URL = `https://source.unsplash.com/featured/${IMG_WIDTH}x${IMG_HEIGHT}/?dark, study`;
+const RANDOM_IMAGE_URL = `https://source.unsplash.com/featured/${IMG_WIDTH}x${IMG_HEIGHT}/?dark, study, class`;
 
 const OwnerDashboardPage: React.FC = ({ match }: any) => {
   const {
@@ -44,6 +44,13 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
 
   const username = `${sessionStorage.getItem('first_name')} ${sessionStorage.getItem('last_name')}`;
 
+  const [dormPreference, setDormPreference] = useState('');
+  const [selectedPeoplePreference, setSelectedPeoplePreference] = useState<Array<number>>([]);
+  const [selectedTimesPreference, setSelectedTimesPreference] = useState<Array<number>>([]);
+
+  const [classCreatedShowModal, setClassCreatedShowModal] = useState(true);
+  const [preferencesShowModal, setPreferencesShowModal] = useState(false);
+
   const getClassInfo = () => {
     axios
       .get(`http://localhost:4567/get_class_with/${classID}`, CONFIG)
@@ -55,8 +62,10 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
         setClassCode(response.data.class_code);
         setClassOwnerID(response.data.owner_id);
 
-        console.log(`Class ID: ${classID}`);
-        console.log(response.data);
+        // eslint-disable-next-line eqeqeq
+        if (response.data.owner_id != sessionStorage.getItem('user_id')) {
+          history.push('/error');
+        }
       })
       .catch((err: any) => {
         console.log(err);
@@ -132,12 +141,27 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
       });
   };
 
-  const [modalShow, setModalShow] = useState(true);
+  const getPreferences = async () => {
+    const response = await axios.get(
+      `http://localhost:4567/get_person_pref_in/${classID}/${sessionStorage.getItem('user_id')!}`,
+      CONFIG
+    );
+    setDormPreference(response.data.preferences.dorm ?? '');
+    setSelectedPeoplePreference(response.data.preferences.preferences ?? []);
+    setSelectedTimesPreference(response.data.preferences.times ?? []);
+    console.log(selectedTimesPreference);
+  };
 
   useEffect(() => {
     getClassInfo();
     getStudents();
+    getPreferences();
+    console.log(selectedPeoplePreference);
   }, []);
+
+  useEffect(() => {
+    getPreferences();
+  }, [preferencesShowModal]);
 
   return (
     <div className="owner-dashboard-page">
@@ -145,8 +169,8 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
 
       <div className="class-created-modal-container">
         <ClassCreatedModal
-          onHide={() => setModalShow(false)}
-          show={modalShow}
+          onHide={() => setClassCreatedShowModal(false)}
+          show={classCreatedShowModal}
           classNumber={classNumber}
           className={className}
         />
@@ -158,7 +182,6 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
           <div className="study-groups-body">
             {studyGroups.map((studyGroup: any) => {
               const studyGroupNames = getStudyGroupStudents(studyGroup);
-              console.log(studyGroupNames);
               return (
                 <StudyGroupDisplay
                   groupID={studyGroup[0].first}
@@ -169,8 +192,59 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
             })}
             <div className="create-groups-container">
               <Button className="create-study-groups-button" onClick={formStudyGroups}>
-                Create Study Groups
+                Generate Study Groups
               </Button>
+            </div>
+            <div className="current-preferences">
+              <div className="current-preferences-header">Current Preferences</div>
+              <div className="current-preferences-body">
+                <div className="dorm">
+                  <div className="dorm-header">Dorm</div>
+                  {dormPreference && (
+                    <div className="dorm-body">&nbsp;&nbsp;&nbsp;&nbsp;{dormPreference}</div>
+                  )}
+                </div>
+                <div className="preferred-people">
+                  <div className="preferred-people-header">Preferred People</div>
+                  <div className="preferred-people-body">
+                    {selectedPeoplePreference.reduce((acc: Array<any>, elt: number) => {
+                      const matchingStudent: any = students.find(
+                        (student: any) => student?.id === elt
+                      );
+                      return elt > 0
+                        ? acc.concat([
+                            <div className="preferred-person">
+                              &nbsp;&nbsp;&nbsp;&nbsp;{matchingStudent?.firstName}{' '}
+                              {matchingStudent?.lastName}
+                            </div>,
+                          ])
+                        : acc;
+                    }, [])}
+                  </div>
+                </div>
+                <div className="not-preferred-people">
+                  <div className="not-preferred-people-header">Not Preferred People</div>
+                  <div className="not-preferred-people-body">
+                    {selectedPeoplePreference.reduce((acc: Array<any>, elt: number) => {
+                      const matchingStudent: any = students.find(
+                        (student: any) => student?.id === Math.abs(elt)
+                      );
+                      return elt < 0
+                        ? acc.concat([
+                            <div className="not-preferred-person">
+                              &nbsp;&nbsp;&nbsp;&nbsp;{matchingStudent?.firstName}{' '}
+                              {matchingStudent?.lastName}
+                            </div>,
+                          ])
+                        : acc;
+                    }, [])}
+                  </div>
+                </div>
+                <div className="times">
+                  <div className="times-header">Preferred Times</div>
+                  &nbsp;&nbsp;&nbsp;&nbsp;Please view modal
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -188,6 +262,8 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
             classNumber={classNumber}
             classID={classID}
             classTerm={classTerm}
+            showModal={preferencesShowModal}
+            setShowModal={setPreferencesShowModal}
           />
         </div>
 

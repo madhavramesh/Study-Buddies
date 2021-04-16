@@ -72,6 +72,8 @@ type PreferencesButtonProps = {
   classNumber: string;
   classID: string;
   classTerm: string;
+  showModal: boolean;
+  setShowModal: any;
 };
 
 const PreferencesButton: React.FC<PreferencesButtonProps> = ({
@@ -79,8 +81,9 @@ const PreferencesButton: React.FC<PreferencesButtonProps> = ({
   classNumber,
   classID,
   classTerm,
+  showModal,
+  setShowModal,
 }: PreferencesButtonProps) => {
-  const [showModal, setShowModal] = useState(false);
   const [page, setPage] = useState(0);
 
   const [dorm, setDorm] = useState('Select a dorm...');
@@ -93,7 +96,7 @@ const PreferencesButton: React.FC<PreferencesButtonProps> = ({
   const submitPreferences = async () => {
     const postParameters = {
       person_id: sessionStorage.getItem('user_id'),
-      class_id: 1,
+      class_id: classID,
       dorm,
       person_preferences: serializePersonPreferences(persons, selected),
       time_preferences: serializeTimePreferences(selectedTimes),
@@ -117,13 +120,13 @@ const PreferencesButton: React.FC<PreferencesButtonProps> = ({
       `http://localhost:4567/get_person_pref_in/${classID}/${sessionStorage.getItem('user_id')!}`,
       CONFIG
     );
-    setDorm(response.data.preferences.dorm);
+    setDorm(response.data.preferences.dorm ?? '');
     const newSelected = deserializePersonPreferences(
       currentPersons,
       response.data.preferences.preferences
     );
-    setSelected(newSelected);
-    setSelectedTimes(response.data.preferences.times);
+    setSelected(newSelected ?? []);
+    setSelectedTimes(response.data.preferences.times ?? []);
     console.log(response.data);
   };
 
