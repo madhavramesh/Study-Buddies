@@ -55,7 +55,7 @@ const ClassCard: React.FC<ClassProps> = ({ cid, name, number, desc, term, classC
       setValidCode(true);
       setTimeout(() => {
         history.push(`/class/student/${cid}`);
-      }, 2000);
+      }, 500);
     }
     setValidCodeMessage(response.data.message);
   };

@@ -1,5 +1,6 @@
 .general-info-container {
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
+  width: 100%;
 
   .class-name {
     font-size: 30px;
@@ -7,7 +8,7 @@
   }
 
   .class-subheader {
-    color: #6A6C6E;
+    color: #6a6c6e;
     margin-bottom: 20px;
     display: flex;
     flex-direction: row;
