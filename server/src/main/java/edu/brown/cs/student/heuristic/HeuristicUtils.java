@@ -38,10 +38,9 @@ public class HeuristicUtils {
    * @param classId classId to choose from
    * @return the list of groups generated
    */
-  public 
-  Pair<
-          List<List<Pair<Integer, PersonInfo>>>, 
-          Map<Integer, Map<Integer, Double>>>
+  public Pair<
+      List<List<Pair<Integer, PersonInfo>>>,
+      Map<Integer, Map<Integer, Double>>>
   getGroups(int classId, int groupSize) throws Exception {
     List<PersonPreferences> peopleInDatabase = GROUPS_DATABASE.getPersonsPrefsInClass(classId);
     Graph graph = createGraph(peopleInDatabase);
@@ -52,7 +51,7 @@ public class HeuristicUtils {
     // Create the data for visualization purposes
     // First integer is start node, second integer is end node, double is weight between them
     List<Map<Integer, Map<Integer, Double>>> resultWeights = new ArrayList<>();
-    for (Set<IGNode> group: results) {
+    for (Set<IGNode> group : results) {
       Map<Integer, Map<Integer, Double>> nodeToNodeWeights = new HashMap<>();
       for (IGNode n : group) {
         Map<Integer, Double> destinations = new HashMap<>();

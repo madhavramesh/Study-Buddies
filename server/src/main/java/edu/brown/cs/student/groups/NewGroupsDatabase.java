@@ -14,8 +14,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import static edu.brown.cs.student.groups.DBCode.*;
 
@@ -771,7 +774,7 @@ public class NewGroupsDatabase {
    * @return a list of person info and their respective groups
    * @throws SQLException if an error occurs while connecting to the database
    */
-  public List<Pair<Integer, PersonInfo>> getGroupsInClass(int classId) throws SQLException {
+  public List<List<Pair<Integer, PersonInfo>>> getGroupsInClass(int classId) throws SQLException {
     PreparedStatement prep;
     ResultSet rs;
     prep = conn.prepareStatement("SELECT id,first_name,last_name,email,group_id " +
@@ -799,7 +802,7 @@ public class NewGroupsDatabase {
     for (Integer i: uniqueGroupIDs) {
       List<Pair<Integer, PersonInfo>> sameGroupId = new ArrayList<>();
       for(Pair<Integer, PersonInfo> pair: personGroups) {
-        if (pair.getFirst == i) {
+        if (pair.getFirst().equals(i)) {
           sameGroupId.add(pair);
         }
       }
