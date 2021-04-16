@@ -45,14 +45,10 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
   const username = `${sessionStorage.getItem('first_name')} ${sessionStorage.getItem('last_name')}`;
 
   // Modal code
-  const [isOpen, setIsOpen] = React.useState(false);
-  function openModal() {
-    setIsOpen(true);
-  }
+  const [show, setShow] = useState(false);
 
-  function closeModal() {
-    setIsOpen(false);
-  }
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const getClassInfo = () => {
     axios
@@ -149,6 +145,23 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
     getStudents();
   }, []);
 
+  // Renders a single group
+  const renderGroup = (g: any) => {
+    return (
+      <table>
+        {g.map(() => {
+          return (
+            <tr>
+              {studyGroupWeights.map((groupWeight) => {
+                return <td>{groupWeight}</td>;
+              })}
+            </tr>
+          );
+        })}
+      </table>
+    );
+  };
+
   return (
     <div className="owner-dashboard-page">
       <ModifiedNavBar username={username} />
@@ -169,7 +182,7 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
               );
             })}
           </div>
-          <Button className="view-algorithm-button" onClick={() => openModal()}>
+          <Button className="view-algorithm-button" onClick={() => handleShow()}>
             View Algorithm
           </Button>
         </div>
@@ -207,8 +220,23 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
           </div>
         </div>
       </div>
-      <Modal>
-        <Button onClick={() => closeModal()} />
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Algorithm Visualization</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div>
+            {/* eslint-disable-next-line array-callback-return */}
+            {studyGroups.map((group) => {
+              renderGroup(group);
+            })}
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+        </Modal.Footer>
       </Modal>
     </div>
   );
