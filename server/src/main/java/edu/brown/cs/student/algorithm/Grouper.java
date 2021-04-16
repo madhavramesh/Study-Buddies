@@ -12,6 +12,7 @@ import java.util.*;
  * Pseudo code and logic was burrowed from
  * https://sci2s.ugr.es/sites/default/files/ficherosPublicaciones/1410_10.1016@j.ejor_.2011.04.018.pdf
  */
+
 public class Grouper {
   private final Graph graph;
   private Graph decrementGraph;
@@ -83,13 +84,21 @@ public class Grouper {
         count += 1;
       }
     }
-
+    
     System.out.println("----------------------------");
     System.out.println("----------------------------");
     System.out.println("Created groups of size " + groupSize + " are");
     for (Set<IGNode> group: groups) {
       for (IGNode n: group) {
         System.out.print(n.getValue() + " ");
+      }
+      System.out.println();
+      for (IGNode n: group) {
+        for (IGNode n2: group) {
+          if (!(n2.equals(n))) {
+            System.out.println("weight from " + n.getValue() + " to " + n2.getValue() + " is " + n.weightTo(n2));
+          }
+        }
       }
       System.out.println();
     }
@@ -106,14 +115,10 @@ public class Grouper {
    * @param groupSize Group size to find
    */
   public Graph findGroup(Graph g, int groupSize) throws Exception {
-    System.out.println("--------------------------");
+
     // make a copy
     Graph workingGraph = new Graph(g);
-    System.out.println("Nodes in graph");
-    for (IGNode n: workingGraph.getNodes()) {
-      System.out.print(n.getValue() + " ");
-    }
-    System.out.println("\n");
+
 
     // 0)
     // Change the value of contributions of each node from "null" to an actual value.
@@ -124,11 +129,7 @@ public class Grouper {
     // Create an initial candidate solution graph by removing the
     // lowest contribution nodes to get a graph of size groupSize.
     Graph candidateSolution = deconstruct(initializedGraph, initializedGraph.getNodes().size() - groupSize);
-    System.out.println("candidate solution");
-    for (IGNode n: candidateSolution.getNodes()) {
-      System.out.print(n.getValue() + " ");
-    }
-    System.out.println("\n");
+
 
     // 2)
     // (Optional)
@@ -147,7 +148,7 @@ public class Grouper {
     // TODO: talk about termination condition and decide if it makes sense
     int runCount = 0;
     // TODO:
-    int maxRuns  = 5;
+    int maxRuns  = 20 * g.getEdges().size();
     // Also, initialize the randomDropNum. For each run through, a random number of nodes will be dropped.
     // TODO: Research/test ideal random drop number
     // TODO: Consider if it should be fixed or variable over the run throughs!!
@@ -170,20 +171,12 @@ public class Grouper {
       // 5)
       // Randomly drop n variables from the candidate solution
       Graph incompleteSolution = randomDrop(candidateSolution, randomDropNum);
-      System.out.println("incomplete solution " + runCount);
-      for (IGNode n: incompleteSolution.getNodes()) {
-        System.out.print(n.getValue() + " ");
-      }
-      System.out.println("\n");
+
 
       // 6)
       // Greedily add n variables to the candidate solution
       Graph completeSolution = greedyAdd(incompleteSolution, randomDropNum);
-      System.out.println("complete solution " + runCount);
-      for (IGNode n: completeSolution.getNodes()) {
-        System.out.print(n.getValue() + " ");
-      }
-      System.out.println("\n");
+
 
       // 7)
       // (Optional) Local search

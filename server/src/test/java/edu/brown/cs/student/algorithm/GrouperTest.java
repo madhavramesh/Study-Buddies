@@ -449,10 +449,33 @@ public class GrouperTest {
 
   @Test
   public void makeGroupTest() throws Exception {
+    System.out.println("MAKE GROUPER TESTING");
+
     setUp();
     grouper.setContributions(graph);
-    System.out.println("MAKE GROUPER TESTING");
+    grouper.makeGroups(graph, 1);
+    tearDown();
+
+    setUp();
+    grouper.setContributions(graph);
     grouper.makeGroups(graph, 2);
+    tearDown();
+
+    setUp();
+    grouper.setContributions(graph);
+    grouper.makeGroups(graph, 3);
+    tearDown();
+
+    setUp();
+    grouper.setContributions(graph);
+    grouper.makeGroups(graph, 4);
+    tearDown();
+
+    setUp();
+    grouper.setContributions(graph);
+    grouper.makeGroups(graph, 5);
+    tearDown();
+
     System.out.println("END");
     tearDown();
   }

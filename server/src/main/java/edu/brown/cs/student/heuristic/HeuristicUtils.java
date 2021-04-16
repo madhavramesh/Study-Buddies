@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 import java.sql.SQLException;
 
@@ -36,12 +38,33 @@ public class HeuristicUtils {
    * @param classId classId to choose from
    * @return the list of groups generated
    */
-  public List<List<Pair<Integer, PersonInfo>>> getGroups(int classId, int groupSize) throws Exception {
+  public 
+  Pair<
+          List<List<Pair<Integer, PersonInfo>>>, 
+          Map<Integer, Map<Integer, Double>>>
+  getGroups(int classId, int groupSize) throws Exception {
     List<PersonPreferences> peopleInDatabase = GROUPS_DATABASE.getPersonsPrefsInClass(classId);
     Graph graph = createGraph(peopleInDatabase);
 
     grouper = new Grouper(graph);
     List<Set<IGNode>> results = grouper.makeGroups(graph, groupSize);
+
+    // Create the data for visualization purposes
+    // First integer is start node, second integer is end node, double is weight between them
+    List<Map<Integer, Map<Integer, Double>>> resultWeights = new ArrayList<>();
+    for (Set<IGNode> group: results) {
+      Map<Integer, Map<Integer, Double>> nodeToNodeWeights = new HashMap<>();
+      for (IGNode n : group) {
+        Map<Integer, Double> destinations = new HashMap<>();
+        for (IGNode n2 : group) {
+          if (!(n2.equals(n))) {
+            destinations.put(n2.getValue(), n.weightTo(n2));
+          }
+        }
+        nodeToNodeWeights.put(n.getValue(), destinations);
+      }
+      resultWeights.add(nodeToNodeWeights);
+    }
 
     // Convert to groups of PersonInfos
     List<List<Pair<Integer, PersonInfo>>> resultGroups = new ArrayList<>();
@@ -56,8 +79,11 @@ public class HeuristicUtils {
       resultGroups.add(newGroup);
       ++groupId;
     }
+    return new Pair(resultGroups, resultWeights);
+  }
 
-    return resultGroups;
+  public void testGetGroupWithEdgeDisplay(Graph g, int groupSize) throws Exception {
+
   }
 
   /**
