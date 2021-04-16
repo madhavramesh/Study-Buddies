@@ -11,6 +11,7 @@ import OwnerDashboardPage from './pages/OwnerDashboardPage';
 import StudentDashboardPage from './pages/StudentDashboardPage';
 import ProfilePage from './pages/ProfilePage';
 import ErrorPage from './pages/ErrorPage';
+import PrivateRoute from './pages/PrivateRoute';
 
 const App: React.FC = () => {
   return (
@@ -18,17 +19,17 @@ const App: React.FC = () => {
       <Router>
         <Switch>
           <Route exact path="/" component={HomePage} />
-          <Route path="/preferences" component={Preferences} />
           <Route path="/signin" component={Signin} />
           <Route path="/signup" component={Signup} />
           <Route path="/about" component={AboutPage} />
-          <Route path="/dashboard" component={DashboardPage} />
-          <Route path="/profile" component={Signin} />
-          <Route path="/profile-page" component={ProfilePage} />
-          <Route path="/class/owner/:classID" component={OwnerDashboardPage} />
-          <Route path="/class/student/:classID" component={StudentDashboardPage} />
+          <PrivateRoute path="/dashboard" component={DashboardPage} />
+          <PrivateRoute path="/profile" component={Signin} />
+          <PrivateRoute path="/profile-page" component={ProfilePage} />
+          <PrivateRoute path="/class/owner/:classID" component={OwnerDashboardPage} />
+          <PrivateRoute path="/class/student/:classID" component={StudentDashboardPage} />
+          <PrivateRoute path="/preferences" component={Preferences} />
           <Route path="*" component={ErrorPage} />
-          <Redirect to="/404" />
+          <Redirect to="/error" />
         </Switch>
       </Router>
     </div>
