@@ -771,21 +771,21 @@ public class NewGroupsDatabase {
    * @return a list of person info and their respective groups
    * @throws SQLException if an error occurs while connecting to the database
    */
-  public List<Pair<PersonInfo, Integer>> getGroupsInClass(int classId) throws SQLException {
+  public List<Pair<Integer, PersonInfo>> getGroupsInClass(int classId) throws SQLException {
     PreparedStatement prep;
     ResultSet rs;
     prep = conn.prepareStatement("SELECT id,first_name,last_name,email,group_id " +
         "FROM logins,class WHERE class_id=? AND id=class.person_id;");
     prep.setInt(1, classId);
     rs = prep.executeQuery();
-    List<Pair<PersonInfo, Integer>> personGroups = new LinkedList<>();
+    List<Pair<Integer, PersonInfo>> personGroups = new LinkedList<>();
     while (rs.next()) {
       int id = rs.getInt("id");
       String firstName = rs.getString("first_name");
       String lastName = rs.getString("last_name");
       String email = rs.getString("email");
       int groupId = rs.getInt("group_id");
-      personGroups.add(new Pair<>(new PersonInfo(id, firstName, lastName, email), groupId));
+      personGroups.add(new Pair<>(groupId, new PersonInfo(id, firstName, lastName, email)));
     }
     prep.close();
     rs.close();
