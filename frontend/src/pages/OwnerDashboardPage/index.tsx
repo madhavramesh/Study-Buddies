@@ -90,18 +90,31 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
     axios
       .get(`http://localhost:4567/form_groups/${classID}/${GROUP_SIZE}`, CONFIG)
       .then((response: any) => {
-        console.log(response.data);
         setStudyGroups(response.data.class.first);
+        console.log(response.data.class);
         setStudyGroupWeights(response.data.class.second);
       })
       .catch((err: any) => {
-        console.log(err.response.data);
+        console.log(err);
       });
   };
 
   const getStudyGroupStudents = (studyGroup: any) => {
     return studyGroup.map((s: any) => `${s.second.firstName} ${s.second.lastName}`);
   };
+
+  /**
+  const getCurrentStudyGroups = () => {
+    axios
+      .get(`htts://localhost:4567/get_groups_in/${classID}`, CONFIG)
+      .then((response: any) => {
+        setStudyGroups();
+      })
+      .catch((err: any) => {
+        console.log(err);
+      });
+  };
+   * */
 
   const removeStudent = (studentID: string) => {
     const postParameters = {
@@ -115,9 +128,6 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
         if (response.data.status === 0) {
           const studentsCopy = [...students];
           setStudents(studentsCopy.filter((studentCopy: any) => studentCopy.id !== studentID));
-          console.log('User successfully removed');
-        } else {
-          console.log('User not allowed to be on this page');
         }
       })
       .catch((err: any) => {
@@ -136,12 +146,10 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
       .then((response: any) => {
         if (response.data.status === 0) {
           history.push('/dashboard');
-        } else {
-          console.log('User not allowed to be on this page');
         }
       })
       .catch((err: any) => {
-        console.log(err.response.data);
+        console.log(err);
       });
   };
 
@@ -153,14 +161,12 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
     setDormPreference(response.data.preferences.dorm ?? '');
     setSelectedPeoplePreference(response.data.preferences.preferences ?? []);
     setSelectedTimesPreference(response.data.preferences.times ?? []);
-    console.log(selectedTimesPreference);
   };
 
   useEffect(() => {
     getClassInfo();
     getStudents();
     getPreferences();
-    console.log(selectedPeoplePreference);
   }, []);
 
   useEffect(() => {

@@ -116,9 +116,6 @@ const ProfilePopup: React.FC<ClassProps> = ({ showPopup, setShowPopup }) => {
     }
   };
 
-  console.log(personInfo);
-  console.log(showPopup);
-
   return (
     <>
       <div ref={wrapperRef} className={`profile-container ${showPopup ? 'selected' : 'dismiss'}`}>

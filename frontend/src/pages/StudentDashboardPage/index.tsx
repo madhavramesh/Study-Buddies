@@ -53,7 +53,6 @@ const StudentDashboardPage: React.FC = ({ match }: any) => {
         const { data } = response;
         setFirstName(data.first_name);
         setLastName(data.last_name);
-        console.log(response.data);
       })
       .catch((err: any) => {
         console.log(err);
@@ -70,9 +69,6 @@ const StudentDashboardPage: React.FC = ({ match }: any) => {
         setClassTerm(response.data.class_term);
         setClassCode(response.data.class_code);
         setClassOwnerID(response.data.owner_id);
-
-        console.log(`Class ID: ${classID}`);
-        console.log(response.data);
       })
       .catch((_: any) => {
         history.push('/error');
@@ -108,9 +104,6 @@ const StudentDashboardPage: React.FC = ({ match }: any) => {
           const studentsCopy = [...students];
           setStudents(studentsCopy.filter((studentCopy: any) => studentCopy.id !== studentID));
           history.push('/dashboard');
-          console.log('User successfully removed');
-        } else {
-          console.log('User not allowed to be on this page');
         }
       })
       .catch((err: any) => {
@@ -238,7 +231,8 @@ const StudentDashboardPage: React.FC = ({ match }: any) => {
             {students.map((student: any) => (
               <StudentInfo
                 studentName={`${student.firstName} ${student.lastName}`}
-                removeStudent={() => console.log('No remove student')}
+                // eslint-disable-next-line @typescript-eslint/no-empty-function
+                removeStudent={() => {}}
                 removeButton={false}
                 studentDashboard
               />

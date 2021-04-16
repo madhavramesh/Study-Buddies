@@ -672,7 +672,7 @@ public final class Main {
     public Object handle(Request request, Response response) throws Exception {
       int classId = Integer.parseInt(request.params(":class_id"));
       Map<String, Object> variables = ImmutableMap.of(
-          "persons", GROUPS_DATABASE.getGroupsInClass(classId)
+          "class", GROUPS_DATABASE.getGroupsInClass(classId)
       );
       return GSON.toJson(variables);
     }

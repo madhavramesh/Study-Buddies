@@ -787,9 +787,28 @@ public class NewGroupsDatabase {
       int groupId = rs.getInt("group_id");
       personGroups.add(new Pair<>(groupId, new PersonInfo(id, firstName, lastName, email)));
     }
+    Set<Integer> uniqueGroupIDs = new HashSet<>();
+
+    // Grab unique group ids
+    for (Pair<Integer, PersonInfo> pair: personGroups) {
+      uniqueGroupIDs.add(pair.getFirst());
+    }
+
+    List<List<Pair<Integer, PersonInfo>>> resultGroups = new ArrayList<>();
+    // create a new list for each group id
+    for (Integer i: uniqueGroupIDs) {
+      List<Pair<Integer, PersonInfo>> sameGroupId = new ArrayList<>();
+      for(Pair<Integer, PersonInfo> pair: personGroups) {
+        if (pair.getFirst == i) {
+          sameGroupId.add(pair);
+        }
+      }
+      resultGroups.add(sameGroupId);
+    }
+
     prep.close();
     rs.close();
-    return personGroups;
+    return resultGroups;
   }
 
   /**

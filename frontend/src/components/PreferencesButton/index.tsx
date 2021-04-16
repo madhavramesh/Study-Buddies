@@ -35,7 +35,6 @@ function serializePersonPreferences(persons: Array<any>, selected: Array<number>
 }
 
 function deserializePersonPreferences(persons: any, selected: Array<number>): Array<number> {
-  console.log(persons);
   const newSelected = new Array(persons.length).fill(0);
   // eslint-disable-next-line array-callback-return
   persons?.map((person: any, index: number) => {
@@ -43,7 +42,6 @@ function deserializePersonPreferences(persons: any, selected: Array<number>): Ar
       newSelected[index] = 1;
     } else if (selected?.includes(-person.id)) {
       newSelected[index] = -1;
-      console.log(newSelected);
     }
   });
   return newSelected;
@@ -109,7 +107,6 @@ const PreferencesButton: React.FC<PreferencesButtonProps> = ({
     );
     setShowModal(false);
     setPage(0);
-    console.log(response.data);
   };
 
   const getInitialPrefPplInfo = async () => {
@@ -127,7 +124,6 @@ const PreferencesButton: React.FC<PreferencesButtonProps> = ({
     );
     setSelected(newSelected ?? []);
     setSelectedTimes(response.data.preferences.times ?? []);
-    console.log(response.data);
   };
 
   useEffect(() => {

@@ -129,7 +129,6 @@ const renderGroup = (g: any, index: number, studyGroupWeights: any) => {
   }
 
   const people = g.map((person: any) => idToPerson[person.second.id]);
-  console.log(people);
 
   return (
     <div className="algorithm-visualizer">
@@ -146,7 +145,6 @@ const renderGroup = (g: any, index: number, studyGroupWeights: any) => {
         </thead>
         <tbody>
           {graphArray.map((row, rowIndex) => {
-            console.log(row, rowIndex);
             return (
               <tr>
                 <td>

@@ -43,15 +43,13 @@ const DashboardPage: React.FC = () => {
   };
 
   const getEnrolledClasses = () => {
-    console.log(`USER ID: ${sessionStorage.getItem('user_id')}`);
     axios
       .get(`http://localhost:4567/get_enrollments/${sessionStorage.getItem('user_id')}`, CONFIG)
       .then((response) => {
         setAllEnrolledClasses(response.data.classes);
-        console.log(`Enrolled Classes: ${response.data.classes}`);
       })
       .catch((err) => {
-        console.log(err.response.data);
+        console.log(err);
       });
   };
 
