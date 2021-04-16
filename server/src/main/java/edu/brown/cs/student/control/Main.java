@@ -121,6 +121,7 @@ public final class Main {
     // account setup
     Spark.post("/register_account", new RegisterUserHandler());
     Spark.post("/validate_account", new LoginUserHandler());
+    Spark.post("/change_password", new ChangePasswordHandler());
     Spark.post("/delete_account", new DeleteUserHandler());
     // join/create/get all class info handlers
     Spark.get("/get_all_classes", new GetAllClasses());
@@ -139,6 +140,7 @@ public final class Main {
     Spark.get("/get_person_prefs_in/:class_id", new GetPersonsPrefsInClass());
     Spark.post("/set_preferences", new SetPreferences());
     Spark.get("/form_groups/:class_id/:group_size", new FormGroups());
+    Spark.get("/get_groups_in/:class_id", new GetGroups());
   }
 
   /**
@@ -233,7 +235,7 @@ public final class Main {
       DBCode code = result.getSecond();
       boolean success = code.getCode() == 0;
       Pair<DBCode, PersonInfo> personInfo = success
-        ?  GROUPS_DATABASE.getPersonInfo(result.getFirst()) : null;
+          ? GROUPS_DATABASE.getPersonInfo(result.getFirst()) : null;
       Map<String, Object> variables = ImmutableMap.of(
           "status", code.getCode(),
           "message", code.getMessage(),
@@ -246,15 +248,63 @@ public final class Main {
   }
 
   /**
+   * Process change password requests. JSON objects must be in the form:
+   * {
+   * id: ...,
+   * confirm_password: ...,
+   * new_password: ...,
+   * confirm_new_password: ...,
+   * }
+   * The returned JSON object will have the form:
+   * {
+   * status: [status of change password request],
+   * message: [message explaining status],
+   * new_password: [error message if one exists],
+   * confirm_password: [error message if one exists]
+   * }
+   */
+  private static class ChangePasswordHandler implements Route {
+    @Override
+    public Object handle(Request request, Response response) throws Exception {
+      JSONObject data = new JSONObject(request.body());
+      int id = Integer.parseInt(data.getString("id"));
+      String oldPassword = data.getString("confirm_password");
+      String newPassword = data.getString("new_password");
+      String confirmNewPassword = data.getString("confirm_new_password");
+      Map<String, String> messages = new HashMap<>();
+      if (newPassword.length() < 6) {
+        messages.put("new_password", "Password must be 6 or more characters!");
+      } else if (!newPassword.equals(confirmNewPassword)) {
+        messages.put("new_password", DBCode.PASSWORD_MISMATCH.getMessage());
+      } else {
+        messages.put("new_password", "");
+      }
+      DBCode code = messages.get("new_password").isEmpty()
+          ? GROUPS_DATABASE.changeUserPassword(id, oldPassword, newPassword)
+          : DBCode.FILLER_BAD;
+
+      messages.put("confirm_password", code.getCode() != 0 ? code.getMessage() : "");
+
+      Map<String, Object> variables = ImmutableMap.of(
+          "status", code.getCode(),
+          "message", code.getMessage(),
+          "new_password", messages.get("new_password"),
+          "confirm_password", messages.get("confirm_password")
+      );
+      return GSON.toJson(variables);
+    }
+  }
+
+  /**
    * Deletes a user from the database.JSON objects must be in the form:
    * {
-   *   id: ...,
-   *   password: ...,
+   * id: ...,
+   * password: ...,
    * }.
    * The returned JSON object will have the form:
    * {
-   *   status: [status of delete request],
-   *   message: [message explaining delete status],
+   * status: [status of delete request],
+   * message: [message explaining delete status],
    * }
    */
   private static class DeleteUserHandler implements Route {
@@ -429,13 +479,13 @@ public final class Main {
   /**
    * Attempts to leave a class. JSON objects must be in the form:
    * {
-   *   id: ...,
-   *   class_id: ...,
+   * id: ...,
+   * class_id: ...,
    * }.
    * The returned JSON object will have the form:
    * {
-   *   status: [status explaining leave class request],
-   *   message: [message explaining leave class status]
+   * status: [status explaining leave class request],
+   * message: [message explaining leave class status]
    * }
    */
   private static class LeaveClass implements Route {
@@ -456,13 +506,13 @@ public final class Main {
   /**
    * Attempts to delete a class. JSON objects must be in the form:
    * {
-   *   id: ...,
-   *   class_id: ...,
+   * id: ...,
+   * class_id: ...,
    * }.
    * The returned JSON object will have the form:
    * {
-   *   status: [status explaining delete class request],
-   *   message: [message explaining delete class status]
+   * status: [status explaining delete class request],
+   * message: [message explaining delete class status]
    * }
    */
   private static class DeleteClass implements Route {
@@ -614,7 +664,18 @@ public final class Main {
   }
 
   /**
-   * Display an error page when an exception occurs in the server.
+   * Gets groups in a class. Returns a list of person info-group ID pairs.
+   */
+  private static class GetGroups implements Route {
+    @Override
+    public Object handle(Request request, Response response) throws Exception {
+      int classId = Integer.parseInt(request.params(":class_id"));
+      return GROUPS_DATABASE.getGroupsInClass(classId);
+    }
+  }
+
+  /**
+   * Display an error pag4 when an exception occurs in the server.
    */
   private static class ExceptionPrinter implements ExceptionHandler<Exception> {
     @Override

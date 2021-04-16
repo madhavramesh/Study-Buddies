@@ -229,6 +229,7 @@ public class NewGroupsDatabase {
     PreparedStatement prep;
     ResultSet rs;
     prep = conn.prepareStatement("SELECT * FROM logins WHERE id=?;");
+    prep.setInt(1, id);
     rs = prep.executeQuery();
     String encryptedPass;
     // if not in database, return an error code
@@ -258,6 +259,48 @@ public class NewGroupsDatabase {
     prep.close();
     rs.close();
     return DELETE_SUCCESS;
+  }
+
+  /**
+   * Changes user password only if old password is verified.
+   *
+   * @param id          the user's id
+   * @param oldPassword the user's old password
+   * @param newPassword the desired new password
+   * @return code representing the status of the operation
+   * @throws SQLException             if an error occurs while connecting to the database
+   * @throws InvalidKeySpecException  if the keygen is not loaded
+   * @throws NoSuchAlgorithmException if the algorithm is not loaded
+   */
+  public DBCode changeUserPassword(int id, String oldPassword, String newPassword)
+      throws SQLException, InvalidKeySpecException, NoSuchAlgorithmException {
+    PreparedStatement prep;
+    ResultSet rs;
+    prep = conn.prepareStatement("SELECT * FROM logins WHERE id=?;");
+    prep.setInt(1, id);
+    rs = prep.executeQuery();
+    String encryptedPass;
+    // if not in database, return an error code
+    if (rs.next()) {
+      encryptedPass = rs.getString("pass_token");
+    } else {
+      rs.close();
+      prep.close();
+      return USER_NOT_FOUND;
+    }
+    // if the password they entered is incorrect, return an error code
+    if (!PasswordEncryption.validatePBKDF2Password(oldPassword, encryptedPass)) {
+      rs.close();
+      prep.close();
+      return INVALID_PASSWORD;
+    }
+    prep = conn.prepareStatement("UPDATE logins SET pass_token=? WHERE id=?;");
+    prep.setString(1, PasswordEncryption.getPBKDF2SecurePassword(newPassword));
+    prep.setInt(2, id);
+    prep.executeUpdate();
+    prep.close();
+    rs.close();
+    return CHANGE_PASSWORD_SUCCESS;
   }
 
 
@@ -537,7 +580,7 @@ public class NewGroupsDatabase {
   /**
    * Deletes a class.
    *
-   * @param id the owner's id
+   * @param id      the owner's id
    * @param classId the class's ID
    * @return code representing the operation's status
    * @throws SQLException if an error occurs while connecting to the database
@@ -696,6 +739,7 @@ public class NewGroupsDatabase {
       prep.close();
       return UPDATE_PREFERENCES_SUCCESS;
     } catch (SQLException e) {
+      prep.close();
       return PERSON_NOT_IN_CLASS;
     }
   }
@@ -718,6 +762,34 @@ public class NewGroupsDatabase {
     prep.executeUpdate();
     prep.close();
     return UPDATE_PREFERENCES_SUCCESS;
+  }
+
+  /**
+   * Gets all groups in the class.
+   *
+   * @param classId the class's ID
+   * @return a list of person info and their respective groups
+   * @throws SQLException if an error occurs while connecting to the database
+   */
+  public List<Pair<PersonInfo, Integer>> getGroupsInClass(int classId) throws SQLException {
+    PreparedStatement prep;
+    ResultSet rs;
+    prep = conn.prepareStatement("SELECT id,first_name,last_name,email,group_id " +
+        "FROM logins,class WHERE class_id=? AND id=class.person_id;");
+    prep.setInt(1, classId);
+    rs = prep.executeQuery();
+    List<Pair<PersonInfo, Integer>> personGroups = new LinkedList<>();
+    while (rs.next()) {
+      int id = rs.getInt("id");
+      String firstName = rs.getString("first_name");
+      String lastName = rs.getString("last_name");
+      String email = rs.getString("email");
+      int groupId = rs.getInt("group_id");
+      personGroups.add(new Pair<>(new PersonInfo(id, firstName, lastName, email), groupId));
+    }
+    prep.close();
+    rs.close();
+    return personGroups;
   }
 
   /**
