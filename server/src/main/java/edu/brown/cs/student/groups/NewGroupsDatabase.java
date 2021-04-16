@@ -60,7 +60,11 @@ public class NewGroupsDatabase {
         "first_name TEXT, " +
         "last_name TEXT, " +
         "email TEXT UNIQUE, " +
-        "pass_token TEXT);");
+        "pass_token TEXT, " +
+        "FOREIGN KEY (id) REFERENCES classes(owner_id), " +
+        "FOREIGN KEY (id) REFERENCES enrollments(person_id), " +
+        "FOREIGN KEY (id) REFERENCES class(person_id)" +
+        "ON DELETE CASCADE ON UPDATE CASCADE);");
     prep.executeUpdate();
 
     // represent all classes and their metadata

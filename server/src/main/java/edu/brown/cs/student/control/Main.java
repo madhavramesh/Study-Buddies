@@ -547,7 +547,7 @@ public final class Main {
   private static class GetPersonInfo implements Route {
     @Override
     public Object handle(Request request, Response response) throws Exception {
-      int id = Integer.valueOf(request.params(":id"));
+      int id = Integer.parseInt(request.params(":id"));
       Pair<DBCode, PersonInfo> result = GROUPS_DATABASE.getPersonInfo(id);
       DBCode code = result.getFirst();
       PersonInfo personInfo = result.getSecond();
