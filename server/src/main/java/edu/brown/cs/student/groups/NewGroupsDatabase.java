@@ -792,8 +792,31 @@ public class NewGroupsDatabase {
   }
 
   /**
-   * Helper function. Processes class information into a ClassInfo object.
-   *
+   * Gets the persons info of people in a certain group.
+   * @param classId the class's id
+   * @param groupId the group's id
+   * @return the list of people info
+   * @throws SQLException if an error occurs while connecting to the database
+   */
+  public List<PersonInfo> getPeopleInGroup(int classId, int groupId) throws SQLException {
+    PreparedStatement prep = conn.prepareStatement("SELECT * FROM logins,class WHERE " +
+        "class_id=? AND id=class.person_id AND group_id=?;");
+    prep.setInt(1, classId);
+    prep.setInt(2, groupId);
+    ResultSet rs = prep.executeQuery();
+    List<PersonInfo> personInfos = new LinkedList<>();
+    while (rs.next()) {
+      int id = rs.getInt("id");
+      String firstName = rs.getString("first_name");
+      String lastName = rs.getString("last_name");
+      String email = rs.getString("email");
+      personInfos.add(new PersonInfo(id, firstName, lastName, email));
+    }
+    return personInfos;
+  }
+
+  /**
+   * Helper function. Processes class information into a ClassInfo object.*
    * @param rs the ResultSet of the current entry
    * @return an object representing a class
    */
