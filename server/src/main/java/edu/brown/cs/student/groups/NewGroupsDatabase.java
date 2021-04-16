@@ -206,6 +206,16 @@ public class NewGroupsDatabase {
     return REGISTRATION_SUCCESS;
   }
 
+  /**
+   * Deletes a user.
+   *
+   * @param id the user's id
+   * @param password the user's password, to verify
+   * @return a code representing the status of the operation
+   * @throws SQLException if an error occurs while connecting to the database
+   * @throws InvalidKeySpecException if the algorithm is not loaded
+   * @throws NoSuchAlgorithmException if the algorithm is not loaded
+   */
   public DBCode deleteUser(int id, String password)
       throws SQLException, InvalidKeySpecException, NoSuchAlgorithmException {
     // first, see if user is even in the database
