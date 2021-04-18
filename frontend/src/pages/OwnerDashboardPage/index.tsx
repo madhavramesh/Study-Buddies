@@ -8,8 +8,8 @@ import ClassCreatedModal from '../../components/ClassCreatedModal';
 import GeneralInfoClass from '../../components/GeneralInfoClass';
 import StudentInfo from '../../components/StudentInfo';
 import StudyGroupDisplay from '../../components/StudyGroupDisplay';
-import PreferencesButton from '../../components/PreferencesButton';
 import AlgorithmVisualizer from '../../components/AlgorithmVisualizer';
+import PreferencesButton from '../../components/PreferencesButton';
 import './OwnersDashboard.scss';
 
 const axios = require('axios');

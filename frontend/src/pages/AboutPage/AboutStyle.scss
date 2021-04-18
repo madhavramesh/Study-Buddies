@@ -4,7 +4,8 @@
 
 #title {
   height: 40vh;
-  background-color: #348AED;
+  background-color: white;
+  text-color: var(--chunky-blue);
   font-family: 'poppins', courier, sans-serif;
   text-align: center;
   //vertical-align: middle;
@@ -21,19 +22,21 @@
 
 #explanation {
   height: 60vh;
-  color: #348aed;
+  color: var(--chunky-blue);
   padding: 5rem;
 }
 
 #heuristic {
   height: 110vh;
-  background-color: #348AED;
+  background-color: white;
+  color: var(--chunky-blue);
   padding: 5rem;
 }
 
 #usage {
   height: 100vh;
-  color: #348aed;
+  background-color: black;
+  color: var(--chunky-blue);
   padding: 5rem;
 }
 

@@ -3,12 +3,16 @@
 .homepage-signup-container {
   width: 100%;
   height: 70vh;
-  background-color: #348AED;
+  background: url('https://images.unsplash.com/photo-1517771530547-3f31e47eeb04?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=849&q=80')
+    no-repeat center;
+  background-size: cover;
 
   .homepage-signup-shill {
     font-family: 'poppins', courier, sans-serif;
     width: 75%;
     font-size: 40px;
+    color: white;
+    text-shadow: 1px 1px 1px black;
     text-align: center;
     left: 12%;
     top: 25%;
@@ -24,7 +28,7 @@
 
   .homepage-signup-button {
     font-family: 'Poppins', Courier, sans-serif;
-    background-color: black;
+    background-color: #348aed;
     width: 50%;
     height: 3rem;
     left: 25%;
@@ -42,7 +46,7 @@
 .homepage-info-container {
   width: 100%;
   height: 70vh;
-  background-color: #000;
+  background-color: var(--chunky-blue);
 
   .homepage-info {
     font-family: 'Poppins', Courier, sans-serif;
@@ -51,7 +55,7 @@
     top: 15%;
     left: 12%;
     position: relative;
-    color: #348AED;
+    color: #ffffff;
 
     -webkit-animation: fadein 6s ease;
     /* Safari, Chrome and Opera > 12.1 */
@@ -78,13 +82,13 @@
     /* Internet Explorer */
     -o-animation: fadein 6s ease;
     /* Opera < 12.1 */
-    animation: fadein 6s ease
+    animation: fadein 6s ease;
   }
 
   .homepage-info-button {
     font-family: 'Poppins', Courier, sans-serif;
-    color: black;
-    background-color: #348AED;
+    color: #ffffff;
+    background-color: #348aed;
     width: 40%;
     height: 3rem;
     left: -23%;
@@ -99,7 +103,7 @@
     /* Internet Explorer */
     -o-animation: fadein 6s ease;
     /* Opera < 12.1 */
-    animation: fadein 6s ease
+    animation: fadein 6s ease;
   }
 
   .homepage-info-button:hover {
@@ -110,7 +114,8 @@
 .homepage-title-container {
   width: 100%;
   height: 80vh;
-  background: url('../../images/home_screen3.jpg') no-repeat center center;
+  background: url('https://images.unsplash.com/photo-1513014939933-3b7e0cf15185?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80')
+    no-repeat center center;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -121,7 +126,8 @@
     font-size: 72px;
     // text-shadow: 2px 2px #000000;
     white-space: nowrap;
-    color: #000;
+    color: white;
+    text-shadow: 1px 1px 1px black;
     font-family: 'Poppins', Courier, sans-serif;
     position: relative;
     top: 25%;
@@ -156,7 +162,7 @@
     height: 5vw;
     width: 5vw;
     border-style: solid;
-    border-color: #000;
+    border-color: white;
     border-width: 0px 5px 5px 0px;
     transform: rotate(45deg);
     position: relative;
@@ -199,7 +205,7 @@
   .homepage-info {
     font-size: 20px;
     white-space: nowrap;
-    color: #FFF6C9;
+    color: #fff6c9;
     font-family: 'Poppins', Courier, sans-serif;
     position: relative;
     top: 15%;
