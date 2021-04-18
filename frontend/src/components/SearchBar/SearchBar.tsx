@@ -5,12 +5,22 @@ import './SearchBarStyle.scss';
 
 type SearchBarProps = {
   onChange: any;
+  placeholderText: string;
+  searchInstructions: string;
+  showSearchHeader: boolean;
+  showSearchDescription: boolean;
 };
 
-const SearchBar: React.FC<SearchBarProps> = ({ onChange }: SearchBarProps) => {
+const SearchBar: React.FC<SearchBarProps> = ({
+  onChange,
+  placeholderText,
+  searchInstructions,
+  showSearchHeader,
+  showSearchDescription,
+}: SearchBarProps) => {
   return (
     <>
-      <div className="search-header">Search</div>
+      {showSearchHeader && <div className="search-header">Search</div>}
       <InputGroup className="search-bar-input-group mb-2">
         <InputGroup.Prepend>
           <Button variant="outline-light">
@@ -19,14 +29,14 @@ const SearchBar: React.FC<SearchBarProps> = ({ onChange }: SearchBarProps) => {
         </InputGroup.Prepend>
         <FormControl
           type="text"
-          placeholder="Search for classes"
+          placeholder={placeholderText}
           className="search-bar-form-control mr-sm-2"
           onChange={onChange}
         />
       </InputGroup>
-      <Form.Text className="search-instructions">
-        Search for classes by class name or number
-      </Form.Text>
+      {showSearchDescription && (
+        <Form.Text className="search-instructions">{searchInstructions}</Form.Text>
+      )}
     </>
   );
 };

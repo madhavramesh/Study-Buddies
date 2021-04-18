@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, ButtonGroup, ToggleButton } from 'react-bootstrap';
+import { Button, ButtonGroup, Form, ToggleButton } from 'react-bootstrap';
 import axios from 'axios';
 import CreateClass from '../../components/CreateClass';
 import './DashboardPageStyle.scss';
@@ -55,7 +55,12 @@ const DashboardPage: React.FC = () => {
 
   const filterClasses = (words: Array<string>, prefix: string) => {
     const preLowercase = prefix.toLowerCase();
-    return words.filter((c: any) => c.className.toLowerCase().trim().startsWith(preLowercase));
+    const nameMatches = words.filter(
+      (c: any) =>
+        c.className.toLowerCase().trim().startsWith(preLowercase) ||
+        c.classNumber.toLowerCase().trim().startsWith(preLowercase)
+    );
+    return nameMatches;
   };
 
   useEffect(() => {
@@ -66,6 +71,8 @@ const DashboardPage: React.FC = () => {
   useEffect(() => {
     let modifiedClasses: Array<string> = [];
     if (radioValue === enrolledToggle[0].value) {
+      console.log('Hello');
+      console.log(allClasses);
       modifiedClasses = filterClasses(allClasses, searchText);
     } else if (radioValue === enrolledToggle[1].value) {
       modifiedClasses = filterClasses(allEnrolledClasses, searchText);
@@ -79,7 +86,13 @@ const DashboardPage: React.FC = () => {
       <div className="search-bar-container">
         <div className="search-bar-inner-container">
           <div className="search-bar">
-            <SearchBar onChange={(e: any) => setSearchText(e.target.value)} />
+            <SearchBar
+              onChange={(e: any) => setSearchText(e.target.value)}
+              placeholderText="Search for classes"
+              searchInstructions="Search for classes by class name or number"
+              showSearchHeader
+              showSearchDescription
+            />
           </div>
           <div className="enrolled-toggle-container">
             <ButtonGroup toggle className="enrolled-toggle">
