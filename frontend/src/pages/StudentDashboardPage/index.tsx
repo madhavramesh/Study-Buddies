@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button } from 'react-bootstrap';
+import { Accordion, Button, Card } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import ModifiedNavBar from '../../components/ModifiedNavbar';
 import ClassCreatedModal from '../../components/ClassCreatedModal';
@@ -17,6 +17,10 @@ const CONFIG = {
     'Access-Control-Allow-Origin': '*',
   },
 };
+
+const IMG_WIDTH = 600;
+const IMG_HEIGHT = 250;
+const RANDOM_IMAGE_URL = `https://source.unsplash.com/featured/${IMG_WIDTH}x${IMG_HEIGHT}/?dark, study, class`;
 
 const StudentDashboardPage: React.FC = ({ match }: any) => {
   const {
@@ -42,9 +46,14 @@ const StudentDashboardPage: React.FC = ({ match }: any) => {
   const [dormPreference, setDormPreference] = useState('');
   const [selectedPeoplePreference, setSelectedPeoplePreference] = useState<Array<number>>([]);
   const [selectedTimesPreference, setSelectedTimesPreference] = useState<Array<number>>([]);
+  const [groupId, setGroupId] = useState('');
+
+  const [studyGroups, setStudyGroups] = useState([]);
 
   const [classCreatedShowModal, setClassCreatedShowModal] = useState(true);
   const [preferencesShowModal, setPreferencesShowModal] = useState(false);
+
+  const [accordionArrowDown, setAccordionArrowDown] = useState(true);
 
   const getPersonInfo = (id: string | null) => {
     axios
@@ -119,6 +128,22 @@ const StudentDashboardPage: React.FC = ({ match }: any) => {
     setDormPreference(response.data.preferences.dorm ?? '');
     setSelectedPeoplePreference(response.data.preferences.preferences ?? []);
     setSelectedTimesPreference(response.data.preferences.times ?? []);
+    setGroupId(response.data.preferences.groupId);
+  };
+
+  const getCurrentStudyGroups = () => {
+    if (groupId != null && parseInt(groupId, 10) !== -1) {
+      axios
+        .get(`http://localhost:4567/get_persons_in/${groupId}/${classID}`)
+        .then((response: any) => {
+          setStudyGroups(response.data.persons);
+        })
+        .catch((err: any) => console.log(err));
+    }
+  };
+
+  const getStudyGroupStudents = (studyGroup: any) => {
+    return studyGroup.map((s: any) => `${s.firstName} ${s.lastName}`);
   };
 
   useEffect(() => {
@@ -127,6 +152,7 @@ const StudentDashboardPage: React.FC = ({ match }: any) => {
     getClassInfo();
     getStudents();
     getPreferences();
+    getCurrentStudyGroups();
   }, []);
 
   useEffect(() => {
@@ -149,58 +175,95 @@ const StudentDashboardPage: React.FC = ({ match }: any) => {
       <div className="student-dashboard-page-sections">
         <div className="page-section study-groups-and-preferences">
           <div className="study-groups">
-            <div className="study-groups-header">Study Group</div>
-            <div className="study-groups-body" />
+            <div className="study-groups-header">
+              <Card>
+                <Card.Header>Study Groups</Card.Header>
+              </Card>
+            </div>
+            <div className="study-groups-body">
+              <StudyGroupDisplay
+                groupID={groupId}
+                studentNames={getStudyGroupStudents(studyGroups)}
+                imageURL={RANDOM_IMAGE_URL}
+              />
+            </div>
           </div>
           <div className="current-preferences">
-            <div className="current-preferences-header">Current Preferences</div>
-            <div className="current-preferences-body">
-              <div className="dorm">
-                <div className="dorm-header">Dorm</div>
-                {dormPreference && (
-                  <div className="dorm-body">&nbsp;&nbsp;&nbsp;&nbsp;{dormPreference}</div>
-                )}
-              </div>
-              <div className="preferred-people">
-                <div className="preferred-people-header">Preferred People</div>
-                <div className="preferred-people-body">
-                  {selectedPeoplePreference.reduce((acc: Array<any>, elt: number) => {
-                    const matchingStudent: any = students.find(
-                      (student: any) => student?.id === elt
-                    );
-                    return elt > 0
-                      ? acc.concat([
-                          <div className="preferred-person">
-                            &nbsp;&nbsp;&nbsp;&nbsp;{matchingStudent?.firstName}{' '}
-                            {matchingStudent?.lastName}
-                          </div>,
-                        ])
-                      : acc;
-                  }, [])}
-                </div>
-              </div>
-              <div className="not-preferred-people">
-                <div className="not-preferred-people-header">Not Preferred People</div>
-                <div className="not-preferred-people-body">
-                  {selectedPeoplePreference.reduce((acc: Array<any>, elt: number) => {
-                    const matchingStudent: any = students.find(
-                      (student: any) => student?.id === Math.abs(elt)
-                    );
-                    return elt < 0
-                      ? acc.concat([
-                          <div className="not-preferred-person">
-                            &nbsp;&nbsp;&nbsp;&nbsp;{matchingStudent?.firstName}{' '}
-                            {matchingStudent?.lastName}
-                          </div>,
-                        ])
-                      : acc;
-                  }, [])}
-                </div>
-              </div>
-              <div className="times">
-                <div className="times-header">Preferred Times</div>
-                &nbsp;&nbsp;&nbsp;&nbsp;Please view modal
-              </div>
+            <div className="current-preferences-header">
+              <Accordion defaultActiveKey="0">
+                <Card>
+                  <Accordion.Toggle
+                    as={Card.Header}
+                    onClick={() => setAccordionArrowDown(!accordionArrowDown)}
+                    eventKey="0"
+                  >
+                    Current Preferences
+                    <div
+                      className={
+                        accordionArrowDown
+                          ? 'accordion arrow arrow-up'
+                          : 'accordion arrow arrow-down'
+                      }
+                    />
+                  </Accordion.Toggle>
+                  <Accordion.Collapse eventKey="0">
+                    <Card.Body>
+                      <div className="current-preferences-body">
+                        <div className="dorm">
+                          <div className="dorm-header">Dorm</div>
+                          {dormPreference && (
+                            <div className="dorm-body">
+                              &nbsp;&nbsp;&nbsp;&nbsp;{dormPreference}
+                            </div>
+                          )}
+                        </div>
+                        <div className="preferred-people">
+                          <div className="preferred-people-header">Preferred People</div>
+                          <div className="preferred-people-body">
+                            {selectedPeoplePreference.reduce((acc: Array<any>, elt: number) => {
+                              const matchingStudent: any = students.find(
+                                (student: any) => student?.id === elt
+                              );
+                              return elt > 0
+                                ? acc.concat([
+                                    <div className="preferred-person">
+                                      &nbsp;&nbsp;&nbsp;&nbsp;{matchingStudent?.firstName}{' '}
+                                      {matchingStudent?.lastName}
+                                    </div>,
+                                  ])
+                                : acc;
+                            }, [])}
+                          </div>
+                        </div>
+                        <div className="not-preferred-people">
+                          <div className="not-preferred-people-header">Not Preferred People</div>
+                          <div className="not-preferred-people-body">
+                            {selectedPeoplePreference.reduce((acc: Array<any>, elt: number) => {
+                              const matchingStudent: any = students.find(
+                                (student: any) => student?.id === Math.abs(elt)
+                              );
+                              return elt < 0
+                                ? acc.concat([
+                                    <div className="not-preferred-person">
+                                      &nbsp;&nbsp;&nbsp;&nbsp;{matchingStudent?.firstName}{' '}
+                                      {matchingStudent?.lastName}
+                                    </div>,
+                                  ])
+                                : acc;
+                            }, [])}
+                          </div>
+                        </div>
+                        <div className="times">
+                          <div className="times-header">Preferred Times</div>
+                          <div className="times-body">
+                            &nbsp;&nbsp;&nbsp;&nbsp;Please view modal
+                          </div>
+                        </div>
+                      </div>
+                    </Card.Body>
+                  </Accordion.Collapse>
+                </Card>
+              </Accordion>
             </div>
           </div>
         </div>
@@ -226,7 +289,11 @@ const StudentDashboardPage: React.FC = ({ match }: any) => {
         </div>
 
         <div className="page-section students">
-          <div className="students-header">Students</div>
+          <div className="students-header">
+            <Card>
+              <Card.Header>Students</Card.Header>
+            </Card>
+          </div>
           <div className="students-body">
             {students.map((student: any) => (
               <StudentInfo

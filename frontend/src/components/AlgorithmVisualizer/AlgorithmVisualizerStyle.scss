@@ -2,6 +2,10 @@
   height: 80vh !important;
   overflow: auto !important;
 
+  .algorithm-description {
+    margin-bottom: 15px;
+  }
+
   .table-hover tbody tr:hover td:not(:first-child) {
     color: #ffffff;
   }

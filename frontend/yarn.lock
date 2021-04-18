@@ -1916,6 +1916,13 @@
   "resolved" "https://registry.npmjs.org/@types/q/-/q-1.5.4.tgz"
   "version" "1.5.4"
 
+"@types/react-csv@^1.1.1":
+  "integrity" "sha512-sP8AxGrFJ/kb7ygFpGkssdD/vKSTqdZDJbw3pJKTCa1C0UoT+0+rdUWy2fZqvhvvdpHG+OCJ4G8O7OZqVIa+BA=="
+  "resolved" "https://registry.npmjs.org/@types/react-csv/-/react-csv-1.1.1.tgz"
+  "version" "1.1.1"
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-dom@^17.0.3":
   "integrity" "sha512-4NnJbCeWE+8YBzupn/YrJxZ8VnjcJq5iR1laqQ1vkpQgBiA7bwk0Rp24fxsdNinzJY2U+HHS4dJJDPdoMjdJ7w=="
   "resolved" "https://registry.npmjs.org/@types/react-dom/-/react-dom-17.0.3.tgz"
@@ -9702,7 +9709,7 @@
   dependencies:
     "fast-diff" "^1.1.2"
 
-"prettier@^2.2.1":
+"prettier@2.2.1":
   "integrity" "sha512-PqyhM2yCjg/oKkFPtTGUojv7gnZAoG80ttl45O6x2Ug/rMJw4wcc9k6aaf2hibP7BGVCCM33gZoGjyvt9mm16Q=="
   "resolved" "https://registry.npmjs.org/prettier/-/prettier-2.2.1.tgz"
   "version" "2.2.1"
@@ -9980,6 +9987,11 @@
     "react-transition-group" "^4.4.1"
     "uncontrollable" "^7.2.1"
     "warning" "^4.0.3"
+
+"react-csv@^2.0.3":
+  "integrity" "sha512-exyAdFLAxtuM4wNwLYrlKyPYLiJ7e0mv9tqPAd3kq+k1CiJFtznevR3yP0icv5q/y200w+lzNgi7TQn1Wrhu0w=="
+  "resolved" "https://registry.npmjs.org/react-csv/-/react-csv-2.0.3.tgz"
+  "version" "2.0.3"
 
 "react-dev-utils@^11.0.3":
   "integrity" "sha512-dx0LvIGHcOPtKbeiSUM4jqpBl3TcY7CDjZdfOIcKeznE7BWr9dg0iPG90G5yfVQ+p/rGNMXdbfStvzQZEVEi4A=="

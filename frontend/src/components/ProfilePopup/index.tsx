@@ -104,15 +104,21 @@ const ProfilePopup: React.FC<ClassProps> = ({ showPopup, setShowPopup }) => {
       password: confirmDeletePassword,
     };
 
-    const response = await axios.post(
-      'http://localhost:4567/delete_account',
-      postParameters,
-      CONFIG
-    );
-    setConfirmDeletePasswordMessage(response.data.message);
-    if (response.data.status === 0) {
-      setDeleteAccountStatus(true);
-      setTimeout(() => history.push('/'), 2250);
+    try {
+      const response = await axios.post(
+        'http://localhost:4567/delete_account',
+        postParameters,
+        CONFIG
+      );
+      console.log('Delete Account');
+      console.log(response.data);
+      setConfirmDeletePasswordMessage(response.data.message);
+      if (response.data.status === 0) {
+        setDeleteAccountStatus(true);
+        setTimeout(() => history.push('/'), 2250);
+      }
+    } catch (err) {
+      console.log(err.response.data);
     }
   };
 

@@ -31,7 +31,7 @@
       }
 
       .study-groups-body {
-        max-height: 35vh;
+        max-height: 32vh;
         overflow: auto;
       }
 
@@ -41,21 +41,62 @@
         .current-preferences-header {
           margin-top: 20px;
           margin-bottom: 10px;
-        }
 
-        .current-preferences-body {
-          max-height: 35vh;
-          overflow: auto;
-        }
+          .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-        .dorm-header,
-        .preferred-people-header,
-        .not-preferred-people-header,
-        .times-header {
-          font-size: 18px;
-          font-weight: 500;
-          margin-top: 10px;
-          margin-bottom: 10px;
+            .accordion.arrow.arrow-down,
+            .accordion.arrow.arrow-up {
+              width: 0;
+              height: 0;
+              border-left: 12px solid transparent;
+              border-right: 12px solid transparent;
+              margin-left: auto;
+              margin-right: 0;
+            }
+
+            .accordion.arrow.arrow-down {
+              border-top: 12px solid #000000;
+            }
+
+            .accordion.arrow.arrow-down:hover {
+              border-top: 12px solid #98fb98;
+            }
+
+            .accordion.arrow.arrow-up {
+              border-bottom: 12px solid #000000;
+            }
+          }
+
+          .current-preferences-body {
+            max-height: 35vh;
+            overflow: auto;
+
+            .dorm-header {
+              font-size: 18px;
+              font-weight: 500;
+              margin-bottom: 10px;
+            }
+
+            .preferred-people-header,
+            .not-preferred-people-header,
+            .times-header {
+              font-size: 18px;
+              font-weight: 500;
+              margin-top: 10px;
+              margin-bottom: 10px;
+            }
+
+            .dorm-body,
+            .preferred-people-body,
+            .not-preferred-people-body,
+            .times-body {
+              font-size: 16px;
+              font-weight: normal;
+            }
+          }
         }
       }
     }
