@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Accordion, Button, Card, OverlayTrigger, Popover } from 'react-bootstrap';
+import { Accordion, Button, Card, Modal, OverlayTrigger, Popover } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { CSVLink } from 'react-csv';
 import GetAppIcon from '@material-ui/icons/GetApp';
@@ -8,8 +8,8 @@ import ClassCreatedModal from '../../components/ClassCreatedModal';
 import GeneralInfoClass from '../../components/GeneralInfoClass';
 import StudentInfo from '../../components/StudentInfo';
 import StudyGroupDisplay from '../../components/StudyGroupDisplay';
-import PreferencesButton from '../../components/PreferencesButton';
 import AlgorithmVisualizer from '../../components/AlgorithmVisualizer';
+import PreferencesButton from '../../components/PreferencesButton';
 import './OwnersDashboard.scss';
 
 const axios = require('axios');
@@ -59,8 +59,9 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
   const [classCreatedShowModal, setClassCreatedShowModal] = useState(true);
   const [preferencesShowModal, setPreferencesShowModal] = useState(false);
   const [algorithmShowModal, setAlgorithmShowModal] = useState(false);
+  const [deleteClassShowModal, setDeleteClassShowModal] = useState(false);
 
-  const [accordionArrowDown, setAccordionArrowDown] = useState(true);
+  const [accordionArrowDown, setAccordionArrowDown] = useState(false);
 
   const getClassInfo = () => {
     axios
@@ -115,6 +116,7 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
     axios
       .get(`http://localhost:4567/get_groups_in/${classID}`, CONFIG)
       .then((response: any) => {
+        console.log('Same');
         console.log(response.data.class);
         setStudyGroups(response.data.class);
       })
@@ -264,7 +266,7 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
           </div>
           <div className="current-preferences">
             <div className="current-preferences-header">
-              <Accordion defaultActiveKey="0">
+              <Accordion>
                 <Card>
                   <Accordion.Toggle
                     as={Card.Header}
@@ -376,9 +378,34 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
               />
             ))}
             <div className="leave-class-container">
-              <Button className="leave-class-button" onClick={deleteClass}>
+              <Button className="leave-class-button" onClick={() => setDeleteClassShowModal(true)}>
                 Delete Class
               </Button>
+              <Modal
+                onHide={() => setDeleteClassShowModal(false)}
+                show={deleteClassShowModal}
+                scrollable
+                centered
+                className="delete-class-modal"
+              >
+                <Modal.Body className="delete-class-modal-body">
+                  Are you sure you want to delete{' '}
+                  <b>
+                    [{classNumber}] {className}?
+                  </b>
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button
+                    className="delete-class-confirmation-button cancel"
+                    onClick={() => setDeleteClassShowModal(false)}
+                  >
+                    Cancel
+                  </Button>
+                  <Button className="delete-class-confirmation-button yes" onClick={deleteClass}>
+                    Yes
+                  </Button>
+                </Modal.Footer>
+              </Modal>
             </div>
           </div>
         </div>

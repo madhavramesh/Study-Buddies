@@ -22,9 +22,8 @@ const AboutPage: React.FC = () => {
             </li>
             <li>
               Using this compatibility score, a complete graph is generated with students as nodes
-              and the compatibility score as the weight of the edge between any two nodes.
-              Therefore, the compatibility of a group of students is sum of the weights of all the
-              edges among them.
+              and the compatibility score as the edge weight between any two nodes. The
+              compatibility of a group of students is sum of the weights of all the them.
             </li>
             <li>
               Groups are recursively created by solving for the set of nodes of the required size
@@ -32,8 +31,8 @@ const AboutPage: React.FC = () => {
               next most compatible group, and so on.
             </li>
             <li>
-              Any leftover students are added to the groups which were created later through the
-              previous step.
+              If at the end there are not enough students to form a full group, they are each added
+              to the latest formed previous groups.
             </li>
           </ol>
         </div>
@@ -49,7 +48,7 @@ const AboutPage: React.FC = () => {
               40% - Working Times:
               <ul>
                 <li>
-                  If two persons overlapping working time in a week is not less than 35 hours, they
+                  If two people have overlapping working times greater than or equal 35 hours, they
                   receive the entirety of this 40%.
                 </li>
                 <li>

@@ -53,7 +53,7 @@ const StudentDashboardPage: React.FC = ({ match }: any) => {
   const [classCreatedShowModal, setClassCreatedShowModal] = useState(true);
   const [preferencesShowModal, setPreferencesShowModal] = useState(false);
 
-  const [accordionArrowDown, setAccordionArrowDown] = useState(true);
+  const [accordionArrowDown, setAccordionArrowDown] = useState(false);
 
   const getPersonInfo = (id: string | null) => {
     axios
@@ -190,7 +190,7 @@ const StudentDashboardPage: React.FC = ({ match }: any) => {
           </div>
           <div className="current-preferences">
             <div className="current-preferences-header">
-              <Accordion defaultActiveKey="0">
+              <Accordion>
                 <Card>
                   <Accordion.Toggle
                     as={Card.Header}

@@ -4,7 +4,7 @@ import { Button, DropdownButton, Dropdown, Form, Nav } from 'react-bootstrap';
 import './ModifiedNavbarStyle.scss';
 import { useHistory } from 'react-router-dom';
 import { Avatar } from '@material-ui/core';
-import logo from '../../images/logo.svg';
+import chunkyLogo from '../../images/chunkylogo.png';
 import ProfilePopup from '../ProfilePopup';
 
 type ModifiedNavBarProps = {
@@ -18,8 +18,12 @@ const ModifiedNavBar: React.FC<ModifiedNavBarProps> = ({ username }) => {
   return (
     <>
       <Navbar className="modified-navbar" bg="black" variant="dark" sticky="top">
-        <Navbar.Brand className="modified-navbar-brand" href="/dashboard">
-          <img alt="" src={logo} width="60" height="60" />
+        <Navbar.Brand
+          className="modified-navbar-brand"
+          href="/dashboard"
+          style={{ fontSize: '22px' }}
+        >
+          <img alt="" src={chunkyLogo} width="100" height="100" />
           Chunky Study Buddies
         </Navbar.Brand>
         <Nav className="ml-auto">
