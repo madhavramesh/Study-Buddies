@@ -3,12 +3,13 @@ import Navbar from 'react-bootstrap/Navbar';
 import { Nav } from 'react-bootstrap';
 import logo from '../../images/logo.svg';
 import './NavbarStyle.scss';
+import chunkyLogo from '../../images/chunkylogo.png';
 
 const NavBar: React.FC = () => {
   return (
-    <Navbar className="navbar" bg="black" variant="dark" sticky="top">
-      <Navbar.Brand className="navbar-brand" href="/">
-        <img alt="" src={logo} width="60" height="60" />
+    <Navbar className="navbar-home-page" bg="black" variant="dark" sticky="top">
+      <Navbar.Brand className="navbar-home-page-brand" href="/" style={{ fontSize: '22px' }}>
+        <img alt="" src={chunkyLogo} width="100" height="100" />
         Chunky Study Buddies
       </Navbar.Brand>
       <Nav className="ml-auto">

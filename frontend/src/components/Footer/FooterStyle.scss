@@ -1,8 +1,9 @@
-.navbar {
-  background-color: var(--chunky-blue) !important;
+.footer-navbar {
+  background-color: #000000;
+  opacity: 0.8;
   padding: 20px 60px 20px 30px;
 
-  .nav-brand {
+  .footer-navbar-brand {
     color: rgba(255, 255, 255, 1);
   }
 }

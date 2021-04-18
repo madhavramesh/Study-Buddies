@@ -32,6 +32,7 @@ import java.io.StringWriter;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 
 /**
@@ -679,8 +680,40 @@ public final class Main {
     @Override
     public Object handle(Request request, Response response) throws Exception {
       int classId = Integer.parseInt(request.params(":class_id"));
+
+      // first
+      List<List<Pair<Integer, PersonInfo>>> studyGroups = GROUPS_DATABASE.getGroupsInClass(classId);
+
+      // second
+      List<Map<Integer, Map<Integer, Double>>> allWeights = new ArrayList<>();
+
+      // Get person prefs by group
+      for (List<Pair<Integer, PersonInfo>> group : studyGroups) {
+        Map<Integer, Map<Integer, Double>> groupWeights = new HashMap<>();
+        for (Pair<Integer, PersonInfo> person1 : group) {
+          Map<Integer, Double> p2AndWeight = new HashMap<>();
+          Integer person1ID = person1.getSecond().getId();
+
+          for (Pair<Integer, PersonInfo> person2: group) {
+            Integer person2ID = person2.getSecond().getId();
+
+            if (person1ID != person2ID) {
+              PersonPreferences pp1 =
+                      GROUPS_DATABASE.getPersonPrefInClass(person1ID, classId).getSecond();
+              PersonPreferences pp2 =
+                      GROUPS_DATABASE.getPersonPrefInClass(person2ID, classId).getSecond();
+              Double weight = heuristic.findHeuristic(pp1, pp2);
+
+              p2AndWeight.put(person2ID, weight);
+            }
+          }
+          groupWeights.put(person1ID, p2AndWeight);
+        }
+        allWeights.add(groupWeights);
+      }
+
       Map<String, Object> variables = ImmutableMap.of(
-          "class", GROUPS_DATABASE.getGroupsInClass(classId)
+          "first", studyGroups, "second", allWeights
       );
       return GSON.toJson(variables);
     }

@@ -1,9 +1,15 @@
-.navbar {
-  background-color: var(--chunky-blue);
+.navbar-home-page {
+  background-color: #000000;
+  opacity: 0.9;
   padding: 0px 60px 0px 30px !important;
 
-  .nav-brand {
+  .navbar-home-page-brand {
     color: rgba(255, 255, 255, 1);
+
+    img {
+      transform: rotate(20deg);
+      margin-right: -15px;
+    }
   }
 
   .nav-link:not(.separator) {

@@ -117,8 +117,9 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
       .get(`http://localhost:4567/get_groups_in/${classID}`, CONFIG)
       .then((response: any) => {
         console.log('Same');
-        console.log(response.data.class);
-        setStudyGroups(response.data.class);
+        console.log(response.data);
+        setStudyGroups(response.data.first);
+        setStudyGroupWeights(response.data.second);
       })
       .catch((err: any) => {
         console.log(err);
