@@ -50,7 +50,7 @@ public class NewGroupsDatabase {
     }
     Statement stat = conn.createStatement();
     // Enable foreign keys. [NOTE: for some reason, this does not seem to work.]
-    stat.executeUpdate("PRAGMA foreign_keys = ON;");
+//    stat.executeUpdate("PRAGMA foreign_keys = ON;");
 
     // Create database tables if not already existing
     PreparedStatement prep;
@@ -61,9 +61,11 @@ public class NewGroupsDatabase {
         "last_name TEXT, " +
         "email TEXT UNIQUE, " +
         "pass_token TEXT, " +
-        "FOREIGN KEY (id) REFERENCES classes(owner_id), " +
-        "FOREIGN KEY (id) REFERENCES enrollments(person_id), " +
-        "FOREIGN KEY (id) REFERENCES class(person_id)" +
+        "FOREIGN KEY (id) REFERENCES classes(owner_id) " +
+        "ON DELETE CASCADE ON UPDATE CASCADE, " +
+        "FOREIGN KEY (id) REFERENCES enrollments(person_id) " +
+        "ON DELETE CASCADE ON UPDATE CASCADE, " +
+        "FOREIGN KEY (id) REFERENCES class(person_id) " +
         "ON DELETE CASCADE ON UPDATE CASCADE);");
     prep.executeUpdate();
 
@@ -84,7 +86,8 @@ public class NewGroupsDatabase {
     prep = conn.prepareStatement("CREATE TABLE IF NOT EXISTS enrollments(" +
         "person_id INTEGER, " +
         "class_id INTEGER, " +
-        "FOREIGN KEY (person_id) REFERENCES logins(id), " +
+        "FOREIGN KEY (person_id) REFERENCES logins(id) " +
+        "ON DELETE CASCADE ON UPDATE CASCADE," +
         "FOREIGN KEY (class_id) REFERENCES classes(class_id) " +
         "ON DELETE CASCADE ON UPDATE CASCADE);");
     prep.executeUpdate();
@@ -258,6 +261,9 @@ public class NewGroupsDatabase {
     prep.setInt(1, id);
     prep.executeUpdate();
     prep = conn.prepareStatement("DELETE FROM enrollments WHERE person_id=?;");
+    prep.setInt(1, id);
+    prep.executeUpdate();
+    prep = conn.prepareStatement("DELETE FROM classes WHERE owner_id=?;");
     prep.setInt(1, id);
     prep.executeUpdate();
     prep = conn.prepareStatement("DELETE FROM logins WHERE id=?;");
