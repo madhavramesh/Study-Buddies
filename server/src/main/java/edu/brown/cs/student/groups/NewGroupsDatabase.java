@@ -798,7 +798,9 @@ public class NewGroupsDatabase {
       String lastName = rs.getString("last_name");
       String email = rs.getString("email");
       int groupId = rs.getInt("group_id");
-      personGroups.add(new Pair<>(groupId, new PersonInfo(id, firstName, lastName, email)));
+      if (groupId != 0) {
+        personGroups.add(new Pair<>(groupId, new PersonInfo(id, firstName, lastName, email)));
+      }
     }
     Set<Integer> uniqueGroupIDs = new HashSet<>();
 

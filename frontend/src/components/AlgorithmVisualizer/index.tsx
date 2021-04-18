@@ -192,6 +192,13 @@ const AlgorithmVisualizer: React.FC<AlgorithmVisualizerProps> = ({
           <Modal.Title>Algorithm Visualization</Modal.Title>
         </Modal.Header>
         <Modal.Body className="algorithm-visualize-modal-body">
+          <div className="algorithm-description">
+            Each table below represents one study group. Decimals in each cell indicate the
+            compatability between two people (1 is the highest and 0 is the lowest). Each cell is
+            also color coded, with <span style={{ color: '#3cb371' }}>green</span> representing a
+            higher compatibility and <span style={{ color: 'var(--slim-red)' }}>red</span>{' '}
+            representing a lower compatibility.
+          </div>
           <div>
             {studyGroups.map((group: any, index: number) => {
               return renderGroup(group, index, studyGroupWeights);

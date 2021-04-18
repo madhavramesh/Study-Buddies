@@ -449,7 +449,6 @@ public class GrouperTest {
 
   @Test
   public void makeGroupTest() throws Exception {
-    System.out.println("MAKE GROUPER TESTING");
 
     setUp();
     grouper.setContributions(graph);
@@ -476,7 +475,6 @@ public class GrouperTest {
     grouper.makeGroups(graph, 5);
     tearDown();
 
-    System.out.println("END");
     tearDown();
   }
 

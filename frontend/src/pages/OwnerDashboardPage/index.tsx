@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { Button, Modal, Table } from 'react-bootstrap';
+import React, { useEffect, useRef, useState } from 'react';
+import { Accordion, Button, Card, OverlayTrigger, Popover } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
+import { CSVLink } from 'react-csv';
+import GetAppIcon from '@material-ui/icons/GetApp';
 import ModifiedNavBar from '../../components/ModifiedNavbar';
 import ClassCreatedModal from '../../components/ClassCreatedModal';
 import GeneralInfoClass from '../../components/GeneralInfoClass';
 import StudentInfo from '../../components/StudentInfo';
 import StudyGroupDisplay from '../../components/StudyGroupDisplay';
-import './OwnersDashboard.scss';
 import PreferencesButton from '../../components/PreferencesButton';
 import AlgorithmVisualizer from '../../components/AlgorithmVisualizer';
+import './OwnersDashboard.scss';
 
 const axios = require('axios');
 
@@ -42,7 +44,11 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
 
   const [students, setStudents] = useState([]);
   const [studyGroups, setStudyGroups] = useState([]);
+  const [studyGroupsCSV, setStudyGroupsCSV] = useState<Array<Array<string>>>([]);
+  const [studyGroupsCSVReady, setStudyGroupsCSVReady] = useState(false);
   const [studyGroupWeights, setStudyGroupWeights] = useState([]);
+
+  const csvLink = useRef<any>();
 
   const username = `${sessionStorage.getItem('first_name')} ${sessionStorage.getItem('last_name')}`;
 
@@ -53,6 +59,8 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
   const [classCreatedShowModal, setClassCreatedShowModal] = useState(true);
   const [preferencesShowModal, setPreferencesShowModal] = useState(false);
   const [algorithmShowModal, setAlgorithmShowModal] = useState(false);
+
+  const [accordionArrowDown, setAccordionArrowDown] = useState(true);
 
   const getClassInfo = () => {
     axios
@@ -103,18 +111,23 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
     return studyGroup.map((s: any) => `${s.second.firstName} ${s.second.lastName}`);
   };
 
-  /**
   const getCurrentStudyGroups = () => {
     axios
-      .get(`htts://localhost:4567/get_groups_in/${classID}`, CONFIG)
+      .get(`http://localhost:4567/get_groups_in/${classID}`, CONFIG)
       .then((response: any) => {
-        setStudyGroups();
+        console.log(response.data.class);
+        setStudyGroups(response.data.class);
       })
       .catch((err: any) => {
         console.log(err);
       });
   };
-   * */
+
+  const createStudyGroupsCSV = (groups: any) => {
+    const studyGroupsFormatted = groups.map((group: any) => getStudyGroupStudents(group));
+    setStudyGroupsCSV(studyGroupsFormatted);
+    setStudyGroupsCSVReady(true);
+  };
 
   const removeStudent = (studentID: string) => {
     const postParameters = {
@@ -167,11 +180,20 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
     getClassInfo();
     getStudents();
     getPreferences();
+    getCurrentStudyGroups();
   }, []);
 
   useEffect(() => {
     getPreferences();
   }, [preferencesShowModal]);
+
+  useEffect(() => {
+    console.log(studyGroupsCSV);
+    if (studyGroupsCSVReady) {
+      csvLink?.current?.link?.click();
+      setStudyGroupsCSVReady(false);
+    }
+  }, [studyGroupsCSVReady]);
 
   return (
     <div className="owner-dashboard-page">
@@ -188,7 +210,33 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
 
       <div className="owner-dashboard-page-sections">
         <div className="page-section study-groups">
-          <div className="study-groups-header">Study Groups</div>
+          <div className="study-groups-header">
+            <Card>
+              <Card.Header>
+                Study Groups
+                <OverlayTrigger
+                  overlay={
+                    <Popover id="groups-csv-description">
+                      <Popover.Content>Click to download as CSV!</Popover.Content>
+                    </Popover>
+                  }
+                >
+                  <GetAppIcon
+                    className="groups-csv-button"
+                    fontSize="large"
+                    onClick={() => createStudyGroupsCSV(studyGroups)}
+                  />
+                </OverlayTrigger>
+                <CSVLink
+                  data={studyGroupsCSV}
+                  filename="studygroups.csv"
+                  target="_blank"
+                  className="hidden"
+                  ref={csvLink}
+                />
+              </Card.Header>
+            </Card>
+          </div>
           <div className="study-groups-body">
             {studyGroups.map((studyGroup: any) => {
               const studyGroupNames = getStudyGroupStudents(studyGroup);
@@ -215,54 +263,81 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
             />
           </div>
           <div className="current-preferences">
-            <div className="current-preferences-header">Current Preferences</div>
-            <div className="current-preferences-body">
-              <div className="dorm">
-                <div className="dorm-header">Dorm</div>
-                {dormPreference && (
-                  <div className="dorm-body">&nbsp;&nbsp;&nbsp;&nbsp;{dormPreference}</div>
-                )}
-              </div>
-              <div className="preferred-people">
-                <div className="preferred-people-header">Preferred People</div>
-                <div className="preferred-people-body">
-                  {selectedPeoplePreference.reduce((acc: Array<any>, elt: number) => {
-                    const matchingStudent: any = students.find(
-                      (student: any) => student?.id === elt
-                    );
-                    return elt > 0
-                      ? acc.concat([
-                          <div className="preferred-person">
-                            &nbsp;&nbsp;&nbsp;&nbsp;{matchingStudent?.firstName}{' '}
-                            {matchingStudent?.lastName}
-                          </div>,
-                        ])
-                      : acc;
-                  }, [])}
-                </div>
-              </div>
-              <div className="not-preferred-people">
-                <div className="not-preferred-people-header">Not Preferred People</div>
-                <div className="not-preferred-people-body">
-                  {selectedPeoplePreference.reduce((acc: Array<any>, elt: number) => {
-                    const matchingStudent: any = students.find(
-                      (student: any) => student?.id === Math.abs(elt)
-                    );
-                    return elt < 0
-                      ? acc.concat([
-                          <div className="not-preferred-person">
-                            &nbsp;&nbsp;&nbsp;&nbsp;{matchingStudent?.firstName}{' '}
-                            {matchingStudent?.lastName}
-                          </div>,
-                        ])
-                      : acc;
-                  }, [])}
-                </div>
-              </div>
-              <div className="times">
-                <div className="times-header">Preferred Times</div>
-                &nbsp;&nbsp;&nbsp;&nbsp;Please view modal
-              </div>
+            <div className="current-preferences-header">
+              <Accordion defaultActiveKey="0">
+                <Card>
+                  <Accordion.Toggle
+                    as={Card.Header}
+                    onClick={() => setAccordionArrowDown(!accordionArrowDown)}
+                    eventKey="0"
+                  >
+                    Current Preferences
+                    <div
+                      className={
+                        accordionArrowDown
+                          ? 'accordion arrow arrow-up'
+                          : 'accordion arrow arrow-down'
+                      }
+                    />
+                  </Accordion.Toggle>
+                  <Accordion.Collapse eventKey="0">
+                    <Card.Body>
+                      <div className="current-preferences-body">
+                        <div className="dorm">
+                          <div className="dorm-header">Dorm</div>
+                          {dormPreference && (
+                            <div className="dorm-body">
+                              &nbsp;&nbsp;&nbsp;&nbsp;{dormPreference}
+                            </div>
+                          )}
+                        </div>
+                        <div className="preferred-people">
+                          <div className="preferred-people-header">Preferred People</div>
+                          <div className="preferred-people-body">
+                            {selectedPeoplePreference.reduce((acc: Array<any>, elt: number) => {
+                              const matchingStudent: any = students.find(
+                                (student: any) => student?.id === elt
+                              );
+                              return elt > 0
+                                ? acc.concat([
+                                    <div className="preferred-person">
+                                      &nbsp;&nbsp;&nbsp;&nbsp;{matchingStudent?.firstName}{' '}
+                                      {matchingStudent?.lastName}
+                                    </div>,
+                                  ])
+                                : acc;
+                            }, [])}
+                          </div>
+                        </div>
+                        <div className="not-preferred-people">
+                          <div className="not-preferred-people-header">Not Preferred People</div>
+                          <div className="not-preferred-people-body">
+                            {selectedPeoplePreference.reduce((acc: Array<any>, elt: number) => {
+                              const matchingStudent: any = students.find(
+                                (student: any) => student?.id === Math.abs(elt)
+                              );
+                              return elt < 0
+                                ? acc.concat([
+                                    <div className="not-preferred-person">
+                                      &nbsp;&nbsp;&nbsp;&nbsp;{matchingStudent?.firstName}{' '}
+                                      {matchingStudent?.lastName}
+                                    </div>,
+                                  ])
+                                : acc;
+                            }, [])}
+                          </div>
+                        </div>
+                        <div className="times">
+                          <div className="times-header">Preferred Times</div>
+                          <div className="times-body">
+                            &nbsp;&nbsp;&nbsp;&nbsp;Please view modal
+                          </div>
+                        </div>
+                      </div>
+                    </Card.Body>
+                  </Accordion.Collapse>
+                </Card>
+              </Accordion>
             </div>
           </div>
         </div>
@@ -286,7 +361,11 @@ const OwnerDashboardPage: React.FC = ({ match }: any) => {
         </div>
 
         <div className="page-section students">
-          <div className="students-header">Students</div>
+          <div className="students-header">
+            <Card>
+              <Card.Header>Students</Card.Header>
+            </Card>
+          </div>
           <div className="students-body">
             {students.map((student: any) => (
               <StudentInfo

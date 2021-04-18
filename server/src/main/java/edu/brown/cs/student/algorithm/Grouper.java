@@ -84,27 +84,6 @@ public class Grouper {
         count += 1;
       }
     }
-    
-    System.out.println("----------------------------");
-    System.out.println("----------------------------");
-    System.out.println("Created groups of size " + groupSize + " are");
-    for (Set<IGNode> group: groups) {
-      for (IGNode n: group) {
-        System.out.print(n.getValue() + " ");
-      }
-      System.out.println();
-      for (IGNode n: group) {
-        for (IGNode n2: group) {
-          if (!(n2.equals(n))) {
-            System.out.println("weight from " + n.getValue() + " to " + n2.getValue() + " is " + n.weightTo(n2));
-          }
-        }
-      }
-      System.out.println();
-    }
-    System.out.println("----------------------------");
-    System.out.println("----------------------------");
-
 
     return groups;
   }
@@ -331,7 +310,6 @@ public class Grouper {
     }
     return finalAnswer;
   }
-
   /**
    * Adds the highest contribution element that is not already in the graph
    * @param g graph to be referenced
