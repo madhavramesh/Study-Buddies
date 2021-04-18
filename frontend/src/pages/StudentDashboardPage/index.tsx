@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Accordion, Button, Card } from 'react-bootstrap';
+import { Accordion, Button, Card, Modal } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import ModifiedNavBar from '../../components/ModifiedNavbar';
 import ClassCreatedModal from '../../components/ClassCreatedModal';
@@ -46,12 +46,13 @@ const StudentDashboardPage: React.FC = ({ match }: any) => {
   const [dormPreference, setDormPreference] = useState('');
   const [selectedPeoplePreference, setSelectedPeoplePreference] = useState<Array<number>>([]);
   const [selectedTimesPreference, setSelectedTimesPreference] = useState<Array<number>>([]);
-  const [groupId, setGroupId] = useState('');
+  const [groupId, setGroupId] = useState(-1);
 
   const [studyGroups, setStudyGroups] = useState([]);
 
   const [classCreatedShowModal, setClassCreatedShowModal] = useState(true);
   const [preferencesShowModal, setPreferencesShowModal] = useState(false);
+  const [leaveClassShowModal, setLeaveClassShowModal] = useState(false);
 
   const [accordionArrowDown, setAccordionArrowDown] = useState(false);
 
@@ -121,21 +122,31 @@ const StudentDashboardPage: React.FC = ({ match }: any) => {
   };
 
   const getPreferences = async () => {
-    const response = await axios.get(
-      `http://localhost:4567/get_person_pref_in/${classID}/${sessionStorage.getItem('user_id')!}`,
-      CONFIG
-    );
-    setDormPreference(response.data.preferences.dorm ?? '');
-    setSelectedPeoplePreference(response.data.preferences.preferences ?? []);
-    setSelectedTimesPreference(response.data.preferences.times ?? []);
-    setGroupId(response.data.preferences.groupId);
+    return axios
+      .get(
+        `http://localhost:4567/get_person_pref_in/${classID}/${sessionStorage.getItem('user_id')!}`,
+        CONFIG
+      )
+      .then((response: any) => {
+        setDormPreference(response.data.preferences.dorm ?? '');
+        setSelectedPeoplePreference(response.data.preferences.preferences ?? []);
+        setSelectedTimesPreference(response.data.preferences.times ?? []);
+        setGroupId(response.data.preferences.groupId);
+        return response.data.preferences.groupId;
+      })
+      .catch((err: any) => {
+        console.log(err);
+      });
   };
 
-  const getCurrentStudyGroups = () => {
-    if (groupId != null && parseInt(groupId, 10) !== -1) {
-      axios
-        .get(`http://localhost:4567/get_persons_in/${groupId}/${classID}`)
+  const getCurrentStudyGroups = async (id: number) => {
+    console.log(id);
+    if (id !== -1) {
+      console.log('TRUEEEEEE');
+      await axios
+        .get(`http://localhost:4567/get_persons_in/${id}/${classID}`)
         .then((response: any) => {
+          console.log(response.data);
           setStudyGroups(response.data.persons);
         })
         .catch((err: any) => console.log(err));
@@ -151,12 +162,18 @@ const StudentDashboardPage: React.FC = ({ match }: any) => {
     getPersonInfo(id);
     getClassInfo();
     getStudents();
-    getPreferences();
-    getCurrentStudyGroups();
+    getPreferences().then((res: any) => {
+      console.log(res);
+      getCurrentStudyGroups(res);
+    });
+    // getCurrentStudyGroups();
   }, []);
 
   useEffect(() => {
-    getPreferences();
+    getPreferences().then((res: any) => {
+      console.log(res);
+      getCurrentStudyGroups(res);
+    });
   }, [preferencesShowModal]);
 
   return (
@@ -181,11 +198,13 @@ const StudentDashboardPage: React.FC = ({ match }: any) => {
               </Card>
             </div>
             <div className="study-groups-body">
-              <StudyGroupDisplay
-                groupID={groupId}
-                studentNames={getStudyGroupStudents(studyGroups)}
-                imageURL={RANDOM_IMAGE_URL}
-              />
+              {groupId !== -1 && (
+                <StudyGroupDisplay
+                  groupID={groupId.toString()}
+                  studentNames={getStudyGroupStudents(studyGroups)}
+                  imageURL={RANDOM_IMAGE_URL}
+                />
+              )}
             </div>
           </div>
           <div className="current-preferences">
@@ -306,12 +325,37 @@ const StudentDashboardPage: React.FC = ({ match }: any) => {
             ))}
           </div>
           <div className="leave-class-container">
-            <Button
-              className="leave-class-button"
-              onClick={() => removeStudent(sessionStorage.getItem('user_id')!)}
-            >
+            <Button className="leave-class-button" onClick={() => setLeaveClassShowModal(true)}>
               Leave Class
             </Button>
+            <Modal
+              onHide={() => setLeaveClassShowModal(false)}
+              show={leaveClassShowModal}
+              scrollable
+              centered
+              className="delete-class-modal"
+            >
+              <Modal.Body className="leave-class-modal-body">
+                Are you sure you want to leave{' '}
+                <b>
+                  [{classNumber}] {className}?
+                </b>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button
+                  className="leave-class-confirmation-button cancel"
+                  onClick={() => setLeaveClassShowModal(false)}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  className="leave-class-confirmation-button yes"
+                  onClick={() => removeStudent(sessionStorage.getItem('user_id')!)}
+                >
+                  Yes
+                </Button>
+              </Modal.Footer>
+            </Modal>
           </div>
         </div>
       </div>

@@ -51,6 +51,8 @@ const ModifiedNavBar: React.FC<ModifiedNavBarProps> = ({ username }) => {
               as="button"
               onClick={() => {
                 sessionStorage.removeItem('user_id');
+                sessionStorage.removeItem('first_name');
+                sessionStorage.removeItem('last_name');
                 history.push('/signin');
               }}
             >

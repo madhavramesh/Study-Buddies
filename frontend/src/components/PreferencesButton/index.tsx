@@ -117,7 +117,6 @@ const PreferencesButton: React.FC<PreferencesButtonProps> = ({
   const getInitialPrefPplInfo = async () => {
     let response = await axios.get(`http://localhost:4567/get_persons_in/${classID}`, CONFIG);
     const { persons: currentPersons } = response.data;
-    console.log(currentPersons);
     setAllPersons(currentPersons);
     setPersons(currentPersons);
     response = await axios.get(
@@ -141,7 +140,7 @@ const PreferencesButton: React.FC<PreferencesButtonProps> = ({
 
   if (persons.length) {
     const filteredPersons = persons.filter(
-      (person) => `${person.firstName} ${person.lastName}` === username
+      (person) => `${person.firstName} ${person.lastName}` !== username
     );
     personCards = filteredPersons.map((person: any, index) => {
       return (

@@ -160,3 +160,21 @@
     }
   }
 }
+
+.leave-class-modal-body {
+  font-size: 20px;
+}
+
+.leave-class-confirmation-button {
+  width: auto;
+  padding-right: 20px !important;
+  padding-left: 20px !important;
+}
+
+.leave-class-confirmation-button.cancel {
+  background-color: var(--chunky-red);
+}
+
+.leave-class-confirmation-button.yes {
+  background-color: #58d68d;
+}
