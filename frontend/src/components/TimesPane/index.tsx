@@ -129,9 +129,6 @@ const TimesPane: React.FC<TimeProps> = ({
     }
   }
 
-  console.log('Selected Times');
-  console.log(selectedTimes);
-
   return (
     <div className="times-pane-container">
       <Table responsive striped bordered hover>

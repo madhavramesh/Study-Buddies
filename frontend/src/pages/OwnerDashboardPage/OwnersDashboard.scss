@@ -46,7 +46,7 @@
       }
 
       .study-groups-body {
-        max-height: 32vh;
+        max-height: 29vh;
         overflow: auto;
       }
 
@@ -89,6 +89,7 @@
               border-right: 12px solid transparent;
               margin-left: auto;
               margin-right: 0;
+              cursor: pointer;
             }
 
             .accordion.arrow.arrow-down {
@@ -189,4 +190,22 @@
       font-weight: 500;
     }
   }
+}
+
+.delete-class-modal-body {
+  font-size: 20px;
+}
+
+.delete-class-confirmation-button {
+  width: auto;
+  padding-right: 20px !important;
+  padding-left: 20px !important;
+}
+
+.delete-class-confirmation-button.cancel {
+  background-color: var(--chunky-red);
+}
+
+.delete-class-confirmation-button.yes {
+  background-color: #58d68d;
 }

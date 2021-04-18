@@ -5,6 +5,7 @@ import MenuBookIcon from '@material-ui/icons/MenuBook';
 import PersonCard from '../PersonCard';
 import TimesPane from '../TimesPane';
 import './PreferencesButton.scss';
+import SearchBar from '../SearchBar/SearchBar';
 
 const dorms = [
   'Andrews Hall',
@@ -86,10 +87,14 @@ const PreferencesButton: React.FC<PreferencesButtonProps> = ({
 
   const [dorm, setDorm] = useState('Select a dorm...');
 
-  const [persons, setPersons] = useState([]);
+  const [searchText, setSearchText] = useState('');
+  const [allPersons, setAllPersons] = useState([]);
+  const [persons, setPersons] = useState<Array<any>>([]);
   const [selected, setSelected] = useState<Array<number>>([]);
 
   const [selectedTimes, setSelectedTimes] = useState(initialTimes);
+
+  const username = `${sessionStorage.getItem('first_name')} ${sessionStorage.getItem('last_name')}`;
 
   const submitPreferences = async () => {
     const postParameters = {
@@ -112,6 +117,8 @@ const PreferencesButton: React.FC<PreferencesButtonProps> = ({
   const getInitialPrefPplInfo = async () => {
     let response = await axios.get(`http://localhost:4567/get_persons_in/${classID}`, CONFIG);
     const { persons: currentPersons } = response.data;
+    console.log(currentPersons);
+    setAllPersons(currentPersons);
     setPersons(currentPersons);
     response = await axios.get(
       `http://localhost:4567/get_person_pref_in/${classID}/${sessionStorage.getItem('user_id')!}`,
@@ -133,7 +140,10 @@ const PreferencesButton: React.FC<PreferencesButtonProps> = ({
   let personCards: JSX.Element[] = [];
 
   if (persons.length) {
-    personCards = persons.map((person: any, index) => {
+    const filteredPersons = persons.filter(
+      (person) => `${person.firstName} ${person.lastName}` === username
+    );
+    personCards = filteredPersons.map((person: any, index) => {
       return (
         <PersonCard
           firstName={person.firstName}
@@ -149,6 +159,20 @@ const PreferencesButton: React.FC<PreferencesButtonProps> = ({
       );
     });
   }
+
+  const filterPersons = (words: Array<string>, prefix: string) => {
+    const preLowercase = prefix.toLowerCase();
+    const nameMatches = words.filter((p: any) =>
+      (p.firstName + p.lastName).toLowerCase().trim().startsWith(preLowercase)
+    );
+    return nameMatches;
+  };
+
+  useEffect(() => {
+    let modifiedPersons: Array<string> = [];
+    modifiedPersons = filterPersons(allPersons, searchText);
+    setPersons(modifiedPersons);
+  }, [searchText]);
 
   let displayedPage: any = '';
   switch (page) {
@@ -234,6 +258,15 @@ const PreferencesButton: React.FC<PreferencesButtonProps> = ({
               or feel uncomfortable working with (
               <span style={{ color: 'var(--slim-red)' }}>red</span>). Click multiple times to cycle
               through options.
+            </div>
+            <div className="search-bar-persons">
+              <SearchBar
+                onChange={(e: any) => setSearchText(e.target.value)}
+                placeholderText="Search for people"
+                searchInstructions="Search for classes by first name"
+                showSearchHeader={false}
+                showSearchDescription={false}
+              />
             </div>
             {personCards}
           </Modal.Body>

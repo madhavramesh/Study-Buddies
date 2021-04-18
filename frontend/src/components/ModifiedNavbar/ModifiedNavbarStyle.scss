@@ -4,8 +4,13 @@
   height: 70px;
   letter-spacing: 1px;
 
-  .modified-nav-brand {
+  .modified-navbar-brand {
     color: #ffffff !important;
+
+    img {
+      transform: rotate(20deg);
+      margin-right: -15px;
+    }
   }
 
   .btn {
@@ -27,12 +32,16 @@
     }
   }
 
-  .btn:hover, .btn:active, .btn:focus {
+  .btn:hover,
+  .btn:active,
+  .btn:focus {
     background-color: var(--slim-red);
   }
 
-  .dropdown-item:hover, .dropdown-item:active, .dropdown-item:focus {
-    background-color: #D3D3D3;
+  .dropdown-item:hover,
+  .dropdown-item:active,
+  .dropdown-item:focus {
+    background-color: #d3d3d3;
     color: #000000;
   }
 }
